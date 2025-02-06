@@ -43,33 +43,33 @@ Dedicated to exploring new knowledge frontiers and creating cutting-edge tech so
 
 ## Projects
 
-### Omodore
+### [Omodore](https://omodore.com/)
 - Developed an Auto Agent Architecture enabling users to customize domain and task-specific agents via a UI.
 - Designed agents with reasoning capabilities, automated web-crawling, and dynamic tool integration.
 - Implemented Retrieval-Augmented Generation (RAG) to enhance information accuracy from diverse data sources.
 - Developed a user-friendly UI allowing non-technical users to create, train, and deploy intelligent AI agents.
 - Optimized response generation through context-aware workflows, allowing personalized and adaptive interactions for various business needs.
 
-### GALAMBO  
+### [GALAMBO](https://www.galambo.com/)  
 - Built a Virtual Multi-modal Agent that responds to queries using context-aware GPT-based responses and image search.
 - Integrated advanced retrieval techniques to improve the accuracy of responses based on both text and image queries.
 
-### Rbetraj  
+### [Rbetraj](https://rbetraj.com/)  
 - Built a Virtual Agent designed for seamless data extraction from e-commerce websites.
 - Automated crawling of provided links, identifying product listings, and retrieving comprehensive product details.
 - Enabled tracking of product price history, product identification, and price comparison for competitive market analysis.
 
-### Salesmoji  
+### [Salesmoji](https://siftsales.com/)  
 - Developed AI-powered insights and predictive analytics for sales intelligence.
 - Implemented Retrieval-Augmented Generation (RAG) techniques to enhance response accuracy.
 - Designed an AI-driven assistant to provide data-backed decision-making insights for sales teams.
 
-### EvalmyBrand  
+### [EvalmyBrand](https://evalmybrand.com/)  
 - Designed and deployed a web application to track brand sentiment using AI-driven analytics.
 - Fine-tuned NLP models for aspect-based sentiment analysis, achieving performance gains of 50%.
 - Implemented competitor benchmarking and automated case management for real-time customer feedback analysis.
 
-### InventtEd  
+### [InventtEd](https://erp.inventted.com/)  
 - Enhanced educational platforms by incorporating AI-powered Text Summarization, Automated Essay Grading, and Virtual Tutoring.
 - Built an AI-driven assistant for teachers and students to streamline personalized learning experiences.
 
@@ -83,4 +83,5 @@ Dedicated to exploring new knowledge frontiers and creating cutting-edge tech so
 ## Contact
 - **Email:** [rohan.dhanraj.y@gmail.com](mailto:rohan.dhanraj.y@gmail.com)  
 - **Phone:** +91-700-895-8143  
-- **LinkedIn:** [https://www.linkedin.com/in/rohan-dhanraj-yadav](https://www.linkedin.com/in/rohan-dhanraj-yadav)  
+- **LinkedIn:** [https://www.linkedin.com/in/rohan-dhanraj-yadav](https://www.linkedin.com/in/rohan-dhanraj-yadav)
+- **Portfolio:**[https://rohandhanraj.github.io/](https://rohandhanraj.github.io/)
