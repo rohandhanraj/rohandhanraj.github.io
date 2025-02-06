@@ -14,9 +14,9 @@ Dedicated to exploring new knowledge frontiers and creating cutting-edge tech so
 - **Frameworks:** Django, Flask, FastAPI, Streamlit  
 - **Databases:** SQL, NoSQL, Vector DB  
 - **Analytics Tools:** NumPy, Pandas, Matplotlib, Seaborn, Plotly  
-- **Machine Learning:** Scikit-Learn, TensorFlow, PyTorch, Transformers, LLMs  
+- **Machine Learning:** Scikit-Learn, TensorFlow, PyTorch, Transformers, LLMs, VLMs, LVMs  
 - **Generative AI:** LangChain, Prompt Chaining, RAG, Agent Building, LangGraph  
-- **Web Scraping:** BeautifulSoup4, Scrapy  
+- **Web Scraping:** BeautifulSoup4, Scrapy, Playwright, Chromium, Selenium   
 - **Version Control:** GitHub, GitLab  
 
 ---
@@ -84,4 +84,4 @@ Dedicated to exploring new knowledge frontiers and creating cutting-edge tech so
 - **Email:** [rohan.dhanraj.y@gmail.com](mailto:rohan.dhanraj.y@gmail.com)  
 - **Phone:** +91-700-895-8143  
 - **LinkedIn:** [https://www.linkedin.com/in/rohan-dhanraj-yadav](https://www.linkedin.com/in/rohan-dhanraj-yadav)
-- **Portfolio:**[https://rohandhanraj.github.io/](https://rohandhanraj.github.io/)
+- **Portfolio:** [https://rohandhanraj.github.io/](https://rohandhanraj.github.io/)
