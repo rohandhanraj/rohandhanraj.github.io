@@ -172,7 +172,7 @@ Navigating the tech cosmos with a stellar track record in *AI Application Odysse
         }
         
         async function streamChatResponse(query, chatContent) {
-            const url = "http://155.130.70.168:4000/stream_chat";
+            const url = "http://155.130.70.168:4000/stream_chat/";
             const formData = new FormData();
             formData.append("user_id", userSession.user_id);
             formData.append("agent_type", "default");
@@ -181,8 +181,15 @@ Navigating the tech cosmos with a stellar track record in *AI Application Odysse
             try {
                 const response = await fetch(url, {
                     method: "POST",
+                    headers: {
+                        "Accept": "application/json"
+                    },
                     body: formData
                 });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
         
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder("utf-8");
