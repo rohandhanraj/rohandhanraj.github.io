@@ -29,7 +29,7 @@ Dedicated to exploring new knowledge frontiers and creating cutting-edge tech so
 - Generative AI and Web Application Development using LangChain and FastAPI.  
 
 ### Software Engineer (Generative AI | ML | Python)  
-**Aimlytics Technology | August 2023 – October 2024**  
+**Aimlytics Technology | September 2022 – October 2024**  
 - Developed innovative AI workflows and created proofs of concept.  
 - Led a team of data annotators for dataset labeling.  
 - Resolved performance bottlenecks in applications.  
