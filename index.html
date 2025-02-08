@@ -192,7 +192,7 @@ Navigating the tech cosmos with a stellar track record in *AI Application Odysse
                     const { done, value } = await reader.read();
                     if (done) break;
                     botMessage += decoder.decode(value, { stream: true });
-                    chatContent.innerHTML = chatContent.innerHTML.replace(/<div class='text-left'>.*</div>/, "") + botMessage + "</span></div>";
+                    chatContent.innerHTML = chatContent.innerHTML.replace(/<div class='text-left'>.*<\/div>/, "") + botMessage + "</span></div>";
                     chatContent.scrollTop = chatContent.scrollHeight;
                 }
         
