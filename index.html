@@ -5,7 +5,7 @@
     <meta name="title" content="Rohan Dhanraj Yadav Portfolio">
     <meta name="description" content="Rohan Dhanraj Yadav - A seasoned professional with expertise in Statistical Machine Learning, NLP, Neural Networks, and Generative AI. Dedicated to mastering new tech stacks swiftly and delivering impactful AI solutions across diverse industries.">
     <meta charset="UTF-8">
-<!--     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -27,7 +27,7 @@
     <section class="py-10">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold mb-4">About Me</h2>
-            <p class="text-gray-300">🚀 *Innovative Software Engineer* 🚀<br>
+            <p class="text-gray-300">🚀 <strong>Innovative Software Engineer</strong> 🚀<br>
 Navigating the tech cosmos with a stellar track record in *AI Application Odyssey. A maestro of code who orchestrates symphonies in **Machine Learning, NLP, Neural Networks, and the avant-garde realm of **Generative AI*. A virtuoso multitasker, seamlessly weaving through projects with the finesse of a seasoned conductor. Fueled by an insatiable curiosity, I'm a tech explorer, always on a quest to conquer new knowledge frontiers and breathe life into cutting-edge tech creations. 🌌👨‍💻</p>
         </div>
     </section>
@@ -99,15 +99,15 @@ Navigating the tech cosmos with a stellar track record in *AI Application Odysse
                     <p>Automated e-commerce data extraction, product tracking, and price analysis.</p>
                 </div>
                 <div class="bg-gray-700 p-5 shadow-lg rounded-lg">
-                    <h3 class="text-xl font-bold">Salesmoji</h3>
+                    <h3 class="text-xl font-bold"><a href="https://siftsales.com/" class="text-blue-300 underline">Salesmoji</a></h3>
                     <p>Developed AI-powered insights, predictive analytics, and RAG implementations for sales intelligence.</p>
                 </div>
                 <div class="bg-gray-700 p-5 shadow-lg rounded-lg">
-                    <h3 class="text-xl font-bold">EvalmyBrand</h3>
+                    <h3 class="text-xl font-bold"><a href="https://evalmybrand.com/" class="text-blue-300 underline">EvalmyBrand</a></h3>
                     <p>Developed a web application, improved NLP models for sentiment analysis, and achieved performance gains of 50%.</p>
                 </div>
                 <div class="bg-gray-700 p-5 shadow-lg rounded-lg">
-                    <h3 class="text-xl font-bold">InventtEd</h3>
+                    <h3 class="text-xl font-bold"><a href="https://erp.inventted.com/" class="text-blue-300 underline">InventtEd</a></h3>
                     <p>Enhanced educational platforms with features like Text Summarization, Essay Grading, and Virtual Tutoring.</p>
                 </div>
                 <div class="bg-gray-700 p-5 shadow-lg rounded-lg">
@@ -129,5 +129,94 @@ Navigating the tech cosmos with a stellar track record in *AI Application Odysse
     </section>
 
     <script src="script.js"></script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Script loaded successfully.');
+        });
+    </script> -->
+
+    <!-- Chatbot -->
+    <div id="chatbot" class="fixed bottom-5 right-5 bg-gray-800 text-white p-4 rounded-lg shadow-lg w-72 hidden">
+        <div class="flex justify-between items-center border-b pb-2">
+            <h3 class="text-lg font-bold">Chatbot</h3>
+            <button onclick="toggleChatbot()" class="text-red-400">×</button>
+        </div>
+        <div id="chat-content" class="h-40 overflow-y-auto p-2 text-sm"></div>
+        <input type="text" id="chat-input" class="w-full p-2 text-black rounded-md mt-2" placeholder="Type a message..." onkeypress="handleChat(event)">
+    </div>
+    <button onclick="toggleChatbot()" class="fixed bottom-5 right-5 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg">💬 Chat</button>
+
+    <script>
+        let userSession = {
+            user_id: generateUserId(),
+            lastActive: new Date().getTime()
+        };
+        
+        function generateUserId() {
+            return 'user_' + Math.random().toString(36).substr(2, 9);
+        }
+        
+        function toggleChatbot() {
+            document.getElementById("chatbot").classList.toggle("hidden");
+        }
+        
+        async function handleChat(event) {
+            if (event.key === "Enter") {
+                let input = document.getElementById("chat-input").value;
+                if (input.trim() === "") return;
+        
+                let chatContent = document.getElementById("chat-content");
+                let userMessage = `<div class='text-right'><span class='bg-blue-500 px-2 py-1 rounded-lg'>${input}</span></div>`;
+                chatContent.innerHTML += userMessage;
+                document.getElementById("chat-input").value = "";
+        
+                userSession.lastActive = new Date().getTime();
+        
+                await streamChatResponse(input, chatContent);
+            }
+        }
+        
+        async function streamChatResponse(query, chatContent) {
+            const url = "http://155.130.70.168:4000/stream_chat";
+            const payload = {
+                user_id: userSession.user_id,
+                agent_type: "default",
+                query: query
+            };
+        
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+        
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+                let botMessage = `<div class='text-left'><span class='bg-gray-500 px-2 py-1 rounded-lg'>`;
+        
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    botMessage += decoder.decode(value, { stream: true });
+                    chatContent.innerHTML = chatContent.innerHTML.replace(/<div class='text-left'>.*<\/div>/, "") + botMessage + "</span></div>";
+                    chatContent.scrollTop = chatContent.scrollHeight;
+                }
+        
+            } catch (error) {
+                console.error("Error fetching chat response:", error);
+                chatContent.innerHTML += `<div class='text-left'><span class='bg-red-500 px-2 py-1 rounded-lg'>Error fetching response</span></div>`;
+            }
+        }
+        
+        setInterval(() => {
+            if (new Date().getTime() - userSession.lastActive > 15 * 60 * 1000) {
+                userSession.user_id = generateUserId();
+            }
+        }, 60 * 1000);
+    </script>
+
 </body>
 </html>
