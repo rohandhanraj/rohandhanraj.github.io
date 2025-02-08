@@ -179,19 +179,15 @@ Navigating the tech cosmos with a stellar track record in *AI Application Odysse
         
         async function streamChatResponse(query, chatContent) {
             const url = "http://155.130.70.168:4000/stream_chat";
-            const payload = {
-                user_id: userSession.user_id,
-                agent_type: "default",
-                query: query
-            };
+            const formData = new FormData();
+            formData.append("user_id", userSession.user_id);
+            formData.append("agent_type", "default");
+            formData.append("query", query);
         
             try {
                 const response = await fetch(url, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
+                    body: formData
                 });
         
                 const reader = response.body.getReader();
@@ -202,7 +198,7 @@ Navigating the tech cosmos with a stellar track record in *AI Application Odysse
                     const { done, value } = await reader.read();
                     if (done) break;
                     botMessage += decoder.decode(value, { stream: true });
-                    chatContent.innerHTML = chatContent.innerHTML.replace(/<div class='text-left'>.*<\/div>/, "") + botMessage + "</span></div>";
+                    chatContent.innerHTML = chatContent.innerHTML.replace(/<div class='text-left'>.*</div>/, "") + botMessage + "</span></div>";
                     chatContent.scrollTop = chatContent.scrollHeight;
                 }
         
