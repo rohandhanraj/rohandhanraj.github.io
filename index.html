@@ -140,57 +140,81 @@ Navigating the tech cosmos with a stellar track record in *AI Application Odysse
     </div>
     <button onclick="toggleChatbot()" class="fixed bottom-5 right-5 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg">💬 Chat</button>
 
+    
     <script>
+        let userSession = {
+            user_id: generateUserId(),
+            lastActive: new Date().getTime()
+        };
+        
+        function generateUserId() {
+            return 'user_' + Math.random().toString(36).substr(2, 9);
+        }
+        
         function toggleChatbot() {
             document.getElementById("chatbot").classList.toggle("hidden");
         }
-
-        function handleChat(event) {
-    if (event.key === "Enter") {
-        let input = document.getElementById("chat-input").value;
-        if (input.trim() === "") return;
-
-        let chatContent = document.getElementById("chat-content");
-        let userMessage = `<div class='text-right'><span class='bg-blue-500 px-2 py-1 rounded-lg'>${input}</span></div>`;
-        chatContent.innerHTML += userMessage;
-        document.getElementById("chat-input").value = "";
-
-        const formData = new FormData();
-        formData.append("query", input);
-        formData.append("user_id", "UserId");
-        formData.append("agent_type", "default");
-
-        fetch("https://agents.omodore.com/stream_chat", {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer rsk-3BlbkFJRQWthYsogLlhnOnyhR714JVfy8TeMAmUo6WGdy"
-            },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            let botReply = data?.response || "Sorry, I couldn't get that.";
-            let botMessage = `<div class='text-left'><span class='bg-gray-500 px-2 py-1 rounded-lg'>${botReply}</span></div>`;
-            chatContent.innerHTML += botMessage;
-            chatContent.scrollTop = chatContent.scrollHeight;
-        })
-        .catch(error => {
-            let botMessage = `<div class='text-left'><span class='bg-red-500 px-2 py-1 rounded-lg'>Error: ${error.message}</span></div>`;
-            chatContent.innerHTML += botMessage;
-            chatContent.scrollTop = chatContent.scrollHeight;
-        });
-    }
-}</span></div>`;
+        
+        async function handleChat(event) {
+            if (event.key === "Enter") {
+                let input = document.getElementById("chat-input").value;
+                if (input.trim() === "") return;
+        
+                let chatContent = document.getElementById("chat-content");
+                let userMessage = `<div class='text-right'><span class='bg-blue-500 px-2 py-1 rounded-lg'>${input}</span></div>`;
                 chatContent.innerHTML += userMessage;
                 document.getElementById("chat-input").value = "";
-                
-                setTimeout(() => {
-                    let botMessage = `<div class='text-left'><span class='bg-gray-500 px-2 py-1 rounded-lg'>Hello! How can I assist you?</span></div>`;
-                    chatContent.innerHTML += botMessage;
-                    chatContent.scrollTop = chatContent.scrollHeight;
-                }, 1000);
+        
+                userSession.lastActive = new Date().getTime();
+        
+                await streamChatResponse(input, chatContent);
             }
         }
+        
+        async function streamChatResponse(query, chatContent) {
+            const url = "https://agents.omodore.com/stream_chat/";
+            const formData = new FormData();
+            formData.append("user_id", userSession.user_id);
+            formData.append("agent_type", "default");
+            formData.append("query", query);
+        
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Accept": "text/event-stream",
+                        "Authorization": "Bearer rsk-3BlbkFJRQWthYsogLlhnOnyhR714JVfy8TeMAmUo6WGdy"
+                    },
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+        
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder("utf-8");
+                let botMessage = `<div class='text-left'><span class='bg-gray-500 px-2 py-1 rounded-lg'>`;
+        
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    botMessage += decoder.decode(value, { stream: true });
+                    chatContent.innerHTML = chatContent.innerHTML.replace(/<div class='text-left'>.*<\/div>/, "") + botMessage + "</span></div>";
+                    chatContent.scrollTop = chatContent.scrollHeight;
+                }
+        
+            } catch (error) {
+                console.error("Error fetching chat response:", error);
+                chatContent.innerHTML += `<div class='text-left'><span class='bg-red-500 px-2 py-1 rounded-lg'>Error fetching response</span></div>`;
+            }
+        }
+        
+        setInterval(() => {
+            if (new Date().getTime() - userSession.lastActive > 15 * 60 * 1000) {
+                userSession.user_id = generateUserId();
+            }
+        }, 60 * 1000);
     </script>
 
 </body>
