@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Rohan Dhanraj Yadav - Master CV</title>
+  <style>
+    :root {
+      --bg-dark: #050508;
+      --bg-card: #0a0a14;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #00f0ff;
+      --accent-glow: rgba(0, 240, 255, 0.4);
+      --border-subtle: rgba(0, 240, 255, 0.15);
+      --font-mono: "Fira Code", monospace;
+      --font-sans: system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ── HEADER (Screenshot match, A4-safe) ── */
+    .header {
+      background: linear-gradient(135deg, #0d1b2e 0%, #1a2f4a 60%, #162540 100%);
+      color: white;
+      padding: 36px 45px 36px 40px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 30px;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    /* Subtle radial glow top-right */
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Subtle radial glow bottom-center */
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -120px; left: 30%;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .header-img-wrapper {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      padding: 5px;
+      background: #1c2a44;
+      border: 2.5px solid #9d8055;
+      box-shadow: 0 0 18px rgba(157, 128, 85, 0.3);
+      overflow: hidden;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .header-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .header-content {
+      z-index: 2;
+      min-width: 0;
+    }
+
+    .header-name {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      line-height: 1.1;
+      margin-bottom: 5px;
+      color: #ffffff;
+    }
+
+    .header-title {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      margin-bottom: 16px;
+      color: #8fa8c8;
+      font-weight: 400;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      align-items: center;
+      line-height: 1.6;
+    }
+
+    .header-title span {
+      white-space: nowrap;
+    }
+
+    .header-title span:not(:last-child)::after {
+      content: ' · ';
+      color: #4a6280;
+      padding: 0 4px;
+    }
+
+    /* 3-column contact grid to match screenshot */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px 16px;
+      font-size: 11px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #8fa8c8;
+      min-width: 0;
+    }
+
+    .contact-item span {
+      color: #c8d8e8;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-item a {
+      color: #c8d8e8 !important;
+      text-decoration: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-item a:hover {
+      color: #fff !important;
+    }
+
+    .svg-icon {
+      width: 14px;
+      height: 14px;
+      fill: #6a8aaa;
+      flex-shrink: 0;
+    }
+
+    /* ── METRICS STRIP (Premium Cyberpunk) ── */
+    .metrics {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 50px;
+      background: #0f172a;
+      /* Dark sleek base */
+      border-bottom: 2px solid var(--accent);
+      box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .metric {
+      text-align: center;
+      position: relative;
+    }
+
+    .metric:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -25px;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: var(--border-subtle);
+    }
+
+    .metric-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      line-height: 1;
+      margin-bottom: 4px;
+      text-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .metric-label {
+      font-size: 9px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    /* Body & Layout */
+    .body {
+      padding: 35px 50px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #0f172a;
+      border-bottom: 2px solid #cbd5e1;
+      padding-bottom: 5px;
+      margin: 25px 0 15px 0;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .summary {
+      font-size: 13.5px;
+      color: #475569;
+      text-align: justify;
+      margin-bottom: 20px;
+    }
+
+    /* Skills Box Format */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .skill-box {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--accent);
+      padding: 12px 15px;
+      border-radius: 6px;
+    }
+
+    .skill-box h3 {
+      font-size: 13px;
+      color: #0f172a;
+      margin-bottom: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .skill-box p {
+      font-size: 12px;
+      color: #475569;
+      line-height: 1.4;
+    }
+
+    /* Certifications Box Format */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .cert-box {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #f59e0b;
+      /* Orange/Gold for certs */
+      padding: 12px 15px;
+      border-radius: 6px;
+    }
+
+    .cert-box h3 {
+      font-size: 13px;
+      color: #0f172a;
+      margin-bottom: 4px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cert-box p {
+      font-size: 12px;
+      color: #475569;
+      line-height: 1.4;
+    }
+
+    /* Achievements */
+    .achievements-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 25px;
+      margin-top: 10px;
+    }
+
+    .achievements-list li {
+      color: #475569;
+      font-size: 12.5px;
+      padding-left: 28px;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    .achievements-list li::before {
+      content: '⚡';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      filter: drop-shadow(0 0 2px var(--accent-glow));
+      font-size: 14px;
+    }
+
+    .achievements-list li strong {
+      color: #0f172a;
+    }
+
+    /* Descriptive Formats (Experience, Projects, Education) */
+    .desc-item {
+      margin-bottom: 25px;
+    }
+
+    .desc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .desc-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .desc-date {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .desc-subtitle {
+      font-size: 12px;      /* small font per request */
+      font-weight: 500;
+      color: #3b82f6;       /* blue preserved */
+      margin-bottom: 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .desc-context {
+      font-size: 13px;
+      color: #475569;
+      margin-bottom: 8px;
+      text-align: justify;
+      font-style: italic;
+    }
+
+    .desc-subheading {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #334155;
+    }
+
+    .desc-bullets {
+      font-size: 13px;
+      color: #475569;
+      padding-left: 18px;
+      margin-bottom: 12px;
+    }
+
+    .desc-bullets li {
+      margin-bottom: 5px;
+    }
+
+    .desc-bullets strong {
+      color: #0f172a;
+    }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tech-badge {
+      font-size: 11.5px;
+      font-family: var(--font-mono);
+      color: #475569;
+      background: #f8fafc;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Preserve document margins on print/PDF */
+    @page {
+      size: A4;
+      margin: 12mm 10mm;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: white;
+      }
+      .page {
+        box-shadow: none;
+        width: 100%;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="header-img-wrapper">
+        <img src="../profile.png" alt="Rohan Dhanraj Yadav">
+      </div>
+      <div class="header-content">
+        <div class="header-name">Rohan Dhanraj Yadav</div>
+        <div class="header-title">
+          <span>AI/ML Engineer</span>
+          <span>Generative AI</span>
+          <span>Agentic Systems</span>
+          <span>AI Platform Developer</span>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-item">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <a href="mailto:rohan.dhanraj.y@gmail.com">rohan.dhanraj.y@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <a href="tel:+917008958143">+91-7008958143</a>
+          </div>
+          <div class="contact-item">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Bengaluru, India</span>
+          </div>
+          <div class="contact-item">
+            <svg class="svg-icon" style="fill:#4a9fd4" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            <a href="https://linkedin.com/in/rohan-dhanraj-yadav" target="_blank">linkedin.com/in/rohan-dhanraj-yadav</a>
+          </div>
+          <div class="contact-item">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.5-1.4-1.9-1.4-1.9-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3z"/></svg>
+            <a href="https://github.com/rohandhanraj" target="_blank">github.com/rohandhanraj</a>
+          </div>
+          <div class="contact-item">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            <a href="https://rohandhanraj.github.io" target="_blank">rohandhanraj.github.io</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- METRICS STRIP -->
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">7+</div>
+        <div class="metric-label">Total Experience</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">4+</div>
+        <div class="metric-label">AI/ML Exp</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">1.5y</div>
+        <div class="metric-label">Agentic AI</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3y</div>
+        <div class="metric-label">Gen AI</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">8+</div>
+        <div class="metric-label">AI Projects</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">15</div>
+        <div class="metric-label">Team Size</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">6+</div>
+        <div class="metric-label">F500 Clients</div>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="section-title" style="margin-top:0;">Professional Profile</div>
+      <div class="summary">
+        Results-driven AI/ML Engineer with <strong>7+ years of professional experience</strong> including <strong>4+
+          years specializing in designing, developing, and deploying production-grade AI systems</strong> across
+        enterprise domains. Deep expertise in <strong>Generative AI, Agentic AI, Large Language Models (LLMs),
+          Retrieval-Augmented Generation (RAG), Multi-Agent Orchestration,</strong> and <strong>Machine
+          Learning</strong>.
+        <br><br>
+        Proven track record in leading cross-functional teams of <strong>15+ engineers</strong>, architecting scalable
+        ML/AI pipelines, and delivering high-impact AI applications for <strong>Fortune 500 clients</strong> including
+        Cisco, ITC Fairview, KDP, Omnitrax, PDS, and Marco Technologies. Known for building production systems handling
+        <strong>4,500+ daily API requests</strong>, processing <strong>100K+ daily records</strong>, and achieving
+        <strong>18–38% model performance improvements</strong> in production environments.
+      </div>
+
+      <!-- Skills Box Format -->
+      <div class="section-title">Technical Skills</div>
+      <div class="skills-grid">
+        <div class="skill-box">
+          <h3>Languages & Frameworks</h3>
+          <p>Python, Django, Flask, FastAPI, Streamlit</p>
+        </div>
+        <div class="skill-box">
+          <h3>Generative AI & LLM</h3>
+          <p>LLMs, OpenAI GPT-4, LangChain, LangGraph, Prompt Engineering, RAG, Prompt Chaining, Chain-of-Thought
+            Reasoning</p>
+        </div>
+        <div class="skill-box">
+          <h3>Agentic AI Systems</h3>
+          <p>Agent Orchestration, LangGraph Workflows, Multi-Agent Systems, Tool Integration, Memory Management,
+            Autonomous Decision-Making</p>
+        </div>
+        <div class="skill-box">
+          <h3>ML & Deep Learning</h3>
+          <p>Scikit-Learn, TensorFlow, PyTorch, Optuna, HuggingFace Transformers, Model Fine-tuning, Optimization,
+            PyCaret</p>
+        </div>
+        <div class="skill-box">
+          <h3>NLP Specialists</h3>
+          <p>Spacy, NLTK, BERT, RoBERTa, CLIP, Flan-T5, Sentiment Analysis, NER, Text Classification</p>
+        </div>
+        <div class="skill-box">
+          <h3>Data Engineering</h3>
+          <p>Apache Airflow, ETL Processes, MySQL, PostgreSQL, MongoDB, Cassandra, Vector DBs (Qdrant, LanceDB, Chroma)
+          </p>
+        </div>
+        <div class="skill-box">
+          <h3>Analytics & Stats</h3>
+          <p>NumPy, Pandas, Matplotlib, Seaborn, Plotly, SciPy, Statistical Analysis, Predictive Analytics,
+            Visualization</p>
+        </div>
+        <div class="skill-box">
+          <h3>Web Scraping</h3>
+          <p>BeautifulSoup, Scrapy, Selenium, Playwright, Pydantic Structured Output</p>
+        </div>
+        <div class="skill-box">
+          <h3>DevOps & Cloud</h3>
+          <p>Git, GitHub, Docker, CI/CD (GitHub Workflows, Jenkins), GCP, AWS, MLOps</p>
+        </div>
+      </div>
+
+      <div class="section-title">Work Experience</div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">AI Engineer — Backend & AI Systems Architecture</div>
+          <div class="desc-date">November 2024 – October 2025</div>
+        </div>
+        <div class="desc-subtitle">AI Tech Solutions Ltd. | Full-time</div>
+        <div class="desc-context">
+          Focus: Architecting production-ready Agentic AI platforms, advanced RAG systems, and multi-agent orchestration
+        </div>
+        <ul class="desc-bullets">
+          <li>Led 15-member team building scalable AI systems using Python, FastAPI for backend services and production
+            deployment</li>
+          <li>Developed modular ML pipelines (Omodore platform) achieving <strong>38% accuracy improvement</strong>
+            through advanced RAG architecture</li>
+          <li>Designed multi-agent orchestration systems using <strong>LangGraph</strong> for complex workflow
+            automation and autonomous decision-making</li>
+          <li>Implemented prompt chaining and <strong>chain-of-thought reasoning</strong> mechanisms</li>
+          <li>Deployed containerized AI systems using <strong>Docker</strong> with vector databases (Qdrant, LanceDB,
+            Chroma)</li>
+          <li>Built automated web scraping systems (Rbetraj) with <strong>Playwright</strong> and
+            <strong>Selenium</strong> for real-time data extraction
+          </li>
+          <li>Architected multi-modal virtual agent (GALAMBO) integrating GPT-4 and autonomous tool use</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Python</span> <span class="tech-badge">LangChain</span> <span
+            class="tech-badge">LangGraph</span> <span class="tech-badge">FastAPI</span> <span
+            class="tech-badge">LLMs</span> <span class="tech-badge">RAG</span> <span class="tech-badge">Docker</span>
+          <span class="tech-badge">Vector DBs</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Software Engineer — Generative AI | ML | Data Science | Python</div>
+          <div class="desc-date">September 2022 – October 2024</div>
+        </div>
+        <div class="desc-subtitle">Aimlytics Technology | Full-time</div>
+        <div class="desc-context">
+          Focus: Enterprise-scale Generative AI, NLP, and ML solutions for Fortune 500 clients
+        </div>
+        <ul class="desc-bullets">
+          <li>Led team of 8 engineers delivering AI solutions for <strong>Fortune 500 clients</strong></li>
+          <li>Built RAG-based virtual sales assistant (SalesMoji) handling <strong>4,500+ daily API requests</strong>
+          </li>
+          <li>Built ML pipelines processing <strong>100K+ daily records</strong> using <strong>Apache Airflow</strong>
+          </li>
+          <li>Fine-tuned <strong>BERT</strong> and <strong>RoBERTa</strong> models achieving <strong>18% performance
+              improvement</strong></li>
+          <li>Implemented vector database solutions (Qdrant, Chroma) for semantic search</li>
+          <li>Built multi-modal educational AI system (InventtEd)</li>
+          <li>Developed multilingual NLP pipeline supporting <strong>15+ languages</strong> (evalmyBRAND)</li>
+          <li>Resolved <strong>28 critical production issues</strong> with 100% on-time delivery</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Airflow</span> <span class="tech-badge">BERT</span> <span
+            class="tech-badge">RoBERTa</span> <span class="tech-badge">FastAPI</span> <span
+            class="tech-badge">GCP</span> <span class="tech-badge">Qdrant</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Machine Learning Engineer Intern</div>
+          <div class="desc-date">August 2021 – September 2022</div>
+        </div>
+        <div class="desc-subtitle">iNeuron.ai | Internship</div>
+        <div class="desc-context">Focus: ML pipeline development and optimization</div>
+        <ul class="desc-bullets">
+          <li>Built ML pipeline architectures for multi-class classification</li>
+          <li>Reduced training time by <strong>35%</strong> using <strong>Optuna</strong></li>
+          <li>Deployed ML applications using Flask and Docker</li>
+          <li>Built protein classification system (77 markers, 8 classes)</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Scikit-Learn</span> <span class="tech-badge">Optuna</span> <span
+            class="tech-badge">Flask</span> <span class="tech-badge">Docker</span> <span class="tech-badge">AWS</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Metallurgical Quality Engineer</div>
+          <div class="desc-date">August 2016 – November 2019</div>
+        </div>
+        <div class="desc-subtitle">Bureau Veritas Group | Full-time</div>
+        <div class="desc-context">Focus: Quality assurance and industrial data analytics</div>
+        <ul class="desc-bullets">
+          <li>Conduct metallurgical testing and quality assurance across major steel companies</li>
+          <li>Apply Python (NumPy, Pandas, SciPy, Plotly) for statistical analysis and data-driven quality improvement
+          </li>
+          <li>Manage quality compliance and predictive analysis for multiple production facilities</li>
+        </ul>
+      </div>
+
+      <div class="section-title">Project Synopsis</div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Project 1: OMODORE</div>
+          <div class="desc-date">Nov 2024 - Oct 2025</div>
+        </div>
+        <div class="desc-context">Domain: AI Agent Platform | Role: Senior AI Engineer</div>
+        <div class="desc-context">Omodore is an auto-agent platform enabling non-technical users to build
+          domain-specific AI agents without coding expertise. The platform leverages advanced RAG pipelines to deliver
+          accurate, context-aware responses with a 45% accuracy boost.</div>
+        <ul class="desc-bullets">
+          <li>Led 15-member team developing Gen AI and Agentic AI solutions</li>
+          <li>Architected scalable RAG pipelines using LangChain and LangGraph</li>
+          <li>Implemented prompt chaining and Chain of Thoughts methodology for improved reasoning</li>
+          <li>Built automated agent building workflows using FastAPI</li>
+          <li>Integrated multiple LLMs for optimal performance and Qdrant/Milvus for retrieval</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Python</span> <span class="tech-badge">FastAPI</span> <span
+            class="tech-badge">LangGraph</span> <span class="tech-badge">RAG</span> <span
+            class="tech-badge">Docker</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Project 2: RBETRAJ</div>
+          <div class="desc-date">Nov 2024 - Oct 2025</div>
+        </div>
+        <div class="desc-context">Domain: E-commerce Data Intelligence | Role: Senior AI Engineer</div>
+        <div class="desc-context">Rbetraj is an Automated Dropshipping Platform powered by Shop Scan Agent specializing
+          in e-commerce data extraction with advanced price tracking. Includes open-source scraper AI TechCrawler for
+          extraction and insights.</div>
+        <ul class="desc-bullets">
+          <li>Developed open-source automated scraping framework <a href="https://pypi.org/project/ai-tech-crawler/">AI
+              Tech Crawler</a></li>
+          <li>Implemented GPT-powered and LLM-based structured data extraction with Pydantic</li>
+          <li>Created robust scraping pipelines using Playwright and BeautifulSoup</li>
+          <li>Designed RESTful APIs using FastAPI for distributed data access</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Playwright</span> <span class="tech-badge">FastAPI</span> <span
+            class="tech-badge">Pydantic</span> <span class="tech-badge">BeautifulSoup</span> <span
+            class="tech-badge">Docker</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Project 3: GALAMBO</div>
+          <div class="desc-date">Nov 2024 - Oct 2025</div>
+        </div>
+        <div class="desc-context">Domain: Multi-Modal AI Assistant | Role: Senior AI Engineer</div>
+        <div class="desc-context">Sophisticated multi-modal virtual agent combining context-aware GPT responses with
+          advanced image search and autonomous tool use.</div>
+        <ul class="desc-bullets">
+          <li>Architected multi-modal AI system integrating text and image processing</li>
+          <li>Implemented autonomous tool use and search engine integration for information retrieval</li>
+          <li>Built scalable API infrastructure using FastAPI and optimized model response times</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Multi-modal AI</span> <span class="tech-badge">GPT-4</span> <span
+            class="tech-badge">LangChain</span> <span class="tech-badge">FastAPI</span>
+        </div>
+      </div>
+
+      <div class="desc-item" style="page-break-before: always; padding-top: 20px;">
+        <div class="desc-header">
+          <div class="desc-title">Project 4: SALESMOJI</div>
+          <div class="desc-date">Nov 2023 - Oct 2024</div>
+        </div>
+        <div class="desc-context">Domain: Sales and Marketing | Role: Software Engineer (Gen AI | ML)</div>
+        <div class="desc-context">Harnesses GPT and LLMs to answer sales questions in plain English. Processes 1M+ daily
+          records through Airflow pipelines.</div>
+        <ul class="desc-bullets">
+          <li>Led 8-member team delivering custom AI workflows for Fortune 500 clients</li>
+          <li>Built RAG-based Virtual Sales Assistant handled 10K+ daily queries with 89% accuracy</li>
+          <li>Architected ML pipelines for predictive sales forecasting and trend analysis</li>
+          <li>Implemented vector DB solutions (Qdrant, Milvus, Weaviate) for efficient retrieval</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">GPT</span> <span class="tech-badge">RAG</span> <span
+            class="tech-badge">Airflow</span> <span class="tech-badge">Milvus</span> <span
+            class="tech-badge">TensorFlow</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Project 5: AISERA</div>
+          <div class="desc-date">July 2023 - Oct 2024</div>
+        </div>
+        <div class="desc-context">Domain: Customer Service and IT Operations | Role: Software Engineer (AI | ML)</div>
+        <div class="desc-context">Enterprise Generative AI platform for automating customer support through NLP and ML
+          workflows.</div>
+        <ul class="desc-bullets">
+          <li>Led team of 8 (5 Data Eng + 3 Soft Dev) delivering workflows for Cisco, ITC, etc.</li>
+          <li>Fine-tuned BERT models achieving 50% performance improvement in sentiment analysis</li>
+          <li>Implemented custom field prediction using advanced BERT architectures and Airflow triggers</li>
+          <li>Architected scalable ML pipelines and integrated LangChain for conversational AI</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">BERT</span> <span class="tech-badge">LangChain</span> <span
+            class="tech-badge">Chroma</span> <span class="tech-badge">FastAPI</span> <span class="tech-badge">GCP</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Project 6: EVALMYBRAND</div>
+          <div class="desc-date">Sep 2022 - Oct 2024</div>
+        </div>
+        <div class="desc-context">Domain: Customer Experience | Role: Software Developer (AI | ML)</div>
+        <div class="desc-context">AI-powered platform supporting 15+ languages to turn unstructured feedback into brand
+          insights and sentiment tracking.</div>
+        <ul class="desc-bullets">
+          <li>Fine-tuned RoBERTa for Aspect-Based Sentiment Analysis with 50% performance gain</li>
+          <li>Implemented BERT for Neural Machine Translation with 27% accuracy improvement</li>
+          <li>Built innovative pipeline for mixed-code translation using Google/LibreOffice APIs</li>
+          <li>Orchestrated large-scale data pipelines using Apache Airflow and Oracle/Cassandra</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">RoBERTa</span> <span class="tech-badge">NMT</span> <span
+            class="tech-badge">Airflow</span> <span class="tech-badge">FastAPI</span> <span
+            class="tech-badge">Poetry</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Project 7: INVENTTED</div>
+          <div class="desc-date">Jan 2023 - Aug 2023</div>
+        </div>
+        <div class="desc-context">Domain: EdTech | Role: Software Developer (AI | ML)</div>
+        <div class="desc-context">Pioneering EdTech platform providing AI-powered tools for summarization, essay
+          grading, and performance prediction.</div>
+        <ul class="desc-bullets">
+          <li>Fine-tuned CLIP for text-to-image generation and Flan-T5 for keyword-based MCQ generation</li>
+          <li>Designed scaled Phishing Classifier and multi-modal social media classification model</li>
+          <li>Integrated multiple AI models into a cohesive platform with optimized Transformers</li>
+          <li>Performed advanced prompt engineering for ChatGPT-based virtual tutoring</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">CLIP</span> <span class="tech-badge">Flan-T5</span> <span class="tech-badge">Prompt
+            Eng</span> <span class="tech-badge">GCP</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Project 8: MICE PROTEIN EXPRESSION</div>
+          <div class="desc-date">Aug 2021 - Sep 2022</div>
+        </div>
+        <div class="desc-context">Domain: Bioinformatics | Role: ML Engineer Intern</div>
+        <div class="desc-context">Multi-class classification of 77 protein markers in Down syndrome research involving
+          complex biological datasets.</div>
+        <ul class="desc-bullets">
+          <li>Led team of 10 to architect end-to-end ML system with automated pipelines</li>
+          <li>Achieved 40% training time reduction using Optuna hyperparameter tuning</li>
+          <li>Developed large-scale biological data preprocessing and Flask-based model serving</li>
+          <li>Integrated MySQL and Cassandra DB for efficient data management</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Optuna</span> <span class="tech-badge">Flask</span> <span
+            class="tech-badge">Cassandra</span> <span class="tech-badge">PyCaret</span> <span
+            class="tech-badge">AWS</span>
+        </div>
+      </div>
+
+      <div class="section-title">Education</div>
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">B.Tech. Mechanical Engineering</div>
+          <div class="desc-date">2016</div>
+        </div>
+        <div class="desc-subtitle">Biju Patnaik University of Technology, Odisha</div>
+        <div class="desc-context">GATE Qualified — Credential ID: A2WR3</div>
+      </div>
+
+      <div class="section-title">Certifications</div>
+      <div class="cert-grid">
+        <div class="cert-box">
+          <h3>🏆 GATE ME 2016</h3>
+          <p>Credential ID: A2WR3</p>
+        </div>
+        <div class="cert-box">
+          <h3>🏆 Machine Learning Zoom Camp</h3>
+          <p>DataTalksClub | Credential ID: 8F163B</p>
+        </div>
+        <div class="cert-box">
+          <h3>🏆 Gold Badge: Python</h3>
+          <p>HackerRank | Credential ID: 6920934A49FA</p>
+        </div>
+        <div class="cert-box">
+          <h3>🏆 Gold Badge: Problem Solving</h3>
+          <p>HackerRank | Credential ID: 113775E95540</p>
+        </div>
+        <div class="cert-box">
+          <h3>🏆 10 Days of Statistics</h3>
+          <p>Gold Badge | HackerRank</p>
+        </div>
+        <div class="cert-box">
+          <h3>🏆 30 Days of ML Challenge</h3>
+          <p>Kaggle | Rank 69 / 7,573 teams</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">🌟 Achievements & Awards</h2>
+        <ul class="achievements-list" style="grid-template-columns: 1fr;">
+          <li><strong>7+ years</strong> of professional experience including 4+ years in AI/ML engineering</li>
+          <li>Achieved <strong>Gold Badges</strong> for Python, Problem Solving, and Statistics on HackerRank</li>
+          <li>Secured <strong>Rank 69 out of 7,573 teams</strong> in Kaggle ML Challenge</li>
+          <li>Led teams of <strong>8–15 members</strong> across enterprise AI projects</li>
+          <li>Delivered <strong>50% model performance improvements</strong> in production systems (BERT, RoBERTa)</li>
+          <li>Built systems handling <strong>4,500+ daily API requests</strong></li>
+          <li>Processed <strong>100K+ daily records</strong> via Airflow pipelines</li>
+          <li>Achieved <strong>38% accuracy boost</strong> in RAG systems</li>
+          <li>Reduced training time by <strong>35%</strong> using Optuna optimization</li>
+          <li>Resolved <strong>28 critical production issues</strong> across Fortune 500 client engagements</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

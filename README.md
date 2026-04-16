@@ -1,87 +1,118 @@
-# Rohan Dhanraj Yadav - CV
+<style>
+  :root {
+    --text-primary: #222222;
+    --text-secondary: #444444;
+    --accent: #3b82f6;
+    --border-subtle: #dddddd;
+    --profile-shadow: rgba(59, 130, 246, 0.2);
+  }
 
-![Profile Picture](https://media.licdn.com/dms/image/v2/D5603AQHba1IoD7TADg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1703700789122?e=2147483647&v=beta&t=F-SpgTyDX0xT31t3nboSN1u-mogOmU5AV4Yh9dAeXFI)
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text-primary: #e0e0e0;
+      --text-secondary: #b0b0b0;
+      --accent: #00f0ff;
+      --border-subtle: #00f0ff44;
+      --profile-shadow: rgba(0, 240, 255, 0.4);
+    }
+    h1, h2 { text-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+    .icon { filter: brightness(0) saturate(100%) invert(86%) sepia(94%) deg(184deg) saturate(3950%) hue-rotate(151deg) brightness(105%) contrast(106%); }
+  }
 
-## About Me
-🚀 **Innovative Software Engineer** navigating the tech cosmos with a stellar track record in AI application odyssey.  
-Expertise in **Machine Learning**, **NLP**, **Neural Networks**, and **Generative AI**.  
-Dedicated to exploring new knowledge frontiers and creating cutting-edge tech solutions. 🌌👨‍💻  
+  body { 
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+    line-height: 1.5;
+    color: var(--text-primary);
+  }
 
----
+  h1 { font-size: 28px; color: var(--text-primary); margin: 0; }
+  h2 { font-size: 18px; color: var(--accent); border-bottom: 2px solid var(--border-subtle); padding-bottom: 4px; margin-top: 24px; text-transform: uppercase; letter-spacing: 1px; }
+  
+  a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  a:hover { text-decoration: underline; }
 
-## Skills
-- **Languages:** Python  
-- **Frameworks:** Django, Flask, FastAPI, Streamlit  
-- **Databases:** SQL, NoSQL, Vector DB  
-- **Analytics Tools:** NumPy, Pandas, Matplotlib, Seaborn, Plotly  
-- **Machine Learning:** Scikit-Learn, TensorFlow, PyTorch, Transformers, LLMs, VLMs, LVMs  
-- **Generative AI:** LangChain, Prompt Chaining, RAG, Agent Building, LangGraph  
-- **Web Scraping:** BeautifulSoup4, Scrapy, Playwright, Chromium, Selenium   
-- **Version Control:** GitHub, GitLab  
+  .contact-grid { font-size: 13px; color: var(--text-secondary); }
+  .profile-ring { border: 3px solid var(--accent); border-radius: 50%; padding: 4px; display: inline-block; box-shadow: 0 0 15px var(--profile-shadow); }
+  
+  .icon { display: inline-block; width: 14px; height: 14px; vertical-align: -2px; margin-right: 4px; }
+</style>
 
----
-
-## Experience
-
-### Senior AI Engineer  
-**AI Tech Solutions Ltd. | November 2024 – Present**  
-- Finetuning Multi-Lingual Multi-Tasking LLMs.  
-- Generative AI and Web Application Development using LangChain and FastAPI.  
-
-### Software Engineer (Generative AI | ML | Python)  
-**Aimlytics Technology | September 2022 – October 2024**  
-- Developed innovative AI workflows and created proofs of concept.  
-- Led a team of data annotators for dataset labeling.  
-- Resolved performance bottlenecks in applications.  
-
-### Machine Learning Engineer Intern  
-**iNeuron.ai | August 2021 – September 2022**  
-- Prototyped scalable ML applications and deployed AI solutions.  
-- Collaborated on diverse AI-driven deployments for automation.  
-
----
-
-## Projects
-
-### [Omodore](https://omodore.com/)
-- Developed an Auto Agent Architecture enabling users to customize domain and task-specific agents via a UI.
-- Designed agents with reasoning capabilities, automated web-crawling, and dynamic tool integration.
-- Implemented Retrieval-Augmented Generation (RAG) to enhance information accuracy from diverse data sources.
-- Developed a user-friendly UI allowing non-technical users to create, train, and deploy intelligent AI agents.
-- Optimized response generation through context-aware workflows, allowing personalized and adaptive interactions for various business needs.
-
-### [GALAMBO](https://www.galambo.com/)  
-- Built a Virtual Multi-modal Agent that responds to queries using context-aware GPT-based responses and image search.
-- Integrated advanced retrieval techniques to improve the accuracy of responses based on both text and image queries.
-
-### [Rbetraj](https://rbetraj.com/)  
-- Built a Virtual Agent designed for seamless data extraction from e-commerce websites.
-- Automated crawling of provided links, identifying product listings, and retrieving comprehensive product details.
-- Enabled tracking of product price history, product identification, and price comparison for competitive market analysis.
-
-### [Salesmoji](https://siftsales.com/)  
-- Developed AI-powered insights and predictive analytics for sales intelligence.
-- Implemented Retrieval-Augmented Generation (RAG) techniques to enhance response accuracy.
-- Designed an AI-driven assistant to provide data-backed decision-making insights for sales teams.
-
-### [EvalmyBrand](https://evalmybrand.com/)  
-- Designed and deployed a web application to track brand sentiment using AI-driven analytics.
-- Fine-tuned NLP models for aspect-based sentiment analysis, achieving performance gains of 50%.
-- Implemented competitor benchmarking and automated case management for real-time customer feedback analysis.
-
-### [InventtEd](https://erp.inventted.com/)  
-- Enhanced educational platforms by incorporating AI-powered Text Summarization, Automated Essay Grading, and Virtual Tutoring.
-- Built an AI-driven assistant for teachers and students to streamline personalized learning experiences.
-
-### MICE Protein Expression  
-- Developed machine learning models for protein classification using extensive biomedical datasets.
-- Optimized pipelines for multi-class classification, enabling better insights into protein expression patterns.
-- Automated data pre-processing and feature extraction, reducing manual efforts in analysis.
+<div align="center">
+  <table>
+    <tr>
+      <td width="160" valign="top" align="center">
+        <div class="profile-ring">
+          <img src="public/profile.png" width="130" style="border-radius: 50%; display: block;">
+        </div>
+      </td>
+      <td valign="middle">
+        <h1 align="center">ROHAN DHANRAJ YADAV</h1>
+        <p align="center" style="color: var(--accent); font-weight: 700; margin-top: 4px; letter-spacing: 0.5px;">
+          AI/ML Engineer | Generative AI | Agentic AI Systems
+        </p>
+        <div align="center" class="contact-grid">
+          <img class="icon" src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/gmail.svg"> <a href="mailto:rohan.dhanraj.y@gmail.com">rohan.dhanraj.y@gmail.com</a> | 
+          <img class="icon" src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/whatsapp.svg"> <a href="https://wa.me/917008958143">+91-7008958143</a> | 
+          <img class="icon" src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/googlemaps.svg"> Bengaluru, India<br>
+          <img class="icon" src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/linkedin.svg"> <a href="https://linkedin.com/in/rohan-dhanraj-yadav">LinkedIn</a> | 
+          <img class="icon" src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/github.svg"> <a href="https://github.com/rohandhanraj">GitHub</a> | 
+          <img class="icon" src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/webcomponentsdotorg.svg"> <a href="https://rohandhanraj.github.io/">Portfolio</a>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 
 ---
 
-## Contact
-- **Email:** [rohan.dhanraj.y@gmail.com](mailto:rohan.dhanraj.y@gmail.com)  
-- **Phone:** +91-700-895-8143  
-- **LinkedIn:** [https://www.linkedin.com/in/rohan-dhanraj-yadav](https://www.linkedin.com/in/rohan-dhanraj-yadav)
-- **Portfolio:** [https://rohandhanraj.github.io/](https://rohandhanraj.github.io/)
+## 🚀 SUMMARY
+
+Results-driven AI/ML Engineer with **7+ years of total professional experience**, including **4+ years** building production-grade AI systems. Expert in **Generative AI, Agentic AI, LLMs, RAG,** and **Multi-Agent Orchestration**. Proven track record leading cross-functional teams of **15+ engineers**, architecting systems handling **4,500+ daily API requests**, processing **100K+ daily records**, and delivering **18–38% model performance improvements** for **Fortune 500 clients** (Cisco, ITC, KDP, Marco). Deep expertise in end-to-end ML pipelines, containerized deployment, and robust cloud API architecture.
+
+---
+
+## 🛠 TECHNICAL SKILLS
+
+**Languages & Frameworks**: Python, FastAPI, Scikit Learn, Tensorflow, PyTorch, Transformers  
+**AI & Agents**: LangChain, LangGraph, RAG, Multi-Agent Systems, Prompt Engineering  
+**DevOps & Data**: Apache Airflow, Docker, AWS, GCP, SQL, NoSQL, Vector Databases (Qdrant, Milvus)
+
+---
+
+## 💼 EXPERIENCE
+
+### AI/ML Engineer
+**AI Tech Solutions Ltd. | Nov 2024 – Oct 2025**
+
+* Designed and orchestrated multi-agent AI systems utilizing LangGraph for complex task execution
+* Enhanced context retrieval relevance by 38% through hybrid RAG implementation
+* Built high-throughput, asynchronous backend microservices using FastAPI
+
+### Software Engineer
+**Aimlytics Technology | Sep 2022 – Oct 2024**
+
+* Architected scalable RAG-based assistants reliably processing 4,500+ daily API requests
+* Fine-tuned BERT and RoBERTa models, improving text classification F1-scores by 18%
+* Orchestrated ETL data pipelines via Airflow to handle 100K+ daily records for ML workflows
+
+### Machine Learning Engineer Intern
+**iNeuron.ai | Aug 2021 – Sep 2022**
+
+* Accelerated hyperparameter tuning cycles by 35% using Optuna optimization
+* Deployed containerized machine learning endpoints using Docker and Flask
+
+---
+
+## 🏗 PROJECTS
+
+* **Omodore**: Autonomous Agentic AI platform demonstrating LangGraph state orchestration
+* **GALAMBO**: Multi-modal AI assistant integrating vision models and real-time tool use
+* **SalesMoji**: Scalable AI sales intelligence system leveraging vector search retrieval
+
+---
+
+## 🎓 EDUCATION
+
+* **B.Tech Mechanical Engineering** | Biju Patnaik University of Technology
+* **GATE Qualified** | Mechanical Engineering
+* **Machine Learning Zoom Camp** | DataTalksClub
