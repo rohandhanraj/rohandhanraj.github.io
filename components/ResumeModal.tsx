@@ -50,43 +50,52 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
     }
   }, [selected]);
 
+  // Lock body + html scroll when modal is open
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, []);
 
   return (
+    /* Outer portal shell — fixed, full-viewport, highest stacking context */
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
+
+      {/* Backdrop — also fixed so it always covers the viewport independently */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 backdrop-blur-md"
-        style={{ background: "rgba(10,10,20,0.85)" }}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 9998,
+          background: "rgba(5,5,14,0.97)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+        }}
       />
-      
-      {/* Modal */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95, y: 10 }} 
-        animate={{ opacity: 1, scale: 1, y: 0 }} 
+
+      {/* Modal box — sits above backdrop */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 10 }}
+        style={{ zIndex: 9999, height: "85vh", maxHeight: "800px" }}
         className="relative w-full max-w-4xl bg-black rounded-lg border border-[#00f0ff40] shadow-[0_0_50px_rgba(0,240,255,0.15)] flex flex-col overflow-hidden"
-        style={{ height: "85vh", maxHeight: "800px" }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-[#00f0ff20] bg-[#0a0a14]">
+        <div className="flex-none flex items-center justify-between p-4 border-b border-[#00f0ff20] bg-[#0a0a14]">
           <h2 className="font-orbitron font-bold text-lg text-[#00f0ff]">
             {selected ? RESUMES[selected].title : "Select Resume Version"}
           </h2>
           <div className="flex gap-3 items-center">
             {selected && (
-              <button 
+              <button
                 onClick={() => setSelected(null)}
                 className="text-xs uppercase tracking-wider text-gray-400 hover:text-white transition-colors"
                 title="Back to options"
@@ -94,57 +103,86 @@ export default function ResumeModal({ onClose }: { onClose: () => void }) {
                 ← Back
               </button>
             )}
-            <button 
+            <button
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors"
               title="Close modal"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
             </button>
           </div>
         </div>
 
-        {/* Content Area */}
-        <div className="flex-1 overflow-y-auto bg-[#050508] relative">
+        {/* Content Area — flex-1 + overflow-hidden so children can use absolute inset-0 */}
+        <div className="relative flex-1 overflow-hidden bg-[#050508]">
           {!selected ? (
-            <div className="p-8 grid gap-4 place-content-center h-full max-w-2xl mx-auto">
-              {(Object.keys(RESUMES) as ResumeType[]).map((key) => {
-                const r = RESUMES[key!];
-                return (
-                  <button
-                    key={key}
-                    onClick={() => setSelected(key)}
-                    className="flex flex-col text-left p-6 rounded-lg border border-[#00f0ff20] hover:border-[#00f0ff] hover:bg-[#00f0ff0a] transition-all group"
-                  >
-                    <span className="font-orbitron font-bold text-xl text-white group-hover:text-[#00f0ff] mb-2">{r.title}</span>
-                    <span className="text-sm text-gray-400 leading-relaxed font-fira">{r.desc}</span>
-                  </button>
-                );
-              })}
+            /* Selection screen — scrollable list of options */
+            <div className="absolute inset-0 overflow-y-auto">
+              <div className="p-8 grid gap-4 place-content-center min-h-full max-w-2xl mx-auto">
+                {(Object.keys(RESUMES) as ResumeType[]).map((key) => {
+                  const r = RESUMES[key!];
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => setSelected(key)}
+                      className="flex flex-col text-left p-6 rounded-lg border border-[#00f0ff20] hover:border-[#00f0ff] hover:bg-[#00f0ff0a] transition-all group"
+                    >
+                      <span className="font-orbitron font-bold text-xl text-white group-hover:text-[#00f0ff] mb-2">
+                        {r.title}
+                      </span>
+                      <span className="text-sm text-gray-400 leading-relaxed font-fira">
+                        {r.desc}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           ) : (
-            <div className="h-full flex flex-col">
-              <div className="flex-1 overflow-hidden relative">
+            /* Resume viewer — pinned to the content area via absolute inset-0 */
+            <div className="absolute inset-0 flex flex-col">
+
+              {/* Document area fills all remaining height */}
+              <div className="relative flex-1 overflow-hidden">
                 {RESUMES[selected].type === "html" ? (
-                  <iframe src={RESUMES[selected].file} className="w-full h-full border-0" title={RESUMES[selected].title} />
+                  /* HTML resume (Master CV) */
+                  <div className="absolute inset-0">
+                    <iframe
+                      src={RESUMES[selected].file}
+                      className="w-full h-full border-0"
+                      title={RESUMES[selected].title}
+                    />
+                  </div>
                 ) : (
+                  /* Markdown resumes (ATS / Optimized) */
                   <div className="absolute inset-0 bg-white">
                     {isLoading ? (
-                      <div className="flex items-center justify-center h-full text-gray-500 font-fira">Loading...</div>
+                      <div className="flex items-center justify-center h-full text-gray-500 font-fira">
+                        Loading…
+                      </div>
                     ) : (
-                      <iframe srcDoc={content} className="w-full h-full border-0" title={RESUMES[selected].title} />
+                      <iframe
+                        srcDoc={content}
+                        className="w-full h-full border-0"
+                        title={RESUMES[selected].title}
+                      />
                     )}
                   </div>
                 )}
               </div>
-              {/* Footer with Download */}
-              <div className="p-4 border-t border-[#00f0ff20] bg-[#0a0a14] flex justify-end">
-                <a 
+
+              {/* Download footer */}
+              <div className="flex-none p-4 border-t border-[#00f0ff20] bg-[#0a0a14] flex justify-end">
+                <a
                   href={RESUMES[selected].pdf}
                   download
                   className="bg-[#00f0ff] text-black px-6 py-3 rounded font-orbitron font-bold hover:bg-white transition-colors uppercase tracking-wider text-sm flex items-center gap-2"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                  </svg>
                   Download final PDF
                 </a>
               </div>
