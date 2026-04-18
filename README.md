@@ -14,11 +14,8 @@
           AI/ML Engineer &nbsp;|&nbsp; Generative AI &nbsp;|&nbsp; Agentic AI Systems
         </p>
         <div align="center" style="font-size:13px;">
-          <a href="mailto:rohan.dhanraj.y@gmail.com"> <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/1280px-Gmail_icon_%282020%29.svg.png?_=20221017173631' alt='Gmail' width="14" height="14">rohan.dhanraj.y@gmail.com</a> |
-          <a href="https://wa.me/917008958143"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="14" height="14"> +91-7008958143</a> |  
-          <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Map_Pin.svg/250px-Map_Pin.svg.png' width="14" height="14"> Bengaluru, India<br/>
-          <a href="https://linkedin.com/in/rohan-dhanraj-yadav"><img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width="14" height="14"> rohan-dhanraj-yadav</a> |
-          <a href="https://github.com/rohandhanraj"><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Codicons_%E2%80%93_github-inverted.svg/250px-Codicons_%E2%80%93_github-inverted.svg.png' width="14" height="14"> rohandhanraj</a>
+          <a href="mailto:rohan.dhanraj.y@gmail.com"> <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/1280px-Gmail_icon_%282020%29.svg.png?_=20221017173631' alt='Gmail' width="13" height="13">rohan.dhanraj.y@gmail.com</a> &nbsp;|&nbsp; <a href="https://wa.me/917008958143"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="14" height="14"> +91-7008958143</a> &nbsp;|&nbsp; <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Map_Pin.svg/250px-Map_Pin.svg.png' width="14" height="14"> Bengaluru, India<br/>
+          <a href="https://linkedin.com/in/rohan-dhanraj-yadav"><img src='https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg' width="14" height="14"> rohan-dhanraj-yadav</a> &nbsp;|&nbsp; <a href="https://github.com/rohandhanraj"><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Codicons_%E2%80%93_github-inverted.svg/250px-Codicons_%E2%80%93_github-inverted.svg.png' width="14" height="14"> rohandhanraj</a>
         </div>
       </td>
     </tr>
