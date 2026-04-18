@@ -1,7 +1,7 @@
-<div align="center">
+<div>
   <table>
     <tr>
-      <td width="160" valign="top" align="center">
+      <td width="160" valign="middle" align="center">
         <img
           src="https://raw.githubusercontent.com/rohandhanraj/rohandhanraj.github.io/main/public/profile.png"
           width="130"
