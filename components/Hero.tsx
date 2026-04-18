@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import ResumeModal from "./ResumeModal";
+import ModalPortal from "./ModalPortal";
 
 const ROLES = [
   "AI/ML Engineer",
@@ -335,9 +336,11 @@ export default function Hero() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {showModal && <ResumeModal onClose={() => setShowModal(false)} />}
-      </AnimatePresence>
+      <ModalPortal>
+        <AnimatePresence>
+          {showModal && <ResumeModal onClose={() => setShowModal(false)} />}
+        </AnimatePresence>
+      </ModalPortal>
     </section>
   );
 }
