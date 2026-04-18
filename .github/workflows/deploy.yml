@@ -35,16 +35,26 @@ jobs:
         working-directory: .
         run: npm ci
 
+      - name: Verify env vars are set
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY || vars.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL:   ${{ secrets.OPENROUTER_MODEL   || vars.OPENROUTER_MODEL }}
+          OPENROUTER_BASE_URL: ${{ secrets.OPENROUTER_BASE_URL || vars.OPENROUTER_BASE_URL }}
+        run: |
+          echo "OPENROUTER_API_KEY  : $( [ -n "$OPENROUTER_API_KEY"   ] && echo 'SET' || echo 'MISSING' )"
+          echo "OPENROUTER_MODEL    : $( [ -n "$OPENROUTER_MODEL"     ] && echo 'SET' || echo 'MISSING' )"
+          echo "OPENROUTER_BASE_URL : $( [ -n "$OPENROUTER_BASE_URL"  ] && echo 'SET' || echo 'MISSING' )"
+
       - name: Build static export
         working-directory: .
         env:
-          # ── Secrets injected at build time ──
-          NEXT_PUBLIC_OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          NEXT_PUBLIC_OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
-          NEXT_PUBLIC_OPENROUTER_BASE_URL: ${{ secrets.OPENROUTER_BASE_URL }}
-          NEXT_PUBLIC_MONGODB_DATA_API_KEY: ${{ secrets.MONGODB_DATA_API_KEY }}
-          NEXT_PUBLIC_MONGODB_DATA_API_ENDPOINT: ${{ secrets.MONGODB_DATA_API_ENDPOINT }}
-          NEXT_PUBLIC_BASE_PATH: ${{ secrets.BASE_PATH }}
+          # Each var falls back: Secrets → Variables (both stores are supported)
+          NEXT_PUBLIC_OPENROUTER_API_KEY:       ${{ secrets.OPENROUTER_API_KEY       || vars.OPENROUTER_API_KEY }}
+          NEXT_PUBLIC_OPENROUTER_MODEL:         ${{ secrets.OPENROUTER_MODEL         || vars.OPENROUTER_MODEL }}
+          NEXT_PUBLIC_OPENROUTER_BASE_URL:      ${{ secrets.OPENROUTER_BASE_URL      || vars.OPENROUTER_BASE_URL }}
+          NEXT_PUBLIC_MONGODB_DATA_API_KEY:     ${{ secrets.MONGODB_DATA_API_KEY     || vars.MONGODB_DATA_API_KEY }}
+          NEXT_PUBLIC_MONGODB_DATA_API_ENDPOINT: ${{ secrets.MONGODB_DATA_API_ENDPOINT || vars.MONGODB_DATA_API_ENDPOINT }}
+          NEXT_PUBLIC_BASE_PATH:                ${{ secrets.BASE_PATH                || vars.BASE_PATH }}
         run: npm run build
 
       - name: Upload artifact
