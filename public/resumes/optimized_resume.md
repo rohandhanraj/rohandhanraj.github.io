@@ -40,7 +40,7 @@ Results-driven AI/ML Engineer with **7+ years of total professional experience**
 
 ## TECHNICAL SKILLS
 
-Python, FastAPI, Scikit Learn, Tensorflow, PyTorch, Transformers, LangChain, LangGraph, RAG, Multi-Agent Systems, Apache Airflow, Docker, AWS, GCP, SQL, NoSQL and Vector Databases
+Python, Django, Flask, FastAPI, Streamlit, LLMs (OpenAI, Anthropic, Vertex AI, Google Gen AI), LangChain, LangGraph, RAG, Multi-Agent Systems, Scikit-Learn, TensorFlow, Keras, PyTorch, Optuna, Transformers, NLP, Apache Airflow, Databases (MySQL, PostgreSQL, MongoDB, Cassandra, Vector DBs), Web Scraping (Playwright, Selenium), Git, Docker, GCP, AWS, CI/CD, MLOps
 
 ---
 

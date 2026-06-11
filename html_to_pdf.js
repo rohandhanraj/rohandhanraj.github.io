@@ -25,7 +25,7 @@ async function htmlToPdf(inputHtml, outputPdf) {
 
 (async () => {
     await htmlToPdf(
-        path.join(__dirname, 'portfolio/public/resumes/master_cv.html'),
-        path.join(__dirname, 'portfolio/public/resumes/master_cv.pdf')
+        path.join(__dirname, 'public/resumes/master_cv.html'),
+        path.join(__dirname, 'public/resumes/master_cv_html.pdf')
     );
 })();

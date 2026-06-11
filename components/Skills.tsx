@@ -4,16 +4,16 @@ import { motion } from "framer-motion";
 
 const skillCategories = [
   {
-    label: "Generative AI",
+    label: "Generative AI & LLM",
     color: "var(--accent-cyan)",
     icon: "🧠",
-    tags: ["LLMs", "LangChain", "LangGraph", "RAG", "Prompt Engineering", "Agent Building", "Chain of Thoughts", "GPT", "Fine-tuning"],
+    tags: ["LLMs", "Vertex AI", "OpenAI", "Anthropic", "LangChain", "LangGraph", "Structured Outputs", "RAG Pipelines", "Prompt Chaining", "Chain-of-Thought"],
   },
   {
-    label: "ML / Deep Learning",
+    label: "ML & Deep Learning",
     color: "var(--accent-pink)",
     icon: "⚡",
-    tags: ["PyTorch", "TensorFlow", "Keras", "Scikit-Learn", "HuggingFace", "BERT", "RoBERTa", "CLIP", "Flan-T5", "Optuna"],
+    tags: ["Scikit-Learn", "TensorFlow", "Keras", "PyTorch", "Optuna", "HuggingFace", "Model Fine-tuning", "Hyperparameter Tuning", "PyCaret"],
   },
   {
     label: "Languages & Frameworks",
@@ -22,34 +22,34 @@ const skillCategories = [
     tags: ["Python", "FastAPI", "Flask", "Django", "Streamlit"],
   },
   {
-    label: "Data Engineering",
+    label: "Data Engineering & DBs",
     color: "var(--accent-green)",
     icon: "🗄️",
-    tags: ["Airflow", "MySQL", "PostgreSQL", "MongoDB", "Cassandra", "Qdrant", "Milvus", "Weaviate", "Chroma", "Selenium", "Playwright"],
+    tags: ["Apache Airflow", "ETL Processes", "SQL (MySQL, Postgres)", "NoSQL (MongoDB, Cassandra)", "Vector DBs", "Qdrant", "Milvus", "Weaviate", "Pinecone", "Chroma", "LanceDB"],
   },
   {
     label: "NLP",
     color: "var(--accent-cyan)",
     icon: "📝",
-    tags: ["Spacy", "NLTK", "Transformers", "Sentiment Analysis", "NER", "Text Classification", "Aspect-Based SA", "Machine Translation"],
+    tags: ["Spacy", "NLTK", "Transformers", "Sentiment Analysis", "NER", "Text Classification", "Aspect-Based Sentiment", "Summarization", "Q&A", "Machine Translation"],
   },
   {
-    label: "DevOps & Cloud",
+    label: "DevOps, Cloud & MLOps",
     color: "var(--accent-pink)",
     icon: "☁️",
-    tags: ["Docker", "Kubernetes", "GCP", "AWS", "CI/CD", "Jenkins", "MLflow", "MLOps", "GitHub Actions"],
+    tags: ["Git / GitHub", "Docker", "CI/CD (Actions, Jenkins)", "GCP", "AWS", "MLOps"],
   },
   {
-    label: "Agentic AI",
+    label: "Agentic AI & Agents",
     color: "var(--accent-purple)",
     icon: "🤖",
-    tags: ["Agent Orchestration", "Multi-Agent Systems", "Tool Integration", "Memory Management", "Agent Planning", "LangGraph Workflows"],
+    tags: ["Agent Orchestration", "Multi-Agent Systems", "Tool Integration", "Memory Management", "Autonomous Decision-Making", "Autonomous AI Agents", "Design Patterns (ReAct, Reflexion)"],
   },
   {
-    label: "Analytics",
+    label: "Extraction & Analytics",
     color: "var(--accent-green)",
     icon: "📊",
-    tags: ["NumPy", "Pandas", "Matplotlib", "Seaborn", "Plotly", "SciPy", "Statistics"],
+    tags: ["Playwright", "Selenium", "Scrapy", "BeautifulSoup", "NumPy", "Pandas", "Matplotlib", "Seaborn", "Plotly", "SciPy", "Statistical Analysis"],
   },
 ];
 

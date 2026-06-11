@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -41,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+resumes_md/
+resumes_pdf/
+graphify-out/

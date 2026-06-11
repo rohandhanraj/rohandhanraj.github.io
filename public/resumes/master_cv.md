@@ -43,23 +43,26 @@ Python, Django, Flask, FastAPI, Streamlit
 
 ### Generative AI & LLM Engineering
 
-Large Language Models (LLMs), OpenAI GPT-4, LangChain, LangGraph, Prompt Engineering, Retrieval-Augmented Generation (RAG), Prompt Chaining, Chain-of-Thought Reasoning
+**Large Language Models (LLMs):** OpenAI, Anthropic, Vertex AI, Google Gen AI Platform, Cohere, AI21 Labs 
+**Agentic AI Frameworks:** LangChain, LangGraph  
+**Techniques:** Prompt Engineering, Structured Outputs Generation, Retrieval-Augmented Generation (RAG), Prompt Chaining, Chain-of-Thought Reasoning, Graph-Based Generation, LLM System Design, LLM Solution Architecture
 
 ### Agentic AI & Multi-Agent Systems
 
-Agent Orchestration, LangGraph Workflows, Multi-Agent Systems, Tool Integration, Memory Management, Autonomous Decision-Making
+**Agentic AI System Design Patterns:** Reflexion, ReAct, Self-Ask, Plan & Execute, Tool Use, Human-in-the-loop, Tree of Thought, Multi-Agent Collaboration, Deep Research  
+**Techniques:** Agent Orchestration, LangGraph Workflows, Multi-Agent Systems, Tool Integration, Memory Management, Autonomous Decision-Making, Autonomous AI Agents
 
 ### Machine Learning & Deep Learning
 
-Scikit-Learn, TensorFlow, PyTorch, Optuna, HuggingFace Transformers, Model Fine-tuning, Hyperparameter Optimization, PyCaret
+Scikit-Learn, TensorFlow, Keras, PyTorch, Optuna, HuggingFace Transformers, Model Fine-tuning, Hyperparameter Optimization, PyCaret
 
 ### Natural Language Processing (NLP)
 
-Spacy, NLTK, BERT, RoBERTa, CLIP, Flan-T5, Sentiment Analysis, Named Entity Recognition (NER), Text Classification
+Spacy, NLTK, Encoder based Transformers, Decoder based Transformers, Encoder-Decoder Transformers, Sentiment Analysis, Named Entity Recognition (NER), Text Classification, Zero-Shot, One-Shot Learning, Aspect Based Sentiment Analysis, Text Generation, Text Summarization, Question Answering, Machine Translation, Paraphrasing
 
 ### Data Engineering & Databases
 
-Apache Airflow, ETL Processes, MySQL, PostgreSQL, MongoDB, Cassandra, Qdrant, LanceDB, Chroma (Vector Databases)
+Apache Airflow, ETL Processes, SQL DBs (MySQL, PostgreSQL, BigQuery), NoSQL DBs (MongoDB, Cassandra), Vector DBs (Pinecone, Qdrant, LanceDB, Chroma, Pgvector, Milvus, Weaviate)
 
 ### Analytics & Statistical Computing
 

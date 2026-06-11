@@ -1,19 +1,19 @@
 <style>
-  @page { margin: 8mm; }
-  body { font-family: system-ui, -apple-system, sans-serif; font-size: 10px; line-height: 1.3; margin: 0; padding: 0; color: #111; }
-  h1 { font-size: 16px; margin: 0 0 4px 0; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-  h2 { font-size: 11px; margin: 10px 0 4px 0; border-bottom: 1px solid #ccc; padding-bottom: 2px; text-transform: uppercase; color: #222; }
-  h3 { font-size: 10.5px; margin: 0; font-weight: bold; padding-top: 6px; }
-  p, ul, li { margin: 0 0 3px 0; }
-  ul { padding-left: 16px; margin-bottom: 6px; margin-top: 2px; }
+  @page { margin: 5mm 8mm; }
+  body { font-family: system-ui, -apple-system, sans-serif; font-size: 10px; line-height: 1.15; margin: 0; padding: 0; color: #111; }
+  h1 { font-size: 15px; margin: 0 0 2px 0; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+  h2 { font-size: 12px; margin: 6px 0 3px 0; border-bottom: 1px solid #ccc; padding-bottom: 1px; text-transform: uppercase; color: #222; }
+  h3 { font-size: 11px; margin: 0; font-weight: bold; padding-top: 3px; }
+  p, ul, li { margin: 0 0 2px 0; }
+  ul { padding-left: 14px; margin-bottom: 3px; margin-top: 1px; }
   hr { display: none; }
   a { text-decoration: none; color: #000; }
-  .contact-info { text-align: center; font-size: 10px; margin-bottom: 8px; line-height: 1.4; color: #333; }
-  .grid-2 { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; border-bottom: none; }
-  .date { color: #555; font-size: 9.5px; font-weight: 500; }
-  .tech { font-style: italic; color: #444; font-size: 9.5px; margin-bottom: 8px; display: block; }
+  .contact-info { text-align: center; font-size: 9.5px; margin-bottom: 4px; line-height: 1.25; color: #333; }
+  .grid-2 { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; border-bottom: none; }
+  .date { color: #555; font-size: 9px; font-weight: 500; }
+  .tech { font-style: italic; color: #444; font-size: 9px; margin-bottom: 4px; display: block; }
   strong { color: #000; font-weight: 700; }
-  .icon { display: inline-block; width: 10px; height: 10px; vertical-align: -1px; margin-right: 3px; background-size: contain; background-repeat: no-repeat; }
+  .icon { display: inline-block; width: 9px; height: 9px; vertical-align: -1px; margin-right: 2px; background-size: contain; background-repeat: no-repeat; }
   .i-email { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>'); }
   .i-phone { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>'); }
   .i-loc { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'); }
@@ -39,11 +39,13 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
 
 
 ## CORE COMPETENCIES
-<strong>Languages/Frameworks:</strong> Python, FastAPI | <strong>Cloud/DevOps:</strong> Docker, CI/CD, GCP, AWS, Linux, MLOps<br>
-<strong>GenAI & Agentic Systems:</strong> LLMs, LangChain, LangGraph, RAG, Prompt Chaining, Chain-of-Thought, Agent Orchestration<br>
-<strong>ML & NLP:</strong> Scikit-Learn, Tensorflow, PyTorch, Transformers, BERT/RoBERTa, Sentiment Analysis, NER, Text Classification, Optuna<br>
-<strong>Data Engineering:</strong> Apache Airflow, ETL, Pandas, SQL (MySQL, PostgreSQL), NoSQL, Vector DBs (Qdrant, Milvus, Chroma)<br>
-<strong>Web Scraping & Tools:</strong> Playwright, Selenium, Scrapy, BeautifulSoup, Git, Docker Compose
+- <strong>Languages/Frameworks:</strong> Python, Django, Flask, FastAPI, Streamlit<br>
+- <strong>Cloud/DevOps:</strong> Git, GitHub, Docker, CI/CD, GCP, AWS, MLOps<br>
+- <strong>GenAI & Agentic Systems:</strong> LLMs (OpenAI, Anthropic, Vertex AI, Google Gen AI Platform, Cohere, AI21 Labs), LangChain, LangGraph, RAG, Prompt Chaining, Chain-of-Thought, Agent Orchestration, Multi-Agent Collaboration, Deep Research, Autonomous Agents<br>
+- <strong>ML & NLP:</strong> Scikit-Learn, TensorFlow, Keras, PyTorch, Optuna, Transformers (Encoder/Decoder), BERT/RoBERTa, Sentiment Analysis, NER, Text Classification, Hyperparameter Optimization, PyCaret<br>
+- <strong>Data Engineering & Databases:</strong> Apache Airflow, ETL, SQL (MySQL, PostgreSQL, BigQuery), NoSQL (MongoDB, Cassandra), Vector DBs (Pinecone, Qdrant, LanceDB, Chroma, Pgvector, Milvus, Weaviate)<br>
+- <strong>Analytics:</strong> NumPy, Pandas, Matplotlib, Seaborn, Plotly, SciPy, Statistical Analysis, Predictive Analytics<br>
+- <strong>Web Scraping & Tools:</strong> BeautifulSoup, Scrapy, Selenium, Playwright, Pydantic Structured Output
 
 ## PROFESSIONAL EXPERIENCE
 
@@ -93,10 +95,9 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
   <li><strong>AISERA:</strong> Enterprise AI system for Fortune 500 clients with BERT fine-tuning and production issue resolution.</li>
   <li><strong>evalmyBRAND:</strong> Aspect-based sentiment analysis system (RoBERTa, 18% improvement) with 15+ language support.</li>
   <li><strong>InventtEd:</strong> AI-powered educational platform with CLIP, Flan-T5, automated essay grading, and virtual tutoring.</li>
-  <li><strong>Mice Protein ML:</strong> Automated ML pipeline for 8-class protein classification achieving 35% training time reduction natively via Optuna.</li>
 </ul>
 
-<div style="display: flex; justify-content: space-between; margin-top: 10px;">
+<div style="display: flex; justify-content: space-between; margin-top: 4px;">
   <div style="flex: 1;">
     <h2>EDUCATION</h2>
     <strong>B.Tech. Mechanical Engineering</strong><br>

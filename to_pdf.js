@@ -1,5 +1,6 @@
 const { mdToPdf } = require('md-to-pdf');
 const fs = require('fs');
+const path = require('path');
 
 async function convert(inputFile, outputFile) {
     try {
@@ -24,7 +25,16 @@ async function convert(inputFile, outputFile) {
 }
 
 (async () => {
-    await convert('/home/ai-machine-1/Projects/gpt_resume/portfolio/public/resumes/detailed_resume.md', '/home/ai-machine-1/Projects/gpt_resume/portfolio/public/resumes/ats_resume.pdf');
-    await convert('/home/ai-machine-1/Projects/gpt_resume/portfolio/public/resumes/optimized_resume.md', '/home/ai-machine-1/Projects/gpt_resume/portfolio/public/resumes/optimized_resume.pdf');
-    // await convert('/home/ai-machine-1/Projects/gpt_resume/portfolio/public/resumes/master_cv.md', '/home/ai-machine-1/Projects/gpt_resume/portfolio/public/resumes/master_cv.pdf');
+    await convert(
+        path.join(__dirname, 'public/resumes/detailed_resume.md'),
+        path.join(__dirname, 'public/resumes/detailed_resume.pdf')
+    );
+    // await convert(
+    //     path.join(__dirname, 'public/resumes/optimized_resume.md'),
+    //     path.join(__dirname, 'public/resumes/optimized_resume.pdf')
+    // );
+    // await convert(
+    //     path.join(__dirname, 'public/resumes/master_cv.md'),
+    //     path.join(__dirname, 'public/resumes/master_cv.pdf')
+    // );
 })();
