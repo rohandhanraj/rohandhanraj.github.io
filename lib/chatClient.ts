@@ -141,52 +141,47 @@ export async function streamChat(
   }
 }
 
-// ─── MongoDB Atlas Data API ──────────────────────────────────────────────────
+import { db } from "./firebase";
+import { doc, setDoc, arrayUnion } from "firebase/firestore";
+
+// ─── Firebase Firestore Persistence ──────────────────────────────────────────
 
 /**
- * Persists chat messages + visitor info to MongoDB Atlas via the Data API (REST).
+ * Persists chat messages + visitor info to Firebase Firestore.
  * Non-blocking — failures are logged but don't affect the chat experience.
  */
-export async function saveToMongo(
+export async function saveToFirestore(
   sessionId: string,
   newMessages: ChatMessage[],
   visitor: VisitorInfo
 ): Promise<void> {
-  const apiKey = process.env.NEXT_PUBLIC_MONGODB_DATA_API_KEY;
-  const endpoint = process.env.NEXT_PUBLIC_MONGODB_DATA_API_ENDPOINT;
+  const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
-  if (!apiKey || !endpoint) {
-    // MongoDB not configured — silently skip
+  if (!apiKey) {
+    // Firebase not configured — silently skip
     return;
   }
 
   try {
-    await fetch(`${endpoint}/action/updateOne`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "api-key": apiKey,
+    const chatRef = doc(db, "chat_sessions", sessionId);
+
+    // Convert messages to flat structures for Firestore saving
+    const messagesToSave = newMessages.map((msg) => ({
+      role: msg.role,
+      content: msg.content,
+      timestamp: msg.timestamp || new Date().toISOString(),
+    }));
+
+    await setDoc(
+      chatRef,
+      {
+        messages: arrayUnion(...messagesToSave),
+        visitor,
+        updatedAt: new Date().toISOString(),
       },
-      body: JSON.stringify({
-        collection: "chat_sessions",
-        database: "portfolio",
-        dataSource: "GithubPortfolio",
-        filter: { sessionId },
-        update: {
-          $push: { messages: { $each: newMessages } },
-          $set: {
-            visitor,
-            updatedAt: new Date().toISOString(),
-          },
-          $setOnInsert: {
-            sessionId,
-            createdAt: new Date().toISOString(),
-          },
-        },
-        upsert: true,
-      }),
-    });
+      { merge: true }
+    );
   } catch (err) {
-    console.warn("MongoDB Data API save failed (non-fatal):", err);
+    console.warn("Firestore save failed (non-fatal):", err);
   }
 }

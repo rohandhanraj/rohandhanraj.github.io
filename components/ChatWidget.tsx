@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { streamChat, saveToMongo } from "@/lib/chatClient";
+import { streamChat, saveToFirestore } from "@/lib/chatClient";
 import { getVisitorInfo } from "@/lib/visitorInfo";
 import { retrieveContext } from "@/lib/ragEngine";
 import { buildDocumentTree } from "@/lib/documentTree";
@@ -192,9 +192,9 @@ export default function ChatWidget() {
           ];
           setChatHistory((prev) => [...prev, ...newMsgs]);
 
-          // Persist to MongoDB (non-blocking, fire-and-forget)
+          // Persist to Firestore (non-blocking, fire-and-forget)
           if (visitorInfo) {
-            saveToMongo(sessionId, newMsgs, visitorInfo).catch(() => {});
+            saveToFirestore(sessionId, newMsgs, visitorInfo).catch(() => {});
           }
         },
 
