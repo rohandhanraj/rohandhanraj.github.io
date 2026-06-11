@@ -41,7 +41,7 @@ export async function streamChat(
   callbacks: StreamCallbacks
 ): Promise<void> {
   const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
-  const model = process.env.NEXT_PUBLIC_OPENROUTER_MODEL || "google/gemini-2.0-flash-001";
+  const model = process.env.NEXT_PUBLIC_OPENROUTER_MODEL || "openrouter/free";
   const baseUrl = process.env.NEXT_PUBLIC_OPENROUTER_BASE_URL || "https://openrouter.ai/api/v1";
 
   if (!apiKey) {
