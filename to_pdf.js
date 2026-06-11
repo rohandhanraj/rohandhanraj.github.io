@@ -29,10 +29,10 @@ async function convert(inputFile, outputFile) {
         path.join(__dirname, 'public/resumes/detailed_resume.md'),
         path.join(__dirname, 'public/resumes/detailed_resume.pdf')
     );
-    // await convert(
-    //     path.join(__dirname, 'public/resumes/optimized_resume.md'),
-    //     path.join(__dirname, 'public/resumes/optimized_resume.pdf')
-    // );
+    await convert(
+        path.join(__dirname, 'public/resumes/optimized_resume.md'),
+        path.join(__dirname, 'public/resumes/optimized_resume.pdf')
+    );
     // await convert(
     //     path.join(__dirname, 'public/resumes/master_cv.md'),
     //     path.join(__dirname, 'public/resumes/master_cv.pdf')
