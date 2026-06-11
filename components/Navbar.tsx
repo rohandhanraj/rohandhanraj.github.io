@@ -75,7 +75,7 @@ export default function Navbar() {
             ))}
 
             <a
-              href="/resumes/ats_resume.pdf"
+              href="/resumes/detailed_resume.pdf"
               download
               className="btn-cyber btn-primary-cyber text-xs py-2 px-4"
               style={{ fontSize: "0.7rem" }}
@@ -142,7 +142,7 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="/resumes/ats_resume.pdf"
+              href="/resumes/detailed_resume.pdf"
               download
               className="btn-cyber btn-primary-cyber text-xs py-2 px-4 inline-block"
               style={{ width: "fit-content" }}
