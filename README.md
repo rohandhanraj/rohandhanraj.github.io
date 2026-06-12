@@ -82,3 +82,15 @@ Results-driven AI/ML Engineer with **7+ years of total professional experience**
 * **B.Tech Mechanical Engineering** | Biju Patnaik University of Technology
 * **GATE Qualified** | Mechanical Engineering
 * **Machine Learning Zoom Camp** | DataTalksClub
+
+```mermaid
+graph TD
+    UserQuery[User Query] --> Embeddings[OpenRouter Free Embedding API]
+    Embeddings --> VectorSearch[Qdrant Vector DB]
+    UserQuery --> EntityExtract[Regex / Word Entity Extractor]
+    EntityExtract --> GraphMatch[Neo4j Cypher Query]
+    VectorSearch -->|Top-15 Chunks| CohereRerank[Cohere Rerank API]
+    GraphMatch -->|Related Nodes & Edges| CohereRerank
+    CohereRerank -->|Top-5 Context Blocks| NIM_LLM[NVIDIA NIM LLM API]
+    NIM_LLM --> Output[Guardrail Check & Streamed Response]
+```

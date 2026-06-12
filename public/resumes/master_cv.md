@@ -29,7 +29,7 @@ Proven track record in leading cross-functional teams of **15+ engineers**, arch
 
 ### Career Metrics
 
-| Total Professional Experience | AI/ML Engineering Experience | Agentic AI Experience | Genreative AI Experience | Production AI Projects Delivered | Max Team Size Led | Fortune 500 Clients Served |
+| Total Professional Experience | AI/ML Engineering Experience | Agentic AI Experience | Generative AI Experience | Production AI Projects Delivered | Max Team Size Led | Fortune 500 Clients Served |
 | ----------------------------------- | ------------ | --------------------- | ------------------------ | -------------------------------- | ----------------- | -------------------------- |
 | 7+ years                            | 4+ years     | 1.5 year              | 3 year                   | 8+                               | 15 engineers      | 6+                         |
 

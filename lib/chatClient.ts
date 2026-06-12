@@ -20,7 +20,9 @@ RULES:
 5. Highlight specific metrics and achievements when relevant (e.g., 45% accuracy boost, 10K+ daily queries)
 6. For project questions, mention the tech stack and key impact
 7. Keep responses under 200 words unless a detailed breakdown is explicitly needed
-8. Format lists with bullet points when appropriate`;
+8. Format lists with bullet points when appropriate
+9. Distinguish carefully between experience durations: Rohan has 7+ years of total professional experience, 4+ years of AI/ML engineering experience, 3 years of Generative AI experience, and 1.5 years of Agentic AI experience. Do not state or imply he has 7+ years of experience in Generative AI or Agentic AI.
+10. When queried about experience with a specific technology, framework, or tech stack, mention all the relevant projects from the context where Rohan applied that technology.`;
 
 // ─── OpenRouter Streaming ────────────────────────────────────────────────────
 
@@ -28,6 +30,57 @@ interface StreamCallbacks {
   onToken: (token: string) => void;
   onDone: (fullText: string) => void;
   onError: (error: string) => void;
+}
+
+/**
+ * Checks if a streamed text segment contains safety refusal or model restriction phrases.
+ */
+function isRefusalPattern(text: string): boolean {
+  const lower = text.toLowerCase().trim();
+  return (
+    lower.startsWith("unsafe") ||
+    lower.includes("unsafe content") ||
+    lower.includes("cannot fulfill") ||
+    lower.includes("unable to answer") ||
+    lower.includes("violates") ||
+    lower.includes("safety guidelines") ||
+    lower.includes("content moderation") ||
+    lower.includes("i'm sorry, but") ||
+    lower.includes("i am sorry, but") ||
+    lower.includes("as an ai") ||
+    lower.includes("as a large language") ||
+    lower.includes("inappropriate") ||
+    lower.startsWith("sorry") ||
+    lower.startsWith("i cannot") ||
+    lower.startsWith("i am unable")
+  );
+}
+
+/**
+ * Checks if a streamed text segment is a prefix or potential start of a safety refusal.
+ */
+function isRefusalPrefix(text: string): boolean {
+  const lower = text.toLowerCase().replace(/\s+/g, "");
+  if (!lower) return true;
+  const refusalStarts = [
+    "unsafe",
+    "cannotfulfill",
+    "unabletoanswer",
+    "violates",
+    "safetyguidelines",
+    "contentmoderation",
+    "imsorry",
+    "iamsorry",
+    "asanai",
+    "asalargelanguage",
+    "inappropriate",
+    "sorry",
+    "icannot",
+    "iamunable"
+  ];
+  return refusalStarts.some(
+    (prefix) => prefix.startsWith(lower) || lower.startsWith(prefix)
+  );
 }
 
 /**
@@ -43,6 +96,7 @@ export async function streamChat(
   const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
   const model = process.env.NEXT_PUBLIC_OPENROUTER_MODEL || "openrouter/free";
   const baseUrl = process.env.NEXT_PUBLIC_OPENROUTER_BASE_URL || "https://openrouter.ai/api/v1";
+  const fallbackMsg = "I don't have that specific detail, but feel free to reach Rohan directly at rohan.dhanraj.y@gmail.com or connect on LinkedIn: https://www.linkedin.com/in/rohan-dhanraj-yadav";
 
   if (!apiKey) {
     callbacks.onError("AI service is not configured. The site owner needs to set the API key.");
@@ -60,6 +114,13 @@ export async function streamChat(
   ];
 
   try {
+    const fallbackModels = [
+      model,
+      "meta-llama/llama-3-8b-instruct:free",
+      "google/gemma-2-9b-it:free"
+    ].filter((m, i, self) => self.indexOf(m) === i)
+     .slice(0, 3);
+
     const response = await fetch(`${baseUrl}/chat/completions`, {
       method: "POST",
       headers: {
@@ -70,6 +131,7 @@ export async function streamChat(
       },
       body: JSON.stringify({
         model,
+        models: fallbackModels,
         messages,
         stream: true,
         temperature: 0.7,
@@ -79,7 +141,41 @@ export async function streamChat(
 
     if (!response.ok) {
       const errText = await response.text();
-      const isAuth = response.status === 401 || response.status === 403;
+      let isModeration = false;
+      try {
+        const parsedErr = JSON.parse(errText);
+        const errMsg = parsedErr.error?.message?.toLowerCase() || "";
+        if (
+          errMsg.includes("moderation") ||
+          errMsg.includes("guardrail") ||
+          errMsg.includes("blocked") ||
+          errMsg.includes("flagged") ||
+          errMsg.includes("unsafe") ||
+          errMsg.includes("policy")
+        ) {
+          isModeration = true;
+        }
+      } catch {
+        const lowerErr = errText.toLowerCase();
+        if (
+          lowerErr.includes("moderation") ||
+          lowerErr.includes("guardrail") ||
+          lowerErr.includes("blocked") ||
+          lowerErr.includes("flagged") ||
+          lowerErr.includes("unsafe") ||
+          lowerErr.includes("policy")
+        ) {
+          isModeration = true;
+        }
+      }
+
+      if (isModeration || response.status === 403) {
+        callbacks.onToken(fallbackMsg);
+        callbacks.onDone(fallbackMsg);
+        return;
+      }
+
+      const isAuth = response.status === 401;
       callbacks.onError(
         isAuth
           ? "AI service authentication failed. Please check the API key."
@@ -99,6 +195,12 @@ export async function streamChat(
     let fullText = "";
     let buffer = "";
 
+    // Safety refusal / restriction interception state
+    let isRefusal = false;
+    let isFlushed = false;
+    let streamBufferedText = "";
+    const BUFFER_THRESHOLD = 40;
+
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
@@ -115,7 +217,19 @@ export async function streamChat(
 
         const data = trimmed.slice(6);
         if (data === "[DONE]") {
-          callbacks.onDone(fullText);
+          if (!isFlushed && !isRefusal) {
+            if (isRefusalPattern(streamBufferedText)) {
+              callbacks.onToken(fallbackMsg);
+              callbacks.onDone(fallbackMsg);
+            } else {
+              callbacks.onToken(streamBufferedText);
+              callbacks.onDone(fullText);
+            }
+          } else if (isRefusal) {
+            callbacks.onDone(fallbackMsg);
+          } else {
+            callbacks.onDone(fullText);
+          }
           return;
         }
 
@@ -124,7 +238,31 @@ export async function streamChat(
           const token = parsed.choices?.[0]?.delta?.content;
           if (token) {
             fullText += token;
-            callbacks.onToken(token);
+
+            if (!isRefusal) {
+              if (!isFlushed) {
+                streamBufferedText += token;
+                
+                // If it is definitely a refusal pattern
+                if (isRefusalPattern(streamBufferedText)) {
+                  isRefusal = true;
+                  callbacks.onToken(fallbackMsg);
+                  fullText = fallbackMsg;
+                }
+                // If it no longer matches any refusal prefix, flush immediately
+                else if (!isRefusalPrefix(streamBufferedText)) {
+                  callbacks.onToken(streamBufferedText);
+                  isFlushed = true;
+                }
+                // If we reached the threshold, and it's still matching prefix, flush it
+                else if (streamBufferedText.length >= BUFFER_THRESHOLD) {
+                  callbacks.onToken(streamBufferedText);
+                  isFlushed = true;
+                }
+              } else {
+                callbacks.onToken(token);
+              }
+            }
           }
         } catch {
           // Skip malformed chunks
@@ -133,7 +271,19 @@ export async function streamChat(
     }
 
     // Stream ended without [DONE] — still finalize
-    callbacks.onDone(fullText);
+    if (!isFlushed && !isRefusal) {
+      if (isRefusalPattern(streamBufferedText)) {
+        callbacks.onToken(fallbackMsg);
+        callbacks.onDone(fallbackMsg);
+      } else {
+        callbacks.onToken(streamBufferedText);
+        callbacks.onDone(fullText);
+      }
+    } else if (isRefusal) {
+      callbacks.onDone(fallbackMsg);
+    } else {
+      callbacks.onDone(fullText);
+    }
   } catch (err: any) {
     if (err.name === "AbortError") return;
     console.error("Stream error:", err);
