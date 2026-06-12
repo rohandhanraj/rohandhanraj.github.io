@@ -1,6 +1,6 @@
 // Client-side chat engine — zero server dependency
 // 1. Streams responses from OpenRouter (OpenAI-compatible SSE)
-// 2. Persists conversations to MongoDB Atlas Data API
+// 2. Persists conversations to Firebase Firestore
 // All secrets are NEXT_PUBLIC_* env vars injected at build time via GitHub Secrets.
 
 import { ChatMessage, VisitorInfo } from "./types";
@@ -143,6 +143,7 @@ export async function streamChat(
 
 import { db } from "./firebase";
 import { doc, setDoc, arrayUnion } from "firebase/firestore";
+import { getVisitorInfo } from "./visitorInfo";
 
 // ─── Firebase Firestore Persistence ──────────────────────────────────────────
 
@@ -153,7 +154,7 @@ import { doc, setDoc, arrayUnion } from "firebase/firestore";
 export async function saveToFirestore(
   sessionId: string,
   newMessages: ChatMessage[],
-  visitor: VisitorInfo
+  visitor?: VisitorInfo
 ): Promise<void> {
   const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
@@ -164,6 +165,9 @@ export async function saveToFirestore(
 
   try {
     const chatRef = doc(db, "chat_sessions", sessionId);
+
+    // Resolve visitor info if not provided
+    const activeVisitor = visitor || await getVisitorInfo();
 
     // Convert messages to flat structures for Firestore saving
     const messagesToSave = newMessages.map((msg) => ({
@@ -176,7 +180,7 @@ export async function saveToFirestore(
       chatRef,
       {
         messages: arrayUnion(...messagesToSave),
-        visitor,
+        visitor: activeVisitor,
         updatedAt: new Date().toISOString(),
       },
       { merge: true }

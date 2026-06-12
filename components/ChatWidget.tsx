@@ -2,11 +2,18 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { marked } from "marked";
 import { streamChat, saveToFirestore } from "@/lib/chatClient";
 import { getVisitorInfo } from "@/lib/visitorInfo";
 import { retrieveContext } from "@/lib/ragEngine";
 import { buildDocumentTree } from "@/lib/documentTree";
 import type { ChatMessage, VisitorInfo } from "@/lib/types";
+
+// Configure marked options
+marked.setOptions({
+  gfm: true,
+  breaks: true,
+});
 
 // Build once — reused across all queries (pure data, no side effects)
 const docTree = buildDocumentTree();
@@ -31,6 +38,99 @@ const WELCOME_MSG: UIMessage = {
   role: "assistant",
   content:
     "Hi! I'm Rohan's AI assistant 👋 Ask me anything about his experience, projects, or skills. I'll answer based on his professional profile.",
+};
+
+// Custom premium SVG Assistant Icon with animations
+function AssistantIcon({ className = "w-6 h-6", animated = true }: { className?: string; animated?: boolean }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="var(--accent-cyan)" />
+          <stop offset="100%" stopColor="var(--accent-purple)" />
+        </linearGradient>
+      </defs>
+      {/* Outer Glow Ring */}
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="url(#aiGrad)"
+        strokeWidth="1"
+        strokeDasharray="4 2"
+        className={animated ? "animate-spin" : ""}
+        style={{ transformOrigin: "center", animationDuration: "12s" }}
+      />
+      {/* Head shape */}
+      <rect
+        x="6"
+        y="7"
+        width="12"
+        height="10"
+        rx="2"
+        stroke="url(#aiGrad)"
+        strokeWidth="1.5"
+        fill="rgba(10, 25, 47, 0.6)"
+      />
+      {/* Eyes */}
+      <circle
+        cx="9.5"
+        cy="11.5"
+        r="1.2"
+        fill="var(--accent-cyan)"
+        className={animated ? "animate-pulse" : ""}
+      />
+      <circle
+        cx="14.5"
+        cy="11.5"
+        r="1.2"
+        fill="var(--accent-cyan)"
+        className={animated ? "animate-pulse" : ""}
+      />
+      {/* Mouth/Waveform */}
+      <path
+        d="M9 14.5C10 15 11 14.5 12 15C13 14.5 14 15 15 14.5"
+        stroke="var(--accent-cyan)"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
+      {/* Antennas */}
+      <path
+        d="M12 7V4M10 4H14"
+        stroke="url(#aiGrad)"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
+      {/* Glowing antenna tip */}
+      <circle
+        cx="12"
+        cy="3.5"
+        r="1"
+        fill="var(--accent-cyan)"
+        className={animated ? "animate-ping" : ""}
+        style={{ animationDuration: "2s" }}
+      />
+    </svg>
+  );
+}
+
+// Synchronously parse markdown to HTML with streaming cursor support
+const getHtmlContent = (content: string, streaming?: boolean) => {
+  try {
+    let raw = content;
+    if (streaming) {
+      raw += ' <span class="streaming-cursor"></span>';
+    }
+    return marked.parse(raw) as string;
+  } catch (e) {
+    console.error("Markdown parsing error:", e);
+    return content;
+  }
 };
 
 function TypingIndicator() {
@@ -61,17 +161,13 @@ function MessageBubble({ msg }: { msg: UIMessage }) {
     >
       {!isUser && (
         <div
-          className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs mr-2 mt-0.5 font-orbitron font-bold"
-          style={{
-            background: "linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))",
-            color: "var(--bg-primary)",
-          }}
+          className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center mr-2 mt-0.5"
         >
-          AI
+          <AssistantIcon className="w-6 h-6" animated={false} />
         </div>
       )}
       <div
-        className="max-w-[80%] text-sm leading-relaxed"
+        className="max-w-[80%] text-sm leading-relaxed markdown-content"
         style={{
           background: isUser
             ? "linear-gradient(135deg, rgba(0,240,255,0.15), rgba(255,46,151,0.1))"
@@ -82,24 +178,17 @@ function MessageBubble({ msg }: { msg: UIMessage }) {
           borderRadius: "2px",
           borderTopRightRadius: isUser ? 0 : "2px",
           borderTopLeftRadius: isUser ? "2px" : 0,
-          whiteSpace: "pre-wrap",
           wordBreak: "break-word",
         }}
-      >
-        {msg.content}
-        {msg.streaming && (
-          <span
-            className="inline-block w-1.5 h-4 ml-0.5 align-middle animate-pulse"
-            style={{ background: "var(--accent-cyan)" }}
-          />
-        )}
-      </div>
+        dangerouslySetInnerHTML={{ __html: getHtmlContent(msg.content, msg.streaming) }}
+      />
     </motion.div>
   );
 }
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [messages, setMessages] = useState<UIMessage[]>([WELCOME_MSG]);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -193,9 +282,7 @@ export default function ChatWidget() {
           setChatHistory((prev) => [...prev, ...newMsgs]);
 
           // Persist to Firestore (non-blocking, fire-and-forget)
-          if (visitorInfo) {
-            saveToFirestore(sessionId, newMsgs, visitorInfo).catch(() => {});
-          }
+          saveToFirestore(sessionId, newMsgs, visitorInfo || undefined).catch(() => {});
         },
 
         onError(errorMsg) {
@@ -245,35 +332,16 @@ export default function ChatWidget() {
               }}
             >
               <div className="flex items-center gap-2">
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-orbitron font-bold"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))",
-                    color: "var(--bg-primary)",
-                  }}
-                >
-                  AI
+                <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0">
+                  <AssistantIcon className="w-7 h-7" animated={true} />
                 </div>
                 <div>
                   <p
                     className="font-orbitron font-bold text-xs"
                     style={{ color: "var(--accent-cyan)" }}
                   >
-                    Rohan&apos;s Portfolio AI
+                    Rohan&apos;s Portfolio Assistant
                   </p>
-                  <div className="flex items-center gap-1">
-                    <span
-                      className="w-1.5 h-1.5 rounded-full animate-pulse"
-                      style={{ background: "var(--accent-green)" }}
-                    />
-                    <span
-                      className="text-xs"
-                      style={{ color: "var(--text-muted)" }}
-                    >
-                      Streaming · RAG
-                    </span>
-                  </div>
                 </div>
               </div>
               <button
@@ -302,15 +370,8 @@ export default function ChatWidget() {
                     animate={{ opacity: 1 }}
                     className="flex items-center gap-2 mb-3"
                   >
-                    <div
-                      className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-orbitron font-bold flex-shrink-0"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))",
-                        color: "var(--bg-primary)",
-                      }}
-                    >
-                      AI
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0">
+                      <AssistantIcon className="w-7 h-7" animated={true} />
                     </div>
                     <div
                       style={{
@@ -419,13 +480,40 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
 
+      {/* Floating Tooltip */}
+      <AnimatePresence>
+        {isHovered && !isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.95 }}
+            transition={{ duration: 0.15 }}
+            className="fixed bottom-[84px] right-5 z-50 px-3 py-1.5 text-xs font-orbitron font-semibold"
+            style={{
+              background: "var(--bg-card)",
+              border: "1px solid var(--accent-cyan)",
+              color: "var(--accent-cyan)",
+              boxShadow: "0 0 15px rgba(0,240,255,0.2)",
+              borderRadius: "2px",
+              pointerEvents: "none",
+            }}
+          >
+            Rohan&apos;s Profile Assistant
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Floating Button */}
       <motion.button
         onClick={() => setIsOpen((prev) => !prev)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-5 right-5 z-50 flex items-center gap-2 px-4 py-3"
+        className="fixed bottom-5 right-5 z-50 flex items-center justify-center"
         style={{
+          width: "56px",
+          height: "56px",
           background: isOpen
             ? "var(--bg-card)"
             : "linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))",
@@ -434,19 +522,22 @@ export default function ChatWidget() {
           cursor: "pointer",
           boxShadow:
             "0 0 30px rgba(0,240,255,0.3), 0 8px 32px rgba(0,0,0,0.4)",
-          borderRadius: "4px",
-          fontFamily: "'Fira Code', monospace",
-          fontSize: "0.875rem",
-          fontWeight: 700,
+          borderRadius: "50%",
         }}
         aria-label={isOpen ? "Close AI Chat" : "Open AI Chat"}
       >
-        <span>{isOpen ? "✕" : "💬"}</span>
-        <span>{isOpen ? "Close" : "Ask AI"}</span>
+        {isOpen ? (
+          <span className="text-xl font-bold">✕</span>
+        ) : (
+          <AssistantIcon className="w-6 h-6" animated={true} />
+        )}
         {!isOpen && (
           <span
-            className="w-2 h-2 rounded-full animate-pulse"
-            style={{ background: "var(--accent-green)" }}
+            className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full animate-pulse"
+            style={{
+              background: "var(--accent-green)",
+              boxShadow: "0 0 8px var(--accent-green)",
+            }}
           />
         )}
       </motion.button>
