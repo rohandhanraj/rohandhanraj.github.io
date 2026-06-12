@@ -193,7 +193,7 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* Current role badge */}
+            {/* Current role badge (Temporarily hidden)
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -215,6 +215,7 @@ export default function Hero() {
                 Agentic AI · Multi-Agent Orchestration · RAG Architecture
               </p>
             </motion.div>
+            */}
 
             {/* Stats */}
             <motion.div
