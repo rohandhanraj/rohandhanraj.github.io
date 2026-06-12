@@ -102,7 +102,7 @@ router.post("/", async (req, res) => {
                 { role: "assistant", content: fullResponse || SAFE_FALLBACK_RESPONSE, timestamp: new Date(), contextUsed: context }
               ]
             }
-          },
+          } as any,
           $setOnInsert: { visitor_id: req.visitorId, createdAt: new Date() },
           $set: { updatedAt: new Date() }
         },

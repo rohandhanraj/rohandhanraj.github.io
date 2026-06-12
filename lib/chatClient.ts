@@ -84,8 +84,7 @@ function isRefusalPrefix(text: string): boolean {
 }
 
 /**
- * Streams a chat response from OpenRouter.
- * Reads SSE chunks and calls onToken for each delta.
+ * Streams a chat response. Redirects to backend if NEXT_PUBLIC_BACKEND_URL is set.
  */
 export async function streamChat(
   context: string,
@@ -93,6 +92,74 @@ export async function streamChat(
   query: string,
   callbacks: StreamCallbacks
 ): Promise<void> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+  if (backendUrl) {
+    try {
+      const response = await fetch(`${backendUrl}/api/chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query, history }),
+      });
+
+      if (!response.ok) {
+        callbacks.onError(`AI service error (${response.status}). Please try again.`);
+        return;
+      }
+
+      const reader = response.body?.getReader();
+      if (!reader) {
+        callbacks.onError("Streaming not supported in this browser.");
+        return;
+      }
+
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let fullText = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || !trimmed.startsWith("data: ")) continue;
+
+          const data = trimmed.slice(6);
+          if (data === "[DONE]") {
+            callbacks.onDone(fullText);
+            return;
+          }
+
+          try {
+            const parsed = JSON.parse(data);
+            const token = parsed.choices?.[0]?.delta?.content;
+            if (token) {
+              fullText += token;
+              callbacks.onToken(token);
+            }
+          } catch {
+            // ignore JSON parsing errors for partial tokens
+          }
+        }
+      }
+
+      callbacks.onDone(fullText);
+      return;
+    } catch (err) {
+      console.error("Backend stream error:", err);
+      callbacks.onError("Connection failed. Please check your internet and try again.");
+      return;
+    }
+  }
+
+  // Fallback to client-side OpenRouter streaming
   const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
   const model = process.env.NEXT_PUBLIC_OPENROUTER_MODEL || "openrouter/free";
   const baseUrl = process.env.NEXT_PUBLIC_OPENROUTER_BASE_URL || "https://openrouter.ai/api/v1";
@@ -103,7 +170,6 @@ export async function streamChat(
     return;
   }
 
-  // Build messages array: system + last 8 history messages + current query
   const messages = [
     { role: "system" as const, content: SYSTEM_PROMPT(context) },
     ...history.slice(-8).map((m) => ({
@@ -195,7 +261,6 @@ export async function streamChat(
     let fullText = "";
     let buffer = "";
 
-    // Safety refusal / restriction interception state
     let isRefusal = false;
     let isFlushed = false;
     let streamBufferedText = "";
@@ -207,9 +272,8 @@ export async function streamChat(
 
       buffer += decoder.decode(value, { stream: true });
 
-      // Process complete SSE lines
       const lines = buffer.split("\n");
-      buffer = lines.pop() || ""; // Keep incomplete line in buffer
+      buffer = lines.pop() || "";
 
       for (const line of lines) {
         const trimmed = line.trim();
@@ -243,18 +307,15 @@ export async function streamChat(
               if (!isFlushed) {
                 streamBufferedText += token;
                 
-                // If it is definitely a refusal pattern
                 if (isRefusalPattern(streamBufferedText)) {
                   isRefusal = true;
                   callbacks.onToken(fallbackMsg);
                   fullText = fallbackMsg;
                 }
-                // If it no longer matches any refusal prefix, flush immediately
                 else if (!isRefusalPrefix(streamBufferedText)) {
                   callbacks.onToken(streamBufferedText);
                   isFlushed = true;
                 }
-                // If we reached the threshold, and it's still matching prefix, flush it
                 else if (streamBufferedText.length >= BUFFER_THRESHOLD) {
                   callbacks.onToken(streamBufferedText);
                   isFlushed = true;
@@ -270,7 +331,6 @@ export async function streamChat(
       }
     }
 
-    // Stream ended without [DONE] — still finalize
     if (!isFlushed && !isRefusal) {
       if (isRefusalPattern(streamBufferedText)) {
         callbacks.onToken(fallbackMsg);
@@ -295,31 +355,36 @@ import { db } from "./firebase";
 import { doc, setDoc, arrayUnion } from "firebase/firestore";
 import { getVisitorInfo } from "./visitorInfo";
 
-// ─── Firebase Firestore Persistence ──────────────────────────────────────────
-
 /**
  * Persists chat messages + visitor info to Firebase Firestore.
- * Non-blocking — failures are logged but don't affect the chat experience.
+ * Redirects to backend and logs events if NEXT_PUBLIC_BACKEND_URL is configured.
  */
 export async function saveToFirestore(
   sessionId: string,
   newMessages: ChatMessage[],
   visitor?: VisitorInfo
 ): Promise<void> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  if (backendUrl) {
+    // If backend is active, MongoDB persistence is handled automatically by /api/chat.
+    // However, log user prompt event to backend analytics for tracking.
+    const lastMsg = newMessages[newMessages.length - 2]; // The user message
+    if (lastMsg && lastMsg.role === "user") {
+      logAnalyticsEvent("chat_message_sent", { query: lastMsg.content }).catch(() => {});
+    }
+    return;
+  }
+
   const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
   if (!apiKey) {
-    // Firebase not configured — silently skip
     return;
   }
 
   try {
     const chatRef = doc(db, "chat_sessions", sessionId);
-
-    // Resolve visitor info if not provided
     const activeVisitor = visitor || await getVisitorInfo();
 
-    // Convert messages to flat structures for Firestore saving
     const messagesToSave = newMessages.map((msg) => ({
       role: msg.role,
       content: msg.content,
@@ -337,5 +402,47 @@ export async function saveToFirestore(
     );
   } catch (err) {
     console.warn("Firestore save failed (non-fatal):", err);
+  }
+}
+
+/**
+ * Logs an analytics event to the backend API if configured.
+ */
+export async function logAnalyticsEvent(eventType: string, details: Record<string, any> = {}): Promise<void> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  if (!backendUrl) return;
+
+  try {
+    await fetch(`${backendUrl}/api/analytics`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ eventType, details })
+    });
+  } catch (err) {
+    console.warn("Failed to log analytics event:", err);
+  }
+}
+
+/**
+ * Retrieves historical chat messages from backend history endpoint.
+ */
+export async function getChatHistory(): Promise<ChatMessage[]> {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  if (!backendUrl) return [];
+
+  try {
+    const res = await fetch(`${backendUrl}/api/chat/history`, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.messages || [];
+  } catch (err) {
+    console.error("Failed to load chat history:", err);
+    return [];
   }
 }

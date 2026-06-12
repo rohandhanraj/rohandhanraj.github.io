@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { marked } from "marked";
-import { streamChat, saveToFirestore } from "@/lib/chatClient";
+import { streamChat, saveToFirestore, getChatHistory, logAnalyticsEvent } from "@/lib/chatClient";
 import { getVisitorInfo } from "@/lib/visitorInfo";
 import { retrieveContext } from "@/lib/ragEngine";
 import { buildDocumentTree } from "@/lib/documentTree";
@@ -274,6 +274,23 @@ export default function ChatWidget() {
 
     // Fetch visitor info in background (non-blocking)
     getVisitorInfo().then(setVisitorInfo).catch(() => {});
+
+    // Log page_view event to backend analytics
+    logAnalyticsEvent("page_view", { url: window.location.pathname }).catch(() => {});
+
+    // Retrieve backend history if backend is active
+    getChatHistory().then((history) => {
+      if (history && history.length > 0) {
+        // Map chat messages to UIMessages
+        const uiMsgs: UIMessage[] = history.map((m, index) => ({
+          id: `hist-${index}`,
+          role: m.role as "user" | "assistant",
+          content: m.content
+        }));
+        setMessages([WELCOME_MSG, ...uiMsgs]);
+        setChatHistory(history);
+      }
+    }).catch(() => {});
   }, []);
 
   // Auto-scroll to bottom
