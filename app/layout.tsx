@@ -38,7 +38,10 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
   },
   verification: {
     google: "jjjIqaX-uARsxLfpyuSU0G_dYG2_EIiQUHZeTSsoZx8",

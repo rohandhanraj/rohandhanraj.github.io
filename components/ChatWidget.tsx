@@ -201,29 +201,68 @@ export default function ChatWidget() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Sticker Avatar and Speech Bubble States
+  // Animation flow step state:
+  // - 'flying': Spaceship is landing at the bottom right corner (2.8s)
+  // - 'avatar_emerging': Avatar starts coming out of the spaceship (1.0s)
+  // - 'spaceship_fading': Spaceship fades out (0.8s)
+  // - 'clouds_appearing': The cloud bubbles appear one by one from smaller to bigger (1.4s total)
+  // - 'message_appearing': The text message appears in the big cloud bubble
+  const [animationStep, setAnimationStep] = useState<
+    'flying' | 'avatar_emerging' | 'spaceship_fading' | 'clouds_appearing' | 'message_appearing'
+  >('flying');
   const [isStickerDismissed, setIsStickerDismissed] = useState(false);
-  const [showSpeechBubble, setShowSpeechBubble] = useState(true);
 
-  // 5-second auto-collapse effect
+  // Triggered when spaceship lands at bottom right corner
+  const handleSpaceshipLanded = () => {
+    setAnimationStep('avatar_emerging');
+  };
+
+  // Step-by-step sequential animation timers
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSpeechBubble(false);
-      setIsStickerDismissed(true);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (isStickerDismissed || isOpen) return;
+
+    if (animationStep === 'avatar_emerging') {
+      const timer = setTimeout(() => {
+        setAnimationStep('clouds_appearing');
+      }, 1000); // 1.0s avatar emerging duration, then proceed to clouds
+      return () => clearTimeout(timer);
+    }
+
+    if (animationStep === 'spaceship_fading') {
+      const timer = setTimeout(() => {
+        setAnimationStep('clouds_appearing');
+      }, 800); // 0.8s spaceship fade out duration
+      return () => clearTimeout(timer);
+    }
+
+    if (animationStep === 'clouds_appearing') {
+      const timer = setTimeout(() => {
+        setAnimationStep('message_appearing');
+      }, 1400); // 1.4s for cloud bubbles (smallest -> medium -> big) to finish scaling
+      return () => clearTimeout(timer);
+    }
+  }, [animationStep, isStickerDismissed, isOpen]);
+
+  // 15-second auto-collapse timer starting only after message is shown
+  useEffect(() => {
+    if (animationStep === 'message_appearing' && !isStickerDismissed && !isOpen) {
+      const timer = setTimeout(() => {
+        setIsStickerDismissed(true);
+      }, 15000);
+      return () => clearTimeout(timer);
+    }
+  }, [animationStep, isStickerDismissed, isOpen]);
 
   const dismissSticker = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setShowSpeechBubble(false);
     setIsStickerDismissed(true);
+    setAnimationStep('message_appearing'); // bypass step sequences safely
   };
 
   const handleOpenChat = () => {
     setIsOpen(true);
-    setShowSpeechBubble(false);
     setIsStickerDismissed(true);
+    setAnimationStep('message_appearing'); // bypass step sequences safely
   };
 
   // Initialize session ID and fetch visitor info
@@ -529,66 +568,199 @@ export default function ChatWidget() {
           )}
         </AnimatePresence>
 
-        {/* Greeting Speech Bubble */}
+        {/* Flying Spaceship entrance & fade out */}
         <AnimatePresence>
-          {showSpeechBubble && !isOpen && !isStickerDismissed && (
-              <motion.div
-                  initial={{ opacity: 0, scale: 0.8, x: 20 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.8, x: 20 }}
-                  onClick={handleOpenChat}
-                  className="fixed bottom-[calc(6.25vw+10px)] right-[calc(12.5vw+30px)] z-50 p-4 rounded-lg backdrop-blur-md cursor-pointer select-none"
-                  style={{
-                    background: "rgba(10, 25, 47, 0.85)",
-                    border: "1px solid rgba(0, 240, 255, 0.4)",
-                    boxShadow: "0 0 20px rgba(0, 240, 255, 0.15), 0 8px 32px rgba(0, 0, 0, 0.5)",
-                    color: "var(--text-primary)",
-                    width: "220px",
-                    fontSize: "0.85rem",
-                    lineHeight: "1.35",
-                    borderRadius: "12px 12px 0px 12px",
-                  }}
-              >
-                {/* Arrow pointing to the avatar */}
-                <div
-                    className="absolute right-[-8px] bottom-[16px] w-0 h-0"
-                    style={{
-                      borderTop: "6px solid transparent",
-                      borderBottom: "6px solid transparent",
-                      borderLeft: "8px solid rgba(0, 240, 255, 0.4)",
-                    }}
-                />
-                <button
-                    onClick={dismissSticker}
-                    className="absolute top-1 right-1.5 w-4 h-4 flex items-center justify-center text-[11px] hover:text-white transition-colors"
-                    style={{
-                      background: "transparent",
-                      border: "none",
-                      color: "var(--text-muted)",
-                      cursor: "pointer",
-                      padding: 0
-                    }}
-                    aria-label="Dismiss greeting"
-                >
-                  ✕
-                </button>
-                <p className="pr-3 font-medium">Hi, how can I assist with Rohan&apos;s profile?</p>
-              </motion.div>
+          {!isStickerDismissed && !isOpen && (animationStep === 'flying' || animationStep === 'avatar_emerging' || animationStep === 'spaceship_fading') && (
+            <motion.div
+              initial={
+                animationStep === 'flying'
+                  ? { x: "-90vw", y: "-90vh", scale: 0.2, rotate: 45, opacity: 0 }
+                  : { x: 0, y: 0, scale: 1, rotate: 0, opacity: 1 }
+              }
+              animate={
+                (animationStep === 'spaceship_fading' || animationStep === 'avatar_emerging')
+                  ? { opacity: 0, scale: 0.9, x: 0, y: 0, rotate: 0 }
+                  : { x: 0, y: 0, scale: 1, rotate: 0, opacity: 1 }
+              }
+              exit={{ opacity: 0 }}
+              transition={
+                animationStep === 'flying'
+                  ? { duration: 2.8, ease: "easeOut" }
+                  : animationStep === 'avatar_emerging'
+                  ? { duration: 1.0 }
+                  : { duration: 0 }
+              }
+              onAnimationComplete={() => {
+                if (animationStep === 'flying') {
+                  handleSpaceshipLanded();
+                }
+              }}
+              className="fixed bottom-5 right-5 z-[51] pointer-events-none select-none"
+              style={{
+                width: "14vw",
+                height: "14vw",
+                minWidth: "140px",
+                minHeight: "140px",
+                maxWidth: "280px",
+                maxHeight: "280px",
+              }}
+            >
+              <img
+                src="/spaceship.png"
+                alt="Spaceship"
+                className="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(0,240,255,0.6)]"
+              />
+            </motion.div>
           )}
         </AnimatePresence>
 
+        {/* Greeting Speech Bubble */}
+        <AnimatePresence>
+          {!isOpen && !isStickerDismissed && (animationStep === 'clouds_appearing' || animationStep === 'message_appearing') && (
+              <motion.div
+                  onClick={handleOpenChat}
+                  className="fixed bottom-[calc(8.5vw+20px)] right-[calc(13vw+30px)] z-50 cursor-pointer select-none"
+                  style={{
+                    width: "220px",
+                    filter: "drop-shadow(0 0 8px rgba(0, 240, 255, 0.35)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5))",
+                  }}
+              >
+                {/* Smallest tail cloud (level with lips, puffy cloud shape) */}
+                <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="absolute backdrop-blur-md z-10"
+                    style={{
+                      right: "-24px",
+                      bottom: "-12px",
+                      width: "12px",
+                      height: "10px",
+                      background: "rgba(224, 252, 255, 0.95)",
+                      borderRadius: "8px 10px 6px 8px / 8px 8px 6px 6px",
+                      transformOrigin: "bottom left"
+                    }}
+                />
+
+                {/* Medium tail cloud (puffy cloud shape) */}
+                <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
+                    className="absolute backdrop-blur-md z-10"
+                    style={{
+                      right: "-12px",
+                      bottom: "0px",
+                      width: "18px",
+                      height: "16px",
+                      background: "rgba(224, 252, 255, 0.95)",
+                      borderRadius: "14px 18px 10px 14px / 12px 14px 10px 12px",
+                      transformOrigin: "bottom left"
+                    }}
+                />
+
+                {/* Main Cloud Body & Puff Bumps */}
+                <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
+                    className="relative w-full h-full"
+                    style={{ transformOrigin: "bottom right" }}
+                >
+                  {/* Main Cloud Box */}
+                  <div
+                      className="p-4 backdrop-blur-md relative z-10"
+                      style={{
+                        background: "rgba(224, 252, 255, 0.95)",
+                        borderRadius: "24px",
+                        color: "#0a192f", // Dark readable navy text
+                        fontSize: "0.85rem",
+                        lineHeight: "1.35",
+                      }}
+                  >
+                    {/* Message content fades in only in message_appearing step */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={animationStep === 'message_appearing' ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="relative z-20 w-full h-full"
+                    >
+                      <button
+                          onClick={dismissSticker}
+                          className="absolute top-0 right-0 w-5 h-5 flex items-center justify-center text-[11px] hover:text-black transition-colors z-20"
+                          style={{
+                            background: "transparent",
+                            border: "none",
+                            color: "#64748b",
+                            cursor: "pointer",
+                            padding: 0,
+                            margin: "4px"
+                          }}
+                          aria-label="Dismiss greeting"
+                      >
+                        ✕
+                      </button>
+                      <p className="pr-3 font-semibold relative z-10">Hi, how can I assist with Rohan&apos;s profile?</p>
+                    </motion.div>
+                  </div>
+
+                  {/* Cloud Puff Bumps (merge seamlessly since they have no borders) */}
+                  <div
+                      className="absolute rounded-full backdrop-blur-md z-0"
+                      style={{
+                        top: "-16px",
+                        left: "30px",
+                        width: "48px",
+                        height: "48px",
+                        background: "rgba(224, 252, 255, 0.95)",
+                      }}
+                  />
+                  <div
+                      className="absolute rounded-full backdrop-blur-md z-0"
+                      style={{
+                        top: "-24px",
+                        right: "40px",
+                        width: "56px",
+                        height: "56px",
+                        background: "rgba(224, 252, 255, 0.95)",
+                      }}
+                  />
+                  <div
+                      className="absolute rounded-full backdrop-blur-md z-0"
+                      style={{
+                        top: "12px",
+                        left: "-12px",
+                        width: "40px",
+                        height: "40px",
+                        background: "rgba(224, 252, 255, 0.95)",
+                      }}
+                  />
+                  <div
+                      className="absolute rounded-full backdrop-blur-md z-0"
+                      style={{
+                        top: "18px",
+                        right: "-12px",
+                        width: "40px",
+                        height: "40px",
+                        background: "rgba(224, 252, 255, 0.95)",
+                      }}
+                  />
+                </motion.div>
+              </motion.div>
+          )}
+        </AnimatePresence>
         {/* Big Sticker Waving Avatar */}
         <AnimatePresence>
-          {!isStickerDismissed && !isOpen && (
+          {!isStickerDismissed && !isOpen && animationStep !== 'flying' && (
               <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
+                  initial={{ scale: 0.1, y: -70, opacity: 0 }}
+                  animate={{ scale: 1, y: 0, opacity: 1 }}
+                  transition={{ duration: 1.0, ease: "easeOut" }}
                   onClick={handleOpenChat}
-                  className="fixed bottom-5 right-5 z-50 cursor-pointer select-none"
+                  className="fixed bottom-[calc(1vw+20px)] right-[calc(1vw+20px)] z-[52] cursor-pointer select-none"
                   style={{
-                    width: "12.5vw",
-                    height: "12.5vw",
+                    width: "12vw",
+                    height: "12vw",
                     minWidth: "120px",
                     minHeight: "120px",
                     maxWidth: "240px",
@@ -603,20 +775,30 @@ export default function ChatWidget() {
               </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Small Circular Profile Badge (collapsed state) */}
+        {/* Small Circular Spaceship Badge (collapsed state) */}
         <AnimatePresence>
           {isStickerDismissed && !isOpen && (
               <motion.div
                   initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
+                  animate={{ 
+                    scale: 1, 
+                    opacity: 1,
+                    y: [0, -4, 0] // Gentle bobbing
+                  }}
+                  transition={{
+                    y: {
+                      repeat: Infinity,
+                      duration: 3,
+                      ease: "easeInOut"
+                    }
+                  }}
                   exit={{ scale: 0, opacity: 0 }}
                   onClick={handleOpenChat}
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
-                  className="fixed bottom-5 right-5 z-50 cursor-pointer select-none"
+                  className="fixed bottom-5 right-5 z-50 cursor-pointer select-none animate-pulse-glow rounded-full"
                   style={{
                     width: "56px",
                     height: "56px",
@@ -638,11 +820,11 @@ export default function ChatWidget() {
                         animationDuration: "3s"
                       }}
                   />
-                  {/* Inner Profile Image */}
+                  {/* Inner Spaceship Image (dynamic logo in place of profile pic) */}
                   <img
-                      src="/profile.png"
-                      alt="Rohan Yadav Profile"
-                      className="w-full h-full object-cover rounded-full bg-slate-900 border border-slate-950"
+                      src="/spaceship.png"
+                      alt="Spaceship Logo"
+                      className="w-full h-full object-contain p-1.5 rounded-full bg-slate-900 border border-slate-950"
                   />
                 </div>
                 <span
