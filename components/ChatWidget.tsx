@@ -537,7 +537,7 @@ export default function ChatWidget() {
                   animate={{ opacity: 1, scale: 1, x: 0 }}
                   exit={{ opacity: 0, scale: 0.8, x: 20 }}
                   onClick={handleOpenChat}
-                  className="fixed bottom-[110px] right-24 z-50 p-4 rounded-lg backdrop-blur-md cursor-pointer select-none"
+                  className="fixed bottom-[calc(6.25vw+10px)] right-[calc(12.5vw+30px)] z-50 p-4 rounded-lg backdrop-blur-md cursor-pointer select-none"
                   style={{
                     background: "rgba(10, 25, 47, 0.85)",
                     border: "1px solid rgba(0, 240, 255, 0.4)",
@@ -587,8 +587,12 @@ export default function ChatWidget() {
                   onClick={handleOpenChat}
                   className="fixed bottom-5 right-5 z-50 cursor-pointer select-none"
                   style={{
-                    width: "90px",
-                    height: "90px",
+                    width: "12.5vw",
+                    height: "12.5vw",
+                    minWidth: "120px",
+                    minHeight: "120px",
+                    maxWidth: "240px",
+                    maxHeight: "240px"
                   }}
               >
                 <img
