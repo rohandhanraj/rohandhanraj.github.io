@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/updateRAG.mjs",
+    "prebuild": "node scripts/updateRAG.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
