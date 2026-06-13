@@ -620,156 +620,165 @@ export default function ChatWidget() {
           )}
         </AnimatePresence>
 
-        {/* Greeting Speech Bubble */}
-        <AnimatePresence>
-          {!isOpen && !isStickerDismissed && (animationStep === 'clouds_appearing' || animationStep === 'message_appearing') && (
-              <motion.div
-                  onClick={handleOpenChat}
-                  className="fixed bottom-[24px] right-[100px] md:bottom-[calc(8.5vw+20px)] md:right-[calc(13vw+30px)] z-50 cursor-pointer select-none w-[190px] md:w-[220px]"
-                  style={{
-                    filter: "drop-shadow(0 0 8px rgba(0, 240, 255, 0.35)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5))",
-                  }}
-              >
-                {/* Smallest tail cloud (level with lips, puffy cloud shape) */}
-                <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="absolute backdrop-blur-md z-10"
-                    style={{
-                      right: "-24px",
-                      bottom: "-12px",
-                      width: "12px",
-                      height: "10px",
-                      background: "rgba(224, 252, 255, 0.95)",
-                      borderRadius: "8px 10px 6px 8px / 8px 8px 6px 6px",
-                      transformOrigin: "bottom left"
-                    }}
-                />
-
-                {/* Medium tail cloud (puffy cloud shape) */}
-                <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
-                    className="absolute backdrop-blur-md z-10"
-                    style={{
-                      right: "-12px",
-                      bottom: "0px",
-                      width: "18px",
-                      height: "16px",
-                      background: "rgba(224, 252, 255, 0.95)",
-                      borderRadius: "14px 18px 10px 14px / 12px 14px 10px 12px",
-                      transformOrigin: "bottom left"
-                    }}
-                />
-
-                {/* Main Cloud Body & Puff Bumps */}
-                <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
-                    className="relative w-full h-full"
-                    style={{ transformOrigin: "bottom right" }}
-                >
-                  {/* Main Cloud Box */}
-                  <div
-                      className="p-4 backdrop-blur-md relative z-10"
-                      style={{
-                        background: "rgba(224, 252, 255, 0.95)",
-                        borderRadius: "24px",
-                        color: "#0a192f", // Dark readable navy text
-                        fontSize: "0.85rem",
-                        lineHeight: "1.35",
-                      }}
-                  >
-                    {/* Message content fades in only in message_appearing step */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={animationStep === 'message_appearing' ? { opacity: 1 } : { opacity: 0 }}
-                        transition={{ duration: 0.4 }}
-                        className="relative z-20 w-full h-full"
-                    >
-                      <button
-                          onClick={dismissSticker}
-                          className="absolute top-0 right-0 w-5 h-5 flex items-center justify-center text-[11px] hover:text-black transition-colors z-20"
-                          style={{
-                            background: "transparent",
-                            border: "none",
-                            color: "#64748b",
-                            cursor: "pointer",
-                            padding: 0,
-                            margin: "4px"
-                          }}
-                          aria-label="Dismiss greeting"
-                      >
-                        ✕
-                      </button>
-                      <p className="pr-3 font-semibold relative z-10">Hi, how can I assist with Rohan&apos;s profile?</p>
-                    </motion.div>
-                  </div>
-
-                  {/* Cloud Puff Bumps (merge seamlessly since they have no borders) */}
-                  <div
-                      className="absolute rounded-full backdrop-blur-md z-0"
-                      style={{
-                        top: "-16px",
-                        left: "30px",
-                        width: "48px",
-                        height: "48px",
-                        background: "rgba(224, 252, 255, 0.95)",
-                      }}
-                  />
-                  <div
-                      className="absolute rounded-full backdrop-blur-md z-0"
-                      style={{
-                        top: "-24px",
-                        right: "40px",
-                        width: "56px",
-                        height: "56px",
-                        background: "rgba(224, 252, 255, 0.95)",
-                      }}
-                  />
-                  <div
-                      className="absolute rounded-full backdrop-blur-md z-0"
-                      style={{
-                        top: "12px",
-                        left: "-12px",
-                        width: "40px",
-                        height: "40px",
-                        background: "rgba(224, 252, 255, 0.95)",
-                      }}
-                  />
-                  <div
-                      className="absolute rounded-full backdrop-blur-md z-0"
-                      style={{
-                        top: "18px",
-                        right: "-12px",
-                        width: "40px",
-                        height: "40px",
-                        background: "rgba(224, 252, 255, 0.95)",
-                      }}
-                  />
-                </motion.div>
-              </motion.div>
-          )}
-        </AnimatePresence>
-        {/* Big Sticker Waving Avatar */}
+        {/* Waving Avatar & Cloud Bubbles Setup */}
         <AnimatePresence>
           {!isStickerDismissed && !isOpen && animationStep !== 'flying' && (
-              <motion.div
-                  initial={{ scale: 0.1, y: -70, opacity: 0 }}
-                  animate={{ scale: 1, y: 0, opacity: 1 }}
-                  transition={{ duration: 1.0, ease: "easeOut" }}
-                  onClick={handleOpenChat}
-                  className="fixed bottom-4 right-4 md:bottom-[calc(1vw+20px)] md:right-[calc(1vw+20px)] z-[52] cursor-pointer select-none w-[80px] h-[80px] md:w-[12vw] md:h-[12vw] md:min-w-[120px] md:min-h-[120px] md:max-w-[240px] md:max-h-[240px]"
-              >
-                <img
-                    src="/avatar_sticker.png"
-                    alt="Rohan's Waving Avatar Sticker"
-                    className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(0,240,255,0.45)] hover:scale-105 transition-transform"
-                />
-              </motion.div>
+            <div
+              className="fixed bottom-4 right-4 z-50 pointer-events-none select-none flex items-end justify-end"
+              style={{
+                width: "min(460px, calc(100vw - 2rem))",
+                height: "320px",
+              }}
+            >
+              <div className="relative w-full h-full">
+                {/* Waving Avatar Sticker */}
+                <motion.div
+                    initial={{ scale: 0.1, y: -70, opacity: 0 }}
+                    animate={{ scale: 1, y: 0, opacity: 1 }}
+                    transition={{ duration: 1.0, ease: "easeOut" }}
+                    onClick={handleOpenChat}
+                    className="absolute bottom-0 right-0 cursor-pointer pointer-events-auto w-[140px] h-[140px] md:w-[180px] md:h-[180px] z-[52]"
+                >
+                  <img
+                      src="/avatar_sticker.png"
+                      alt="Rohan's Waving Avatar Sticker"
+                      className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(0,240,255,0.45)] hover:scale-105 transition-transform"
+                  />
+                </motion.div>
+
+                {/* Cloud Bubbles */}
+                <AnimatePresence>
+                  {(animationStep === 'clouds_appearing' || animationStep === 'message_appearing') && (
+                    <>
+                      {/* Smallest tail cloud (starting just above the index finger of the avatar) */}
+                      <motion.div
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="absolute backdrop-blur-md z-10 right-[95px] bottom-[102px] md:right-[122px] md:bottom-[132px]"
+                          style={{
+                            width: "12px",
+                            height: "10px",
+                            background: "rgba(224, 252, 255, 0.95)",
+                            borderRadius: "8px 10px 6px 8px / 8px 8px 6px 6px",
+                            transformOrigin: "bottom left"
+                          }}
+                      />
+
+                      {/* Medium tail cloud */}
+                      <motion.div
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
+                          className="absolute backdrop-blur-md z-10 right-[110px] bottom-[118px] md:right-[141px] md:bottom-[152px]"
+                          style={{
+                            width: "18px",
+                            height: "16px",
+                            background: "rgba(224, 252, 255, 0.95)",
+                            borderRadius: "14px 18px 10px 14px / 12px 14px 10px 12px",
+                            transformOrigin: "bottom left"
+                          }}
+                      />
+
+                      {/* Main Cloud Body & Puff Bumps */}
+                      <motion.div
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
+                          className="absolute z-10 right-[124px] bottom-[134px] md:right-[158px] md:bottom-[172px] w-[190px] md:w-[220px]"
+                          style={{
+                            transformOrigin: "bottom right",
+                            filter: "drop-shadow(0 0 8px rgba(0, 240, 255, 0.35)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5))",
+                          }}
+                      >
+                        {/* Main Cloud Box */}
+                        <div
+                            className="p-4 backdrop-blur-md relative z-10 cursor-pointer pointer-events-auto"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenChat();
+                            }}
+                            style={{
+                              background: "rgba(224, 252, 255, 0.95)",
+                              borderRadius: "24px",
+                              color: "#0a192f",
+                              fontSize: "0.85rem",
+                              lineHeight: "1.35",
+                            }}
+                        >
+                          {/* Message content fades in only in message_appearing step */}
+                          <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={animationStep === 'message_appearing' ? { opacity: 1 } : { opacity: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="relative z-20 w-full h-full"
+                          >
+                            <button
+                                onClick={dismissSticker}
+                                className="absolute top-0 right-0 w-5 h-5 flex items-center justify-center text-[11px] hover:text-black transition-colors z-20"
+                                style={{
+                                  background: "transparent",
+                                  border: "none",
+                                  color: "#64748b",
+                                  cursor: "pointer",
+                                  padding: 0,
+                                  margin: "4px"
+                                }}
+                                aria-label="Dismiss greeting"
+                            >
+                              ✕
+                            </button>
+                            <p className="pr-3 font-semibold relative z-10">Hi, how can I assist with Rohan&apos;s profile?</p>
+                          </motion.div>
+                        </div>
+
+                        {/* Cloud Puff Bumps */}
+                        <div
+                            className="absolute rounded-full backdrop-blur-md z-0"
+                            style={{
+                              top: "-16px",
+                              left: "30px",
+                              width: "48px",
+                              height: "48px",
+                              background: "rgba(224, 252, 255, 0.95)",
+                            }}
+                        />
+                        <div
+                            className="absolute rounded-full backdrop-blur-md z-0"
+                            style={{
+                              top: "-24px",
+                              right: "40px",
+                              width: "56px",
+                              height: "56px",
+                              background: "rgba(224, 252, 255, 0.95)",
+                            }}
+                        />
+                        <div
+                            className="absolute rounded-full backdrop-blur-md z-0"
+                            style={{
+                              top: "12px",
+                              left: "-12px",
+                              width: "40px",
+                              height: "40px",
+                              background: "rgba(224, 252, 255, 0.95)",
+                            }}
+                        />
+                        <div
+                            className="absolute rounded-full backdrop-blur-md z-0"
+                            style={{
+                              top: "18px",
+                              right: "-12px",
+                              width: "40px",
+                              height: "40px",
+                              background: "rgba(224, 252, 255, 0.95)",
+                            }}
+                        />
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
           )}
         </AnimatePresence>
         {/* Small Circular Spaceship Badge (collapsed state) */}

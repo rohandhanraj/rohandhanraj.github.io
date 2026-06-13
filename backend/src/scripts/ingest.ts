@@ -15,7 +15,7 @@ interface DocumentNode {
   content: string;
 }
 
-const documentTreePath = path.resolve(__dirname, "../../../lib/documentTree.json");
+const documentTreePath = path.resolve(__dirname, "../../../frontend/lib/documentTree.json");
 
 async function getEmbedding(text: string): Promise<number[]> {
   const apiKey = process.env.OPENROUTER_API_KEY;

@@ -15,8 +15,8 @@ dist/
 /coverage
 
 # next.js
-/.next/
-/out/
+.next/
+out/
 
 # production
 /build
@@ -44,3 +44,6 @@ next-env.d.ts
 resumes_md/
 resumes_pdf/
 graphify-out/
+qdrant/
+volumes/
+docs/
