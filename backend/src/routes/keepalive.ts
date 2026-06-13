@@ -1,14 +1,12 @@
+import "../config/env.js";
 import { Router } from "express";
 import { mongoClient, qdrantClient, neo4jDriver } from "../config/db.js";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const router = Router();
 
 router.get("/", async (req, res) => {
   const authHeader = req.headers.authorization;
-  const cronSecret = process.env.CRON_SECRET;
+  const cronSecret = process.env.CRON_SECRET?.trim();
 
   if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
     return res.status(401).json({ error: "Unauthorized cron execution" });

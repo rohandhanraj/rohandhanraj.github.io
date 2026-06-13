@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { marked } from "marked";
-import { streamChat, saveToFirestore, getChatHistory, logAnalyticsEvent } from "@/lib/chatClient";
+import { streamChat, getChatHistory, logAnalyticsEvent } from "@/lib/chatClient";
 import { getVisitorInfo } from "@/lib/visitorInfo";
 import { retrieveContext } from "@/lib/ragEngine";
 import { buildDocumentTree } from "@/lib/documentTree";
@@ -362,9 +362,6 @@ export default function ChatWidget() {
             { role: "assistant", content: fullText, timestamp: now },
           ];
           setChatHistory((prev) => [...prev, ...newMsgs]);
-
-          // Persist to Firestore (non-blocking, fire-and-forget)
-          saveToFirestore(sessionId, newMsgs, visitorInfo || undefined).catch(() => {});
         },
 
         onError(errorMsg) {
@@ -612,15 +609,7 @@ export default function ChatWidget() {
                   handleSpaceshipLanded();
                 }
               }}
-              className="fixed bottom-5 right-5 z-[51] pointer-events-none select-none"
-              style={{
-                width: "14vw",
-                height: "14vw",
-                minWidth: "140px",
-                minHeight: "140px",
-                maxWidth: "280px",
-                maxHeight: "280px",
-              }}
+              className="fixed bottom-4 right-4 md:bottom-5 md:right-5 z-[51] pointer-events-none select-none w-[80px] h-[80px] md:w-[14vw] md:h-[14vw] md:min-w-[140px] md:min-h-[140px] md:max-w-[280px] md:max-h-[280px]"
             >
               <img
                 src="/spaceship.png"
@@ -636,9 +625,8 @@ export default function ChatWidget() {
           {!isOpen && !isStickerDismissed && (animationStep === 'clouds_appearing' || animationStep === 'message_appearing') && (
               <motion.div
                   onClick={handleOpenChat}
-                  className="fixed bottom-[calc(8.5vw+20px)] right-[calc(13vw+30px)] z-50 cursor-pointer select-none"
+                  className="fixed bottom-[24px] right-[100px] md:bottom-[calc(8.5vw+20px)] md:right-[calc(13vw+30px)] z-50 cursor-pointer select-none w-[190px] md:w-[220px]"
                   style={{
-                    width: "220px",
                     filter: "drop-shadow(0 0 8px rgba(0, 240, 255, 0.35)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5))",
                   }}
               >
@@ -774,15 +762,7 @@ export default function ChatWidget() {
                   animate={{ scale: 1, y: 0, opacity: 1 }}
                   transition={{ duration: 1.0, ease: "easeOut" }}
                   onClick={handleOpenChat}
-                  className="fixed bottom-[calc(1vw+20px)] right-[calc(1vw+20px)] z-[52] cursor-pointer select-none"
-                  style={{
-                    width: "12vw",
-                    height: "12vw",
-                    minWidth: "120px",
-                    minHeight: "120px",
-                    maxWidth: "240px",
-                    maxHeight: "240px"
-                  }}
+                  className="fixed bottom-4 right-4 md:bottom-[calc(1vw+20px)] md:right-[calc(1vw+20px)] z-[52] cursor-pointer select-none w-[80px] h-[80px] md:w-[12vw] md:h-[12vw] md:min-w-[120px] md:min-h-[120px] md:max-w-[240px] md:max-h-[240px]"
               >
                 <img
                     src="/avatar_sticker.png"
@@ -815,11 +795,7 @@ export default function ChatWidget() {
                   onMouseLeave={() => setIsHovered(false)}
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
-                  className="fixed bottom-5 right-5 z-50 cursor-pointer select-none animate-pulse-glow rounded-full"
-                  style={{
-                    width: "56px",
-                    height: "56px",
-                  }}
+                  className="fixed bottom-4 right-4 md:bottom-5 md:right-5 z-50 cursor-pointer select-none animate-pulse-glow rounded-full w-[56px] h-[56px]"
               >
                 {/* Holographic Glowing Border Container */}
                 <div

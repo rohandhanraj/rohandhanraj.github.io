@@ -1,10 +1,8 @@
+import "../config/env.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { mongoClient, neo4jDriver, qdrantClient } from "../config/db.js";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -66,20 +64,32 @@ export async function ingestResume() {
 
   // 2. Setup Qdrant Collection
   const collectionName = "resume_chunks";
+  
+  // Get first embedding to dynamically determine dimension size
+  console.log("Determining embedding dimension size dynamically...");
+  const firstValidNode = nodes.find(n => n.content.trim().length > 0);
+  if (!firstValidNode) {
+    throw new Error("No valid nodes with content found in document tree.");
+  }
+  const firstEmbedding = await getEmbedding(firstValidNode.content);
+  const embeddingDim = firstEmbedding.length;
+  console.log(`Determined embedding dimension: ${embeddingDim}`);
+
   const collections = await qdrantClient.getCollections();
   const exists = collections.collections.some(c => c.name === collectionName);
 
   if (exists) {
-    console.log(`Qdrant collection '${collectionName}' already exists.`);
-  } else {
-    console.log(`Creating Qdrant collection '${collectionName}'...`);
-    await qdrantClient.createCollection(collectionName, {
-      vectors: {
-        size: 768, // nomic-ai/nomic-embed-text-v1.5 size
-        distance: "Cosine"
-      }
-    });
+    console.log(`Deleting existing Qdrant collection '${collectionName}'...`);
+    await qdrantClient.deleteCollection(collectionName);
   }
+
+  console.log(`Creating Qdrant collection '${collectionName}' with size ${embeddingDim}...`);
+  await qdrantClient.createCollection(collectionName, {
+    vectors: {
+      size: embeddingDim,
+      distance: "Cosine"
+    }
+  });
 
   // 3. Process and Upload to Qdrant (Vector DB)
   console.log("Embedding and upserting chunks to Qdrant...");

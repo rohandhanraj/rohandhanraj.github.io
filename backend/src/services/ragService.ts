@@ -1,7 +1,5 @@
+import "../config/env.js";
 import { mongoClient, neo4jDriver, qdrantClient } from "../config/db.js";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 interface RAGContext {
   content: string;
@@ -20,8 +18,8 @@ function extractKeywords(query: string): string[] {
 
 // Fetch embeddings for Qdrant querying
 async function getQueryEmbedding(text: string): Promise<number[]> {
-  const apiKey = process.env.OPENROUTER_API_KEY;
-  const model = process.env.OPENROUTER_EMBEDDING_MODEL || "nomic-ai/nomic-embed-text-v1.5";
+  const apiKey = process.env.OPENROUTER_API_KEY?.trim();
+  const model = process.env.OPENROUTER_EMBEDDING_MODEL?.trim() || "nomic-ai/nomic-embed-text-v1.5";
 
   if (!apiKey || apiKey === "mock-key") {
     return Array.from({ length: 768 }, () => Math.random() - 0.5);
@@ -46,7 +44,7 @@ async function getQueryEmbedding(text: string): Promise<number[]> {
 
 // Query Cohere Rerank API
 async function rerankCandidates(query: string, documents: string[]): Promise<Array<{ index: number; relevance_score: number }>> {
-  const apiKey = process.env.COHERE_API_KEY;
+  const apiKey = process.env.COHERE_API_KEY?.trim();
   if (!apiKey || apiKey === "mock-key") {
     // If no API key, return natural order with mock scores
     return documents.map((_, index) => ({

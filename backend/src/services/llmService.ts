@@ -1,7 +1,6 @@
-import dotenv from "dotenv";
+import "../config/env.js";
+import axios from "axios";
 import { isRefusalPattern, SAFE_FALLBACK_RESPONSE } from "./guardrailService.js";
-
-dotenv.config();
 
 export async function streamNvidiaNimResponse(
   query: string,
@@ -9,9 +8,9 @@ export async function streamNvidiaNimResponse(
   history: Array<{ role: "user" | "assistant"; content: string }>,
   res: any
 ): Promise<void> {
-  const apiKey = process.env.NVIDIA_NIM_API_KEY;
-  const model = process.env.NVIDIA_NIM_MODEL || "meta/llama-3.1-70b-instruct";
-  const baseUrl = process.env.NVIDIA_NIM_BASE_URL || "https://integrate.api.nvidia.com/v1/chat/completions";
+  const apiKey = process.env.NVIDIA_NIM_API_KEY?.trim();
+  const model = process.env.NVIDIA_NIM_MODEL?.trim() || "meta/llama-3.1-70b-instruct";
+  const baseUrl = process.env.NVIDIA_NIM_BASE_URL?.trim() || "https://integrate.api.nvidia.com/v1/chat/completions";
 
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
@@ -52,96 +51,118 @@ RULES:
     { role: "user", content: query }
   ];
 
-  const response = await fetch(baseUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model,
-      messages,
-      stream: true,
-      temperature: 0.7,
-      max_tokens: 512
-    })
-  });
+  const invokeUrl = baseUrl.endsWith("/chat/completions") ? baseUrl : `${baseUrl}/chat/completions`;
 
-  if (!response.ok) {
-    throw new Error(`NVIDIA NIM API failed: ${response.status} ${response.statusText}`);
-  }
-
-  const reader = response.body ? response.body.getReader() : null;
-  const decoder = new TextDecoder();
-
-  if (!reader) {
-    throw new Error("Response body is not readable");
-  }
-
-  let buffer = "";
-  let accumulatedText = "";
-  let checkPassed = false;
-  const bufferLimit = 150; // Buffer first 150 characters to run output guardrail check
-
-  const streamFallback = async () => {
-    const words = SAFE_FALLBACK_RESPONSE.split(" ");
-    for (const word of words) {
-      res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: word + " " } }] })}\n\n`);
-    }
-    res.write("data: [DONE]\n\n");
-    res.end();
+  const headers = {
+    "Authorization": `Bearer ${apiKey}`,
+    "Content-Type": "application/json",
+    "Accept": "text/event-stream"
   };
 
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
+  const payload = {
+    model,
+    messages,
+    stream: true,
+    temperature: 0.7,
+    max_tokens: 512
+  };
 
-    buffer += decoder.decode(value, { stream: true });
-    const lines = buffer.split("\n");
-    buffer = lines.pop() || "";
+  try {
+    const response = await axios.post(invokeUrl, payload, {
+      headers,
+      responseType: "stream"
+    });
 
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed === "data: [DONE]") continue;
+    const stream = response.data;
+    let buffer = "";
+    let accumulatedText = "";
+    let checkPassed = false;
+    const bufferLimit = 150; // Buffer first 150 characters to run output guardrail check
 
-      if (trimmed.startsWith("data: ")) {
-        try {
-          const parsed = JSON.parse(trimmed.slice(6));
-          const content = parsed.choices?.[0]?.delta?.content || "";
-          accumulatedText += content;
+    const streamFallback = async () => {
+      const words = SAFE_FALLBACK_RESPONSE.split(" ");
+      for (const word of words) {
+        res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: word + " " } }] })}\n\n`);
+      }
+      res.write("data: [DONE]\n\n");
+      res.end();
+    };
 
-          if (!checkPassed && accumulatedText.length >= bufferLimit) {
-            if (isRefusalPattern(accumulatedText)) {
-              console.warn("Output refusal intercepted by guardrails. Triggering fallback.");
-              await streamFallback();
-              return;
+    return new Promise<void>((resolve, reject) => {
+      stream.on("data", (chunk: Buffer) => {
+        buffer += chunk.toString();
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || trimmed === "data: [DONE]") continue;
+
+          if (trimmed.startsWith("data: ")) {
+            try {
+              const parsed = JSON.parse(trimmed.slice(6));
+              const content = parsed.choices?.[0]?.delta?.content || "";
+              accumulatedText += content;
+
+              if (!checkPassed && accumulatedText.length >= bufferLimit) {
+                if (isRefusalPattern(accumulatedText)) {
+                  console.warn("Output refusal intercepted by guardrails. Triggering fallback.");
+                  stream.destroy();
+                  streamFallback().then(resolve).catch(reject);
+                  return;
+                }
+                checkPassed = true;
+                res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: accumulatedText } }] })}\n\n`);
+              } else if (checkPassed) {
+                res.write(`${line}\n\n`);
+              }
+            } catch {
+              if (checkPassed) {
+                res.write(`${line}\n\n`);
+              }
             }
-            checkPassed = true;
-            // Write the accumulated buffer out
-            res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: accumulatedText } }] })}\n\n`);
-          } else if (checkPassed) {
-            res.write(`${line}\n\n`);
-          }
-        } catch {
-          // Pass-through any unparseable line if check already passed
-          if (checkPassed) {
-            res.write(`${line}\n\n`);
           }
         }
+      });
+
+      stream.on("end", () => {
+        if (!checkPassed) {
+          if (isRefusalPattern(accumulatedText)) {
+            console.warn("Output refusal intercepted at stream end.");
+            streamFallback().then(resolve).catch(reject);
+            return;
+          }
+          res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: accumulatedText } }] })}\n\n`);
+        }
+        res.write("data: [DONE]\n\n");
+        res.end();
+        resolve();
+      });
+
+      stream.on("error", (err: any) => {
+        reject(err);
+      });
+    });
+  } catch (err: any) {
+    if (err.response) {
+      console.error(`NVIDIA NIM API HTTP error ${err.response.status}`);
+      if (err.response.data && typeof err.response.data.on === "function") {
+        let errBody = "";
+        err.response.data.on("data", (chunk: Buffer) => {
+          errBody += chunk.toString();
+        });
+        await new Promise<void>((resolve) => {
+          err.response.data.on("end", () => {
+            console.error("NVIDIA error response body:", errBody);
+            resolve();
+          });
+        });
+      } else {
+        console.error(err.response.data);
       }
+      throw new Error(`NVIDIA NIM API failed with status ${err.response.status}`);
+    } else {
+      throw err;
     }
   }
-
-  // If response ended before reaching the bufferLimit, check it now
-  if (!checkPassed) {
-    if (isRefusalPattern(accumulatedText)) {
-      console.warn("Output refusal intercepted at stream end.");
-      await streamFallback();
-      return;
-    }
-    res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: accumulatedText } }] })}\n\n`);
-  }
-
-  res.write("data: [DONE]\n\n");
-  res.end();
 }

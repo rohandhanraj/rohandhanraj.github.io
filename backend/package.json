@@ -1,14 +1,17 @@
 {
   "name": "portfolio-backend",
   "version": "1.0.0",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/index.ts",
+    "dev": "ts-node-dev --esm --respawn src/index.ts",
     "build": "tsc",
-    "test": "vitest run"
+    "test": "vitest run",
+    "ingest": "ts-node src/scripts/ingest.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.18.0",
+    "axios": "^1.17.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
