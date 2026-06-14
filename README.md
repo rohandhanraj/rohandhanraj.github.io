@@ -3,7 +3,7 @@
     <tr>
       <td width="160" valign="middle" align="center">
         <img
-          src="https://raw.githubusercontent.com/rohandhanraj/rohandhanraj.github.io/main/public/profile.png"
+          src="https://raw.githubusercontent.com/rohandhanraj/rohandhanraj.github.io/main/frontend/public/profile.png"
           width="130"
           style="border-radius:50%;border:3px solid #00f0ff;box-shadow:0 0 15px rgba(0,240,255,0.4);display:block;"
         />
