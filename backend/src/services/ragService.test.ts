@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { retrieveHybridContext } from "./ragService.js";
-import { qdrantClient, neo4jDriver } from "../config/db.js";
+import { qdrantClient, getNeo4jSession } from "../config/db.js";
 
 vi.mock("../config/db.js", () => {
   const mockSession = {
@@ -42,9 +42,12 @@ vi.mock("../config/db.js", () => {
     ])
   };
 
+  const mockGetNeo4jSession = vi.fn().mockReturnValue(mockSession);
+
   return {
     qdrantClient: mockQdrantClient,
     neo4jDriver: mockNeo4jDriver,
+    getNeo4jSession: mockGetNeo4jSession,
     mongoClient: {}
   };
 });
@@ -65,6 +68,6 @@ describe("RAG Context Service", () => {
     expect(context).toContain("Project OMODORE (AI Agent Platform): AI Agent Platform description");
     
     expect(qdrantClient.search).toHaveBeenCalled();
-    expect(neo4jDriver.session).toHaveBeenCalled();
+    expect(getNeo4jSession).toHaveBeenCalled();
   });
 });

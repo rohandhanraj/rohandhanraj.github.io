@@ -2,7 +2,7 @@ import "../config/env.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { mongoClient, neo4jDriver, qdrantClient } from "../config/db.js";
+import { mongoClient, getNeo4jSession, qdrantClient } from "../config/db.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -127,7 +127,7 @@ export async function ingestResume() {
 
   // 4. Setup and Upload to Neo4j (Graph DB)
   console.log("Upserting Graph entities to Neo4j...");
-  const session = neo4jDriver.session();
+  const session = getNeo4jSession();
   try {
     // Clear existing graph to ensure clean seeding
     await session.run("MATCH (n) DETACH DELETE n");

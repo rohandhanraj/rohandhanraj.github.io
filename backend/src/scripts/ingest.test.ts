@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { ingestResume } from "./ingest.js";
-import { qdrantClient, neo4jDriver } from "../config/db.js";
+import { qdrantClient, getNeo4jSession } from "../config/db.js";
 
 // Mock the DB client modules or functions
 vi.mock("../config/db.js", () => {
@@ -25,10 +25,13 @@ vi.mock("../config/db.js", () => {
     db: vi.fn().mockReturnValue({})
   };
 
+  const mockGetNeo4jSession = vi.fn().mockReturnValue(mockSession);
+
   return {
     mongoClient: mockMongoClient,
     neo4jDriver: mockNeo4jDriver,
-    qdrantClient: mockQdrantClient
+    qdrantClient: mockQdrantClient,
+    getNeo4jSession: mockGetNeo4jSession
   };
 });
 
@@ -49,8 +52,8 @@ describe("Ingestion Pipeline", () => {
     expect(qdrantClient.upsert).toHaveBeenCalled();
     
     // Verify Neo4j session and runs were called
-    expect(neo4jDriver.session).toHaveBeenCalled();
-    const session = neo4jDriver.session();
+    expect(getNeo4jSession).toHaveBeenCalled();
+    const session = getNeo4jSession();
     expect(session.run).toHaveBeenCalled();
   });
 });

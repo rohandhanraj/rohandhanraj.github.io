@@ -1,6 +1,6 @@
 import "../config/env.js";
 import { Router } from "express";
-import { mongoClient, qdrantClient, neo4jDriver } from "../config/db.js";
+import { mongoClient, qdrantClient, getNeo4jSession } from "../config/db.js";
 
 const router = Router();
 
@@ -37,7 +37,7 @@ router.get("/", async (req, res) => {
   }
 
   // 3. Neo4j Keep-Alive
-  const session = neo4jDriver.session();
+  const session = getNeo4jSession();
   try {
     // Shuffled query: count node labels or match a random node
     const neo4jPing = await session.run("MATCH (n) RETURN count(n) as nodeCount LIMIT 1");

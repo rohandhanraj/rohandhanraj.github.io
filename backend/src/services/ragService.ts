@@ -1,5 +1,5 @@
 import "../config/env.js";
-import { mongoClient, neo4jDriver, qdrantClient } from "../config/db.js";
+import { mongoClient, getNeo4jSession, qdrantClient } from "../config/db.js";
 
 interface RAGContext {
   content: string;
@@ -120,7 +120,7 @@ export async function retrieveHybridContext(
 
   // 2. Graph Search (Neo4j)
   if (keywords.length > 0) {
-    const session = neo4jDriver.session();
+    const session = getNeo4jSession();
     try {
       // Find direct matches or connections for matching skills, projects, and experiences
       for (const kw of keywords) {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import request from "supertest";
 import app from "../index.js";
-import { mongoClient, qdrantClient, neo4jDriver } from "../config/db.js";
+import { mongoClient, qdrantClient, getNeo4jSession } from "../config/db.js";
 
 vi.mock("../config/db.js", () => {
   const mockDb = {
@@ -34,7 +34,8 @@ vi.mock("../config/db.js", () => {
     },
     neo4jDriver: {
       session: vi.fn().mockReturnValue(mockSession)
-    }
+    },
+    getNeo4jSession: vi.fn().mockReturnValue(mockSession)
   };
 });
 

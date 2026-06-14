@@ -12,6 +12,12 @@ export async function streamNvidiaNimResponse(
   const model = process.env.NVIDIA_NIM_MODEL?.trim() || "meta/llama-3.1-70b-instruct";
   const baseUrl = process.env.NVIDIA_NIM_BASE_URL?.trim() || "https://integrate.api.nvidia.com/v1/chat/completions";
 
+  if (res.setHeader && !res.headersSent) {
+    res.setHeader("Content-Type", "text/event-stream");
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
+  }
+
   const censor = new StreamCensor();
 
   if (!apiKey || apiKey === "mock-key") {

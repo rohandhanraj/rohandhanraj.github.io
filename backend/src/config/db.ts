@@ -39,8 +39,14 @@ export const qdrantClient = new QdrantClient({
   ...(qdrantApiKey ? { apiKey: qdrantApiKey } : {})
 });
 
+export function getNeo4jSession() {
+  const database = process.env.NEO4J_DATABASE || process.env.NEO4J_USERNAME;
+  const useDatabase = database && database !== "neo4j" ? database : undefined;
+  return neo4jDriver.session(useDatabase ? { database: useDatabase } : undefined);
+}
+
 export async function connectDbs() {
   await mongoClient.connect();
   await neo4jDriver.verifyConnectivity();
-  // QdrantClient verifies on the first request, but let's test a simple ping or check collections
 }
+
