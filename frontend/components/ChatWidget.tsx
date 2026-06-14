@@ -150,9 +150,43 @@ function TypingIndicator() {
   );
 }
 
+function parseMessageContent(content: string) {
+  let thinking = "";
+  let mainContent = content;
+  let isThinking = false;
+
+  if (content.includes("<think>")) {
+    const start = content.indexOf("<think>");
+    const end = content.indexOf("</think>");
+    if (end !== -1) {
+      thinking = content.slice(start + 7, end).trim();
+      mainContent = content.slice(end + 8).trim();
+    } else {
+      thinking = content.slice(start + 7).trim();
+      mainContent = "";
+      isThinking = true;
+    }
+  }
+  return { thinking, mainContent, isThinking };
+}
+
 // Custom assistant message bubble that uses Avatar Sticker icon
 function MessageBubble({ msg }: { msg: UIMessage }) {
   const isUser = msg.role === "user";
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+  const { thinking, mainContent, isThinking } = parseMessageContent(msg.content);
+
+  // Auto-collapse accordion when thinking is done and main content starts streaming
+  useEffect(() => {
+    if (mainContent && !isThinking) {
+      setIsAccordionOpen(false);
+    }
+  }, [mainContent, isThinking]);
+
+  if (!isUser && !msg.content && msg.streaming) {
+    return null;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 8, scale: 0.96 }}
@@ -168,7 +202,7 @@ function MessageBubble({ msg }: { msg: UIMessage }) {
         </div>
       )}
       <div
-        className="max-w-[80%] text-sm leading-relaxed markdown-content"
+        className="max-w-[80%] text-sm leading-relaxed"
         style={{
           background: isUser
             ? "linear-gradient(135deg, rgba(0,240,255,0.15), rgba(255,46,151,0.1))"
@@ -181,8 +215,40 @@ function MessageBubble({ msg }: { msg: UIMessage }) {
           borderTopLeftRadius: isUser ? "2px" : 0,
           wordBreak: "break-word",
         }}
-        dangerouslySetInnerHTML={{ __html: getHtmlContent(msg.content, msg.streaming) }}
-      />
+      >
+        {/* Render Thinking Process if present */}
+        {thinking && (
+          <div className="mb-2">
+            <button
+              onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+              className="flex items-center gap-1.5 text-[11px] font-mono font-medium text-slate-400 bg-slate-800/40 hover:bg-slate-800/80 border border-slate-700/50 rounded px-2 py-0.5 transition-colors cursor-pointer select-none"
+              style={{ outline: "none", background: "transparent", border: "none" }}
+            >
+              <span className={`inline-block transition-transform duration-200 ${isAccordionOpen ? "rotate-90" : ""}`}>▶</span>
+              <span>Thinking Process</span>
+              {isThinking && (
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              )}
+            </button>
+            {isAccordionOpen && (
+              <div className="mt-1.5 pl-2.5 border-l border-slate-700 text-[11px] text-slate-400 italic font-mono whitespace-pre-wrap leading-normal">
+                {thinking}
+                {isThinking && <span className="streaming-cursor"></span>}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Render Main Content */}
+        {mainContent && (
+          <div
+            className="markdown-content"
+            dangerouslySetInnerHTML={{
+              __html: getHtmlContent(mainContent, msg.streaming && !isThinking),
+            }}
+          />
+        )}
+      </div>
     </motion.div>
   );
 }
@@ -194,6 +260,7 @@ export default function ChatWidget() {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [statusText, setStatusText] = useState<"retrieving" | "reranking" | null>(null);
   const [sessionId, setSessionIdState] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(true);
@@ -321,6 +388,7 @@ export default function ChatWidget() {
       ]);
       setInput("");
       setIsLoading(true);
+      setStatusText("retrieving");
 
       // RAG: retrieve relevant context from the document tree (client-side)
       const context = retrieveContext(query, docTree);
@@ -334,7 +402,12 @@ export default function ChatWidget() {
 
       // Stream from OpenRouter
       await streamChat(context, chatHistory, query, {
+        onStatus(status) {
+          setStatusText(status);
+        },
+
         onToken(token) {
+          setStatusText(null);
           setMessages((prev) =>
               prev.map((m) =>
                   m.id === assistantMsgId
@@ -345,6 +418,7 @@ export default function ChatWidget() {
         },
 
         onDone(fullText) {
+          setStatusText(null);
           // Finalize the streaming message
           setMessages((prev) =>
               prev.map((m) =>
@@ -365,6 +439,7 @@ export default function ChatWidget() {
         },
 
         onError(errorMsg) {
+          setStatusText(null);
           // Remove the empty streaming message
           setMessages((prev) => prev.filter((m) => m.id !== assistantMsgId));
           setError(errorMsg);
@@ -442,27 +517,33 @@ export default function ChatWidget() {
                       <MessageBubble key={msg.id} msg={msg} />
                   ))}
 
-                  {isLoading &&
-                      messages[messages.length - 1]?.role !== "assistant" && (
-                          <motion.div
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              className="flex items-center gap-2 mb-3"
-                          >
-                            <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-700 bg-slate-900">
-                              <img src="/avatar_sticker.png" alt="AI Assistant" className="w-full h-full object-cover" />
-                            </div>
-                            <div
-                                style={{
-                                  background: "var(--bg-card)",
-                                  border: "1px solid var(--border-subtle)",
-                                  borderRadius: "2px",
-                                }}
-                            >
-                              <TypingIndicator />
-                            </div>
-                          </motion.div>
-                      )}
+                  {isLoading && statusText && (
+                      <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="flex items-center gap-2 mb-3"
+                      >
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-700 bg-slate-900">
+                          <img src="/avatar_sticker.png" alt="AI Assistant" className="w-full h-full object-cover" />
+                        </div>
+                        <div
+                            className="flex items-center gap-2 px-3 py-1.5"
+                            style={{
+                              background: "var(--bg-card)",
+                              border: "1px solid var(--border-subtle)",
+                              borderRadius: "2px",
+                              color: "var(--text-muted)",
+                              fontSize: "11px",
+                              fontFamily: "'Fira Code', monospace",
+                            }}
+                        >
+                          <span className="w-3.5 h-3.5 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+                          <span>
+                            {statusText === "retrieving" ? "Retrieving knowledge..." : "Reranking context..."}
+                          </span>
+                        </div>
+                      </motion.div>
+                  )}
 
                   {error && (
                       <motion.p

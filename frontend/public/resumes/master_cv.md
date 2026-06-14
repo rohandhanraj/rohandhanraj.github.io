@@ -43,38 +43,61 @@ Python, Django, Flask, FastAPI, Streamlit
 
 ### Generative AI & LLM Engineering
 
-**Large Language Models (LLMs):** OpenAI, Anthropic, Vertex AI, Google Gen AI Platform, Cohere, AI21 Labs 
-**Agentic AI Frameworks:** LangChain, LangGraph  
-**Techniques:** Prompt Engineering, Structured Outputs Generation, Retrieval-Augmented Generation (RAG), Prompt Chaining, Chain-of-Thought Reasoning, Graph-Based Generation, LLM System Design, LLM Solution Architecture
+**LLM Providers & Platforms:** OpenAI, Anthropic, Vertex AI, Google Gen AI Platform, Cohere, AI21 Labs  
+**LLM Frameworks:** LangChain  
+**Prompt Engineering & Reasoning:** Prompt Engineering, Prompt Chaining, Chain-of-Thought (CoT) Reasoning, Structured Output Generation  
+**Retrieval & Context Engineering:** Retrieval-Augmented Generation (RAG), Embedding Generation  
+**LLM Architecture & Solution Design:** LLM System Design, LLM Solution Architecture  
 
 ### Agentic AI & Multi-Agent Systems
 
-**Agentic AI System Design Patterns:** Reflexion, ReAct, Self-Ask, Plan & Execute, Tool Use, Human-in-the-loop, Tree of Thought, Multi-Agent Collaboration, Deep Research  
-**Techniques:** Agent Orchestration, LangGraph Workflows, Multi-Agent Systems, Tool Integration, Memory Management, Autonomous Decision-Making, Autonomous AI Agents
+**Agent Frameworks:** LangGraph  
+**Agent Design Patterns:** ReAct, Reflexion, Self-Ask, Plan-and-Execute, Tool Use, Human-in-the-Loop, Tree of Thoughts (ToT), Multi-Agent Collaboration, Deep Research  
+**Agent Development & Orchestration:** Agent Orchestration, LangGraph Workflows, Multi-Agent Systems, Tool Integration, Memory Management, Autonomous AI Agents, Autonomous Decision-Making
 
 ### Machine Learning & Deep Learning
 
-Scikit-Learn, TensorFlow, Keras, PyTorch, Optuna, HuggingFace Transformers, Model Fine-tuning, Hyperparameter Optimization, PyCaret
+**Machine Learning Libraries:** Scikit-Learn, PyCaret  
+**Deep Learning Frameworks:** TensorFlow, Keras, PyTorch  
+**Model Development & Optimization:** Neural Networks, Hyperparameter Optimization, Optuna
+
+### Model Fine-Tuning & Alignment
+
+**Parameter-Efficient Fine-Tuning (PEFT):** PEFT, LoRA, QLoRA, IA³, LLaMA-Adapter  
+**Fine-Tuning Methodologies:** Instruction Fine-Tuning, Supervised Fine-Tuning (SFT), Soft Prompting  
+**Alignment & Preference Optimization:** Reinforcement Learning from Human Feedback (RLHF), Reinforcement Learning from AI Feedback (RLAIF), Direct Preference Optimization (DPO)  
 
 ### Natural Language Processing (NLP)
 
-Spacy, NLTK, Encoder based Transformers, Decoder based Transformers, Encoder-Decoder Transformers, Sentiment Analysis, Named Entity Recognition (NER), Text Classification, Zero-Shot, One-Shot Learning, Aspect Based Sentiment Analysis, Text Generation, Text Summarization, Question Answering, Machine Translation, Paraphrasing
+**NLP Libraries:** SpaCy, NLTK, Hugging Face Transformers  
+**Encoder-Based Transformer Applications:** BERT, RoBERTa, Sentiment Analysis, Aspect-Based Sentiment Analysis (ABSA), Named Entity Recognition (NER), Text Classification  
+**Decoder-Based Transformer Applications:** Zero-Shot Learning, One-Shot Learning, Few-Shot Learning, Text Generation, Summarization, Question Answering, Paraphrasing  
+**Encoder-Decoder Transformer Applications:** Machine Translation  
 
 ### Data Engineering & Databases
 
-Apache Airflow, ETL Processes, SQL DBs (MySQL, PostgreSQL, BigQuery), NoSQL DBs (MongoDB, Cassandra), Vector DBs (Pinecone, Qdrant, LanceDB, Chroma, Pgvector, Milvus, Weaviate)
+**Relational Databases:** MySQL, PostgreSQL, BigQuery  
+**NoSQL Databases:** MongoDB, Cassandra  
+**Vector Databases:** Pinecone, Qdrant, LanceDB, Chroma, PgVector, Milvus, Weaviate, Sqlitevec  
+**Graph Databases:** Neo4j  
+**Data Engineering:** Apache Airflow, ETL Pipelines, Kafka  
 
 ### Analytics & Statistical Computing
 
-NumPy, Pandas, Matplotlib, Seaborn, Plotly, SciPy, Statistical Analysis, Predictive Analytics, Data Visualization
+NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predictive Analytics, Data Visualization
 
 ### Web Scraping & Data Extraction
 
-BeautifulSoup, Scrapy, Selenium, Playwright, Pydantic Structured Output
+**Web Scraping Frameworks:** BeautifulSoup, Scrapy, Selenium, Playwright  
+**Data Extraction & Validation:** Data Extraction, Data Validation  
 
 ### DevOps, Cloud & MLOps
 
-Git, GitHub, Docker, CI/CD(Github Workflows, Jenkins), Google Cloud Platform (GCP), Amazon Web Services (AWS), MLOps
+**Version Control & DevOps:** Git, GitHub, Docker  
+**CI/CD & Automation:** GitHub Actions, Jenkins   
+**Cloud Platforms:** Google Cloud Platform (GCP), Amazon Web Services (AWS)  
+**MLOps Tools:** MLflow, TensorBoard, DVC  
+**MLOps Practices:** Continuous Model Training, Model Evaluation, Model Deployment, Model Monitoring, Model Optimization, Model Versioning, Model Management  
 
 ---
 
@@ -185,7 +208,11 @@ Omodore is an auto-agent platform enabling non-technical users to build domain-s
 
 **Language:** Python  
 **Development Framework:** FastAPI  
-**Generative AI:** LangChain, LangGraph, GPT, LLMs, Prompt Chaining, Chain of Thoughts, RAG, Agent Building  
+**Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
+**NLP:** Hugging Face Transformers, Large Language Models (LLMs)  
+**Model Development:** Model Tuning, Model Training, Model Evaluation, Model Deployment, Model Monitoring, Model Optimization, Model Versioning, Model Management  
+**Generative AI & Agentic AI:** LangChain, LangGraph, GPT, LLMs, Prompt Chaining, Chain of Thoughts, RAG, Agent Building, Autonomous Agents, Multi-Agent Systems  
+**Data Engineering & Databases:** Apache Airflow, Qdrant, MongoDB, Postgresql, PgVector, Neo4j  
 **Cloud & DevOps:** Docker
 
 ---
@@ -222,7 +249,8 @@ Rbetraj is an Automated Dropshipping Platform powered by Shop Scan Agent which s
 **Language:** Python  
 **Development Framework:** FastAPI  
 **Web Scraping:** Selenium, Playwright, BeautifulSoup  
-**Generative AI:** GPT, LLMs, LangChain, Pydantic for structured output  
+**Generative AI & Agentic AI:** GPT, LLMs, LangChain, Pydantic for structured output 
+**Data Engineering & Databases:** Apache Airflow, Qdrant, MongoDB  
 **Cloud & DevOps:** Docker
 
 ---
@@ -256,7 +284,7 @@ GALAMBO is a sophisticated multi-modal virtual agent that combines context-aware
 
 **Language:** Python  
 **Development Framework:** FastAPI  
-**Generative AI:** GPT, LLMs, Multi-modal AI, LangChain, Agent Building  
+**Generative AI & Agentic AI:** GPT, LLMs, Multi-modal AI, LangChain, Agent Building  
 **Tools:** Search Engine Integration  
 **Cloud & DevOps:** Docker
 
@@ -301,15 +329,11 @@ Chat-bot interface where users can type sample questions and receive instant dat
 
 **Language:** Python  
 **Development Framework:** FastAPI  
-**Databases:**
-- SQL: MySQL
-- NoSQL: MongoDB
-- Vector DB: Qdrant, Milvus, Weaviate
-
 **Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
 **NLP:** Hugging Face Transformers, Large Language Models (LLMs)  
-**Generative AI:** LangChain, LangGraph, GPT, Prompt Chaining, Chain of Thoughts, RAG, Agent Building  
-**Data Orchestration:** Airflow
+**Generative AI & Agentic AI:** LangChain, LangGraph, GPT, Prompt Chaining, Chain of Thoughts, RAG, Agent Building  
+**Data Engineering & Databases:** Apache Airflow, MySQL, MongoDB, Qdrant, Milvus, Weaviate   
+**Cloud & DevOps:** Docker
 
 ---
 
@@ -346,15 +370,10 @@ Aisera is a leading provider of Generative AI Solutions that helps enterprises b
 
 **Language:** Python, Nashorn JAVA  
 **Development Framework:** FastAPI  
-**Databases:**
-- SQL: Postgres
-- NoSQL: MongoDB
-- Vector DB: Chroma, Weaviate
-
 **Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
 **NLP:** Spacy, NLTK, Hugging Face Transformers, BERT, Large Language Models (LLMs)  
 **Generative AI:** LangChain, Prompt Chaining, RAG, Agent Building  
-**Data Orchestration:** Airflow  
+**Data Engineering & Databases:** Apache Airflow, MySQL, MongoDB, Chroma, Weaviate      
 **Cloud Platform:** GCP
 
 ---
@@ -393,14 +412,10 @@ evalmyBRAND is an AI-powered platform designed to turn unstructured customer fee
 
 **Language:** Python  
 **Development Framework:** Poetry, Flask, FastAPI  
-**Databases:**
-- SQL: Oracle
-- NoSQL: MongoDB, Cassandra
-
 **Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
 **NLP:** Spacy, NLTK, Hugging Face Transformers, BERT, RoBERTa, Large Language Models (LLMs), Google Translate, LibreOffice Translate, Mixed Code Language Translation  
 **Generative AI:** LangChain, Prompt Chaining, RAG  
-**Data Orchestration:** Airflow
+**Data Engineering & Databases:** Apache Airflow, Oracle, MongoDB, Cassandra
 
 ---
 

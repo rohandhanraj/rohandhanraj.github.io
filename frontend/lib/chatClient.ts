@@ -5,6 +5,7 @@ interface StreamCallbacks {
   onToken: (token: string) => void;
   onDone: (fullText: string) => void;
   onError: (error: string) => void;
+  onStatus?: (status: "retrieving" | "reranking") => void;
 }
 
 /**
@@ -67,6 +68,11 @@ export async function streamChat(
 
         try {
           const parsed = JSON.parse(data);
+          if (parsed.status && callbacks.onStatus) {
+            callbacks.onStatus(parsed.status);
+            continue;
+          }
+
           const token = parsed.choices?.[0]?.delta?.content;
           if (token) {
             fullText += token;

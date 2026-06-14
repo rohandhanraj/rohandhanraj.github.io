@@ -2,7 +2,7 @@ import { Router } from "express";
 import crypto from "crypto";
 import { mongoClient } from "../config/db.js";
 import { retrieveHybridContext } from "../services/ragService.js";
-import { isPromptInjection, SAFE_FALLBACK_RESPONSE } from "../services/guardrailService.js";
+import { validatePreAgentInput, SAFE_FALLBACK_RESPONSE } from "../services/guardrailService.js";
 import { streamNvidiaNimResponse } from "../services/llmService.js";
 
 const router = Router();
@@ -58,10 +58,16 @@ router.post("/", async (req, res) => {
     return res.status(400).json({ error: "Query is required" });
   }
 
+  // Set response headers for event stream early
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+
   // 1. Input Guardrail Check
-  if (isPromptInjection(query)) {
-    console.warn(`Prompt injection attempt blocked: "${query}"`);
-    res.setHeader("Content-Type", "text/event-stream");
+  try {
+    validatePreAgentInput(query);
+  } catch (error: any) {
+    console.warn(`Prompt validation blocked: "${query}" - ${error.message}`);
     res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: SAFE_FALLBACK_RESPONSE } }] })}\n\n`);
     res.write("data: [DONE]\n\n");
     res.end();
@@ -69,20 +75,29 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    // 2. Retrieve Hybrid context
-    const context = await retrieveHybridContext(query);
+    // 2. Retrieve Hybrid context with status streaming
+    const context = await retrieveHybridContext(query, (status) => {
+      res.write(`data: ${JSON.stringify({ status })}\n\n`);
+    });
 
     // Create a mock/intercept response object to capture the full streamed text
     let fullResponse = "";
     const originalWrite = res.write.bind(res);
     res.write = (chunk: any, encoding?: any, callback?: any) => {
       const chunkStr = chunk.toString();
-      if (chunkStr.startsWith("data: ")) {
-        try {
-          const parsed = JSON.parse(chunkStr.slice(6).trim());
-          fullResponse += parsed.choices?.[0]?.delta?.content || "";
-        } catch {
-          // ignore parsing error
+      const lines = chunkStr.split("\n");
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.startsWith("data: ")) {
+          const dataStr = trimmed.slice(6).trim();
+          if (dataStr && dataStr !== "[DONE]") {
+            try {
+              const parsed = JSON.parse(dataStr);
+              fullResponse += parsed.choices?.[0]?.delta?.content || "";
+            } catch {
+              // ignore parsing error
+            }
+          }
         }
       }
       return originalWrite(chunk, encoding, callback);

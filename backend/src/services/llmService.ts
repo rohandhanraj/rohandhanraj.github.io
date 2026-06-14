@@ -1,6 +1,6 @@
 import "../config/env.js";
 import axios from "axios";
-import { isRefusalPattern, SAFE_FALLBACK_RESPONSE } from "./guardrailService.js";
+import { StreamCensor, SAFE_FALLBACK_RESPONSE } from "./guardrailService.js";
 
 export async function streamNvidiaNimResponse(
   query: string,
@@ -12,16 +12,23 @@ export async function streamNvidiaNimResponse(
   const model = process.env.NVIDIA_NIM_MODEL?.trim() || "meta/llama-3.1-70b-instruct";
   const baseUrl = process.env.NVIDIA_NIM_BASE_URL?.trim() || "https://integrate.api.nvidia.com/v1/chat/completions";
 
-  res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
+  const censor = new StreamCensor();
 
   if (!apiKey || apiKey === "mock-key") {
-    const mockResponseText = `Based on the context, Rohan Yadav is an AI/ML Engineer with 7+ years of experience, including work on OMODORE and SALESMOJI.`;
+    // Generate reasoning + response in mock response block
+    const mockResponseText = `<think>\nAnalyzing prompt for query: "${query}"...\nRetrieving relevant information.\n</think>\nBased on the context, Rohan Yadav is an AI/ML Engineer with 7+ years of experience, including work on OMODORE and SALESMOJI.`;
     const words = mockResponseText.split(" ");
     for (const word of words) {
-      res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: word + " " } }] })}\n\n`);
+      const chunk = word + " ";
+      const safe = censor.append(chunk);
+      if (safe) {
+        res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safe } }] })}\n\n`);
+      }
       await new Promise(resolve => setTimeout(resolve, 20));
+    }
+    const final = censor.append("", true);
+    if (final) {
+      res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: final } }] })}\n\n`);
     }
     res.write("data: [DONE]\n\n");
     res.end();
@@ -75,18 +82,8 @@ RULES:
 
     const stream = response.data;
     let buffer = "";
-    let accumulatedText = "";
-    let checkPassed = false;
-    const bufferLimit = 150; // Buffer first 150 characters to run output guardrail check
-
-    const streamFallback = async () => {
-      const words = SAFE_FALLBACK_RESPONSE.split(" ");
-      for (const word of words) {
-        res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: word + " " } }] })}\n\n`);
-      }
-      res.write("data: [DONE]\n\n");
-      res.end();
-    };
+    let hasThinkStarted = false;
+    let hasThinkEnded = false;
 
     return new Promise<void>((resolve, reject) => {
       stream.on("data", (chunk: Buffer) => {
@@ -101,38 +98,43 @@ RULES:
           if (trimmed.startsWith("data: ")) {
             try {
               const parsed = JSON.parse(trimmed.slice(6));
+              const reasoning = parsed.choices?.[0]?.delta?.reasoning_content || "";
               const content = parsed.choices?.[0]?.delta?.content || "";
-              accumulatedText += content;
 
-              if (!checkPassed && accumulatedText.length >= bufferLimit) {
-                if (isRefusalPattern(accumulatedText)) {
-                  console.warn("Output refusal intercepted by guardrails. Triggering fallback.");
-                  stream.destroy();
-                  streamFallback().then(resolve).catch(reject);
-                  return;
+              let chunkToProcess = "";
+              if (reasoning) {
+                if (!hasThinkStarted) {
+                  hasThinkStarted = true;
+                  chunkToProcess += "<think>";
                 }
-                checkPassed = true;
-                res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: accumulatedText } }] })}\n\n`);
-              } else if (checkPassed) {
-                res.write(`${line}\n\n`);
+                chunkToProcess += reasoning;
+              } else if (content) {
+                if (hasThinkStarted && !hasThinkEnded) {
+                  hasThinkEnded = true;
+                  chunkToProcess += "</think>";
+                }
+                chunkToProcess += content;
               }
-            } catch {
-              if (checkPassed) {
-                res.write(`${line}\n\n`);
+
+              if (chunkToProcess) {
+                const safe = censor.append(chunkToProcess);
+                if (safe) {
+                  res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safe } }] })}\n\n`);
+                }
               }
-            }
+            } catch {}
           }
         }
       });
 
       stream.on("end", () => {
-        if (!checkPassed) {
-          if (isRefusalPattern(accumulatedText)) {
-            console.warn("Output refusal intercepted at stream end.");
-            streamFallback().then(resolve).catch(reject);
-            return;
-          }
-          res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: accumulatedText } }] })}\n\n`);
+        let endChunk = "";
+        if (hasThinkStarted && !hasThinkEnded) {
+          endChunk += "</think>";
+        }
+        const finalContent = censor.append(endChunk, true);
+        if (finalContent) {
+          res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: finalContent } }] })}\n\n`);
         }
         res.write("data: [DONE]\n\n");
         res.end();

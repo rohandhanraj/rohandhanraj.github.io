@@ -79,7 +79,11 @@ async function rerankCandidates(query: string, documents: string[]): Promise<Arr
   return data.results;
 }
 
-export async function retrieveHybridContext(query: string): Promise<string> {
+export async function retrieveHybridContext(
+  query: string,
+  onStatusUpdate?: (status: "retrieving" | "reranking") => void
+): Promise<string> {
+  if (onStatusUpdate) onStatusUpdate("retrieving");
   console.log(`Retrieving context for query: "${query}"`);
   
   const keywords = extractKeywords(query);
@@ -193,6 +197,7 @@ export async function retrieveHybridContext(query: string): Promise<string> {
   }
 
   // 3. Cohere Reranking
+  if (onStatusUpdate) onStatusUpdate("reranking");
   console.log(`Reranking ${candidateTexts.length} context candidates...`);
   try {
     const reranked = await rerankCandidates(query, candidateTexts);
