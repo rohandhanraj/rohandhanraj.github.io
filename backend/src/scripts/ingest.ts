@@ -64,7 +64,7 @@ export async function ingestResume() {
 
   // 2. Setup Qdrant Collection
   const collectionName = "resume_chunks";
-  
+
   // Get first embedding to dynamically determine dimension size
   console.log("Determining embedding dimension size dynamically...");
   const firstValidNode = nodes.find(n => n.content.trim().length > 0);
@@ -149,49 +149,90 @@ export async function ingestResume() {
         name: "OMODORE",
         domain: "AI Agent Platform",
         desc: "Auto-agent platform enabling non-technical users to build domain-specific AI agents.",
-        skills: ["Python", "FastAPI", "LangChain", "LangGraph", "GPT", "LLMs", "RAG", "Agent Building", "Docker"]
+        skills: [
+          "Python", "FastAPI", "Sklearn", "TensorFlow", "Keras", "PyTorch",
+          "Hugging Face Transformers", "LLMs", "Model Tuning", "Model Training",
+          "Model Evaluation", "Model Deployment", "Model Monitoring", "Model Optimization",
+          "Model Versioning", "Model Management", "Generative AI", "Agentic AI", "LangChain", "LangGraph", "GPT",
+          "Prompt Chaining", "Chain of Thoughts", "Deep Research", "Web Search",
+          "RAG", "Agent Building", "Autonomous Agents", "Multi-Agent Systems",
+          "Apache Airflow", "Qdrant", "MongoDB", "Postgresql", "PgVector",
+          "Neo4j", "Docker"
+        ]
       },
       {
         name: "RBETRAJ",
         domain: "E-commerce Data Intelligence",
         desc: "Automated Dropshipping Platform powered by Shop Scan Agent for competitive analysis.",
-        skills: ["Python", "FastAPI", "Selenium", "Playwright", "BeautifulSoup", "GPT", "LLMs", "LangChain", "Pydantic", "Docker"]
+        skills: [
+          "Python", "FastAPI", "Selenium", "Playwright", "BeautifulSoup", "GPT",
+          "LLMs", "Generative AI", "Agentic AI", "LangChain", "LangGraph", "Multi-Agent Systems", "Structured Outputs Generation", "Pydantic", "Apache Airflow", "Qdrant", "MongoDB", "Docker"
+        ]
       },
       {
         name: "GALAMBO",
         domain: "Multi-Modal AI Assistant",
         desc: "Multi-modal virtual agent combining context-aware GPT responses with image search.",
-        skills: ["Python", "FastAPI", "GPT", "LLMs", "LangChain", "Agent Building", "Docker"]
+        skills: [
+          "Python", "FastAPI", "GPT", "LLMs", "Multi-modal AI", "LangChain",
+          "Agent Building", "Search Engine Integration", "Docker"
+        ]
       },
       {
         name: "SALESMOJI",
         domain: "Sales and Marketing",
         desc: "RAG-based Virtual Sales Assistant answering natural language sales queries.",
-        skills: ["Python", "FastAPI", "MySQL", "MongoDB", "Qdrant", "Milvus", "Weaviate", "Scikit-Learn", "TensorFlow", "Keras", "PyTorch", "Transformers", "LLMs", "LangChain", "LangGraph", "GPT", "RAG", "Agent Building", "Apache Airflow"]
+        skills: [
+          "Python", "FastAPI", "Sklearn", "TensorFlow", "Keras", "PyTorch",
+          "Hugging Face Transformers", "LLMs", "Generative AI", "Agentic AI", "LangChain", "LangGraph", "GPT",
+          "Prompt Chaining", "Chain of Thoughts", "RAG", "Agent Building",
+          "Apache Airflow", "MySQL", "MongoDB", "Qdrant", "Milvus", "Weaviate", "Docker"
+        ]
       },
       {
         name: "AISERA",
         domain: "Customer Support & IT Ops",
         desc: "AISM platform automated operations support for Fortune 500 clients.",
-        skills: ["Python", "FastAPI", "PostgreSQL", "MongoDB", "Chroma", "Weaviate", "Scikit-Learn", "TensorFlow", "Keras", "PyTorch", "Spacy", "NLTK", "Transformers", "BERT", "LLMs", "LangChain", "RAG", "Agent Building", "Apache Airflow", "GCP"]
+        skills: [
+          "Python", "Nashorn JAVA", "FastAPI", "Sklearn", "TensorFlow", "Keras", "PyTorch",
+          "Spacy", "NLTK", "Hugging Face Transformers", "BERT", "LLMs", "Generative AI", "Agentic AI",
+          "LangChain", "Prompt Chaining", "RAG", "Agent Building", "Autonomous Agents", "Multi-Agent Systems",
+          "Agentic Guardrails and Middleware for Enterprise AI", "Apache Airflow", "MySQL",
+          "MongoDB", "Chroma", "Weaviate", "GCP"
+        ]
       },
       {
         name: "EVALMYBRAND",
         domain: "Brand Experience Management",
         desc: "Aspect-based sentiment analysis and translation supporting 15+ languages.",
-        skills: ["Python", "Poetry", "Flask", "FastAPI", "Oracle", "MongoDB", "Cassandra", "Scikit-Learn", "TensorFlow", "Keras", "PyTorch", "Spacy", "NLTK", "Transformers", "BERT", "RoBERTa", "LLMs", "LangChain", "RAG", "Apache Airflow"]
+        skills: [
+          "Python", "Poetry", "Flask", "FastAPI", "Sklearn", "TensorFlow", "Keras", "PyTorch",
+          "Spacy", "NLTK", "Hugging Face Transformers", "BERT", "RoBERTa", "LLMs",
+          "Google Translate", "LibreOffice Translate", "Mixed Code Language Translation",
+          "LangChain", "Prompt Chaining", "RAG", "Apache Airflow", "Oracle", "MongoDB", "Cassandra"
+        ]
       },
       {
         name: "INVENTTED",
         domain: "Educational Technology",
         desc: "Pioneering education platform with timetabling, essay grading, MCQ generator.",
-        skills: ["Python", "Poetry", "Flask", "FastAPI", "Oracle", "MongoDB", "Cassandra", "Scikit-Learn", "TensorFlow", "Keras", "PyTorch", "Spacy", "NLTK", "Transformers", "LLMs", "CLIP", "Flan-T5", "LangChain", "RAG", "Agent Building", "GCP"]
+        skills: [
+          "Python", "Poetry", "Flask", "FastAPI", "Oracle", "MongoDB", "Cassandra",
+          "Sklearn", "TensorFlow", "Keras", "PyTorch", "Spacy", "NLTK",
+          "Hugging Face Transformers", "LLMs", "CLIP", "Flan-T5", "LangChain",
+          "Prompt Chaining", "RAG", "Agent Building", "Google Translate",
+          "LibreOffice Translate", "Mixed Code Language Translation", "GCP"
+        ]
       },
       {
         name: "MICE PROTEIN EXPRESSION",
         domain: "Bioinformatics",
         desc: "Bioinformatics multi-class classification platform for Down syndrome mice.",
-        skills: ["Python", "Flask", "Cassandra", "MySQL", "Scikit-Learn", "Optuna", "PyCaret", "AWS", "Docker"]
+        skills: [
+          "Python", "Flask", "Cassandra DB", "MySQL", "Sklearn", "Optuna",
+          "PyCaret", "Anaconda", "Data Pipeline", "Artificial Intelligence",
+          "Machine Learning", "AWS", "Docker"
+        ]
       }
     ];
 
@@ -200,25 +241,29 @@ export async function ingestResume() {
         company: "AI Tech Solutions Ltd.",
         role: "AI/ML Engineer",
         duration: "November 2024 – October 2025",
-        skills: ["Python", "LangChain", "LangGraph", "FastAPI", "RAG", "Docker", "Qdrant", "Playwright", "Selenium"]
+        skills: ["Python", "LangChain", "LangGraph", "FastAPI", "RAG", "Docker", "Qdrant", "Playwright", "Selenium"],
+        projects: ["OMODORE", "RBETRAJ", "GALAMBO"]
       },
       {
         company: "Aimlytics Technology",
         role: "Software Engineer",
         duration: "September 2022 – October 2024",
-        skills: ["Python", "RAG", "LangChain", "Apache Airflow", "BERT", "RoBERTa", "FastAPI", "Flask", "TensorFlow", "PyTorch", "Qdrant", "Chroma", "GCP"]
+        skills: ["Python", "RAG", "LangChain", "Apache Airflow", "BERT", "RoBERTa", "FastAPI", "Flask", "TensorFlow", "PyTorch", "Qdrant", "Chroma", "GCP"],
+        projects: ["SALESMOJI", "AISERA", "EVALMYBRAND", "INVENTTED"]
       },
       {
         company: "iNeuron.ai",
         role: "Machine Learning Engineer Intern",
         duration: "August 2021 – September 2022",
-        skills: ["Python", "Flask", "Scikit-Learn", "Optuna", "MySQL", "Cassandra", "Docker", "AWS"]
+        skills: ["Python", "Flask", "Scikit-Learn", "Optuna", "MySQL", "Cassandra", "Docker", "AWS"],
+        projects: ["MICE PROTEIN EXPRESSION"]
       },
       {
         company: "Bureau Veritas Group",
         role: "Metallurgical Quality Engineer",
         duration: "August 2016 – November 2019",
-        skills: ["Python", "NumPy", "Pandas", "SciPy", "Plotly"]
+        skills: ["Python", "NumPy", "Pandas", "SciPy", "Plotly"],
+        projects: []
       }
     ];
 
@@ -267,7 +312,7 @@ export async function ingestResume() {
       );
     }
 
-    // Seed Experiences and Link to Skills & Section
+    // Seed Experiences and Link to Skills, Projects & Section
     for (const exp of experiences) {
       await session.run(
         `
@@ -286,6 +331,18 @@ export async function ingestResume() {
           MERGE (e)-[:APPLIED_SKILL]->(sk)
           `,
           { company: exp.company, skillName: skill }
+        );
+      }
+
+      // Link to Projects
+      for (const projName of exp.projects) {
+        await session.run(
+          `
+          MATCH (e:Experience {company: $company})
+          MATCH (p:Project {name: $projectName})
+          MERGE (e)-[:DEVELOPED_PROJECT]->(p)
+          `,
+          { company: exp.company, projectName: projName }
         );
       }
 

@@ -568,11 +568,27 @@
       "gpt4",
       "tool",
       "use",
+      "projects",
+      "demonstrating",
+      "state",
+      "assistant",
+      "vision",
+      "models",
+      "dropshipping",
+      "aipowered",
+      "product",
+      "research",
+      "listing",
+      "generation",
+      "scanning",
+      "global",
+      "ecommerce",
+      "sites",
       "stack",
       "langchain",
       "llms"
     ],
-    "content": "**AI Tech Solutions Ltd.** | November 2024 – October 2025 | Full-time\n\n**Focus:** Architecting production-ready Agentic AI platforms, advanced RAG systems, and multi-agent orchestration\n\n**Key Responsibilities & Achievements:**\n\n* Led 15-member team building scalable AI systems using Python, FastAPI for backend services and production deployment\n* Developed modular ML pipelines (Omodore platform) achieving **38% accuracy improvement** through advanced RAG architecture\n* Designed multi-agent orchestration systems using **LangGraph** for complex workflow automation and autonomous decision-making\n* Implemented prompt chaining and **chain-of-thought reasoning** mechanisms\n* Deployed containerized AI systems using **Docker** with vector databases (Qdrant, LanceDB, Chroma)\n* Built automated web scraping systems (Rbetraj) with **Playwright** and **Selenium** for real-time data extraction\n* Architected multi-modal virtual agent (GALAMBO) integrating GPT-4 and autonomous tool use\n\n**Tech Stack:** Python, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Multi-Agent Systems, Docker, Qdrant, LanceDB, Chroma, Playwright, Selenium\n\n---"
+    "content": "**AI Tech Solutions Ltd.** | November 2024 – October 2025 | Full-time\n\n**Focus:** Architecting production-ready Agentic AI platforms, advanced RAG systems, and multi-agent orchestration\n\n**Key Responsibilities & Achievements:**\n\n* Led 15-member team building scalable AI systems using Python, FastAPI for backend services and production deployment\n* Developed modular ML pipelines (Omodore platform) achieving **38% accuracy improvement** through advanced RAG architecture\n* Designed multi-agent orchestration systems using **LangGraph** for complex workflow automation and autonomous decision-making\n* Implemented prompt chaining and **chain-of-thought reasoning** mechanisms\n* Deployed containerized AI systems using **Docker** with vector databases (Qdrant, LanceDB, Chroma)\n* Built automated web scraping systems (Rbetraj) with **Playwright** and **Selenium** for real-time data extraction\n* Architected multi-modal virtual agent (GALAMBO) integrating GPT-4 and autonomous tool use\n\n**Projects**\n\n* **Omodore** — Autonomous Agentic AI platform demonstrating LangGraph state orchestration\n* **GALAMBO** — Multi-modal AI assistant integrating vision models and real-time tool use\n* **Rbetraj** — Automated Dropshipping Platform with AI-Powered Product Research and Listing Generation by scanning Global E-Commerce Sites.\n\n**Tech Stack:** Python, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Multi-Agent Systems, Docker, Qdrant, LanceDB, Chroma, Playwright, Selenium\n\n---"
   },
   {
     "id": "2_software_engineer_generative_ai_ml_data_science_python",
@@ -649,6 +665,33 @@
       "issues",
       "ontime",
       "delivery",
+      "projects",
+      "aipowered",
+      "lead",
+      "generation",
+      "platform",
+      "contextaware",
+      "followup",
+      "automation",
+      "realtime",
+      "linkedin",
+      "integration",
+      "learning",
+      "enhancing",
+      "stem",
+      "education",
+      "visual",
+      "explanations",
+      "interactive",
+      "problemsolving",
+      "brand",
+      "monitoring",
+      "reputation",
+      "management",
+      "sentiment",
+      "analysis",
+      "trend",
+      "tracking",
       "tech",
       "stack",
       "rag",
@@ -659,7 +702,7 @@
       "pytorch",
       "gcp"
     ],
-    "content": "**Aimlytics Technology** | September 2022 – October 2024 | Full-time\n\n**Focus:** Enterprise-scale Generative AI, NLP, and ML solutions for Fortune 500 clients\n\n**Key Responsibilities & Achievements:**\n\n* Led team of 8 engineers delivering AI solutions for **Fortune 500 clients**\n* Built RAG-based virtual sales assistant (SalesMoji) handling **4,500+ daily API requests**\n* Built ML pipelines processing **100K+ daily records** using **Apache Airflow**\n* Fine-tuned **BERT** and **RoBERTa** models achieving **18% performance improvement**\n* Implemented vector database solutions (Qdrant, Chroma) for semantic search\n* Built multi-modal educational AI system (InventtEd)\n* Developed multilingual NLP pipeline supporting **15+ languages** (evalmyBRAND)\n* Resolved **28 critical production issues** with 100% on-time delivery\n\n**Tech Stack:** Python, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Qdrant, Chroma, GCP\n\n---"
+    "content": "**Aimlytics Technology** | September 2022 – October 2024 | Full-time\n\n**Focus:** Enterprise-scale Generative AI, NLP, and ML solutions for Fortune 500 clients\n\n**Key Responsibilities & Achievements:**\n\n* Led team of 8 engineers delivering AI solutions for **Fortune 500 clients**\n* Built RAG-based virtual sales assistant (SalesMoji) handling **4,500+ daily API requests**\n* Built ML pipelines processing **100K+ daily records** using **Apache Airflow**\n* Fine-tuned **BERT** and **RoBERTa** models achieving **18% performance improvement**\n* Implemented vector database solutions (Qdrant, Chroma) for semantic search\n* Built multi-modal educational AI system (InventtEd)\n* Developed multilingual NLP pipeline supporting **15+ languages** (evalmyBRAND)\n* Resolved **28 critical production issues** with 100% on-time delivery\n\n**Projects**\n\n* **SalesMoji** — AI-Powered Lead Generation Platform with Context-Aware Follow-up Automation and Real-time LinkedIn Integration.\n* **InventtEd** — Multi-Modal AI Learning Assistant Enhancing STEM Education with Visual Explanations and Interactive Problem-Solving\n* **evalmyBRAND** — Brand Monitoring and Reputation Management Platform with Multi-Lingual Sentiment Analysis and Trend Tracking\n\n**Tech Stack:** Python, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Qdrant, Chroma, GCP\n\n---"
   },
   {
     "id": "3_machine_learning_engineer_intern",
@@ -698,6 +741,10 @@
       "system",
       "markers",
       "classes",
+      "projects",
+      "model",
+      "highthroughput",
+      "analysis",
       "tech",
       "stack",
       "python",
@@ -706,7 +753,7 @@
       "cassandra",
       "aws"
     ],
-    "content": "**iNeuron.ai** | August 2021 – September 2022 | Internship\n\n**Focus:** ML pipeline development and optimization\n\n**Key Responsibilities & Achievements:**\n\n* Built ML pipeline architectures for multi-class classification\n* Reduced training time by **35%** using **Optuna**\n* Deployed ML applications using Flask and Docker\n* Built protein classification system (77 markers, 8 classes)\n\n**Tech Stack:** Python, Flask, Scikit-Learn, Optuna, MySQL, Cassandra, Docker, AWS\n\n---"
+    "content": "**iNeuron.ai** | August 2021 – September 2022 | Internship\n\n**Focus:** ML pipeline development and optimization\n\n**Key Responsibilities & Achievements:**\n\n* Built ML pipeline architectures for multi-class classification\n* Reduced training time by **35%** using **Optuna**\n* Deployed ML applications using Flask and Docker\n* Built protein classification system (77 markers, 8 classes)\n\n**Projects**\n\n* **Protein Classification System** — Multi-Class Classification Model for High-Throughput Protein Analysis using ML Pipeline Architectures.\n\n**Tech Stack:** Python, Flask, Scikit-Learn, Optuna, MySQL, Cassandra, Docker, AWS\n\n---"
   },
   {
     "id": "4_metallurgical_quality_engineer",
@@ -1443,9 +1490,16 @@
       "transformers",
       "large",
       "llms",
+      "agentic",
       "prompt",
       "chaining",
       "agent",
+      "autonomous",
+      "agents",
+      "multiagent",
+      "systems",
+      "guardrails",
+      "middleware",
       "engineering",
       "databases",
       "apache",
@@ -1454,7 +1508,7 @@
       "cloud",
       "gcp"
     ],
-    "content": "**Duration:** July 2023 to October 2024  \n**Role:** Software Engineer (AI | ML | Data Science | PYTHON)\n\n**Description:**\n\n**Domain:** Customer Service and IT Operations Management\n\nAisera is a leading provider of Generative AI Solutions that helps enterprises boost revenue, improve user productivity, lower operating expenses, and create magical user experiences by automating and personalizing customer support. The platform uses Natural Language Processing (NLP) and Machine Learning (ML) to understand customer queries and provide relevant information or solutions.\n\n**Key Features:**\n- Custom AI models for various enterprise tasks\n- AI Service Management (AISM) for automated operations support\n- TRAPS Framework for ethical and secure AI practices\n- Positive customer feedback on efficiency and automation\n- Enterprise-grade workflows for Fortune 500 clients\n\n**Roles and Responsibilities:**\n- Led 8-member team comprising 5 Data Engineers and 3 Software Developers\n- Delivered custom AI workflows for Fortune 500 clients including Cisco, ITC Fairview, Omnitrax, PDS, KDP, Marco Technologies\n- Fine-tuned BERT models for sentiment analysis achieving 50% performance improvement\n- Developed and scheduled system triggers using Airflow for automated operations\n- Implemented custom field prediction using advanced BERT architectures\n- Architected scalable ML pipelines ensuring reliability and performance\n- Implemented vector database solutions (Chroma, Weaviate) for RAG applications\n- Integrated LangChain for building conversational AI workflows\n- Resolved critical production issues maintaining high system availability\n- Handled 28 tickets overall and individually resolved 16 tickets out of 63 tickets assigned to Aimlytics Technologies Workflow team\n\n**Skills Used:**\n\n**Language:** Python, Nashorn JAVA  \n**Development Framework:** FastAPI  \n**Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  \n**NLP:** Spacy, NLTK, Hugging Face Transformers, BERT, Large Language Models (LLMs)  \n**Generative AI:** LangChain, Prompt Chaining, RAG, Agent Building  \n**Data Engineering & Databases:** Apache Airflow, MySQL, MongoDB, Chroma, Weaviate      \n**Cloud Platform:** GCP\n\n---"
+    "content": "**Duration:** July 2023 to October 2024  \n**Role:** Software Engineer (AI | ML | Data Science | PYTHON)\n\n**Description:**\n\n**Domain:** Customer Service and IT Operations Management\n\nAisera is a leading provider of Generative AI Solutions that helps enterprises boost revenue, improve user productivity, lower operating expenses, and create magical user experiences by automating and personalizing customer support. The platform uses Natural Language Processing (NLP) and Machine Learning (ML) to understand customer queries and provide relevant information or solutions.\n\n**Key Features:**\n- Custom AI models for various enterprise tasks\n- AI Service Management (AISM) for automated operations support\n- TRAPS Framework for ethical and secure AI practices\n- Positive customer feedback on efficiency and automation\n- Enterprise-grade workflows for Fortune 500 clients\n\n**Roles and Responsibilities:**\n- Led 8-member team comprising 5 Data Engineers and 3 Software Developers\n- Delivered custom AI workflows for Fortune 500 clients including Cisco, ITC Fairview, Omnitrax, PDS, KDP, Marco Technologies\n- Fine-tuned BERT models for sentiment analysis achieving 50% performance improvement\n- Developed and scheduled system triggers using Airflow for automated operations\n- Implemented custom field prediction using advanced BERT architectures\n- Architected scalable ML pipelines ensuring reliability and performance\n- Implemented vector database solutions (Chroma, Weaviate) for RAG applications\n- Integrated LangChain for building conversational AI workflows\n- Resolved critical production issues maintaining high system availability\n- Handled 28 tickets overall and individually resolved 16 tickets out of 63 tickets assigned to Aimlytics Technologies Workflow team\n\n**Skills Used:**\n\n**Language:** Python, Nashorn JAVA  \n**Development Framework:** FastAPI  \n**Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  \n**NLP:** Spacy, NLTK, Hugging Face Transformers, BERT, Large Language Models (LLMs)  \n**Generative AI & Agentic AI:** LangChain, Prompt Chaining, RAG, Agent Building,Autonomous Agents, Multi-Agent Systems, Agentic Guardrails and Middleware for Enterprise AI  \n**Data Engineering & Databases:** Apache Airflow, MySQL, MongoDB, Chroma, Weaviate      \n**Cloud Platform:** GCP\n\n---"
   },
   {
     "id": "6_project_name_evalmybrand",

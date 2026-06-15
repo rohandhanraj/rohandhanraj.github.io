@@ -42,6 +42,34 @@ jobs:
           NEXT_PUBLIC_BACKEND_URL: ${{ secrets.NEXT_PUBLIC_BACKEND_URL }}
         run: npm run build
 
+      - name: Check for resume modifications
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            resume:
+              - 'frontend/public/resumes/**'
+              - 'frontend/lib/documentTree.json'
+
+      - name: Install Ingestion Dependencies
+        if: steps.changes.outputs.resume == 'true'
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Run Database Ingestion Pipeline
+        if: steps.changes.outputs.resume == 'true'
+        working-directory: ./backend
+        env:
+          NODE_ENV: production
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          QDRANT_BASE_URL: ${{ secrets.QDRANT_BASE_URL }}
+          QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}
+          NEO4J_URI: ${{ secrets.NEO4J_URI }}
+          NEO4J_USERNAME: ${{ secrets.NEO4J_USERNAME }}
+          NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: npx tsx src/scripts/ingest.ts
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

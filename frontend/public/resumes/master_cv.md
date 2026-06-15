@@ -119,6 +119,12 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 * Built automated web scraping systems (Rbetraj) with **Playwright** and **Selenium** for real-time data extraction
 * Architected multi-modal virtual agent (GALAMBO) integrating GPT-4 and autonomous tool use
 
+**Projects**
+
+* **Omodore** — Autonomous Agentic AI platform demonstrating LangGraph state orchestration
+* **GALAMBO** — Multi-modal AI assistant integrating vision models and real-time tool use
+* **Rbetraj** — Automated Dropshipping Platform with AI-Powered Product Research and Listing Generation by scanning Global E-Commerce Sites.
+
 **Tech Stack:** Python, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Multi-Agent Systems, Docker, Qdrant, LanceDB, Chroma, Playwright, Selenium
 
 ---
@@ -140,6 +146,12 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 * Developed multilingual NLP pipeline supporting **15+ languages** (evalmyBRAND)
 * Resolved **28 critical production issues** with 100% on-time delivery
 
+**Projects**
+
+* **SalesMoji** — AI-Powered Lead Generation Platform with Context-Aware Follow-up Automation and Real-time LinkedIn Integration.
+* **InventtEd** — Multi-Modal AI Learning Assistant Enhancing STEM Education with Visual Explanations and Interactive Problem-Solving
+* **evalmyBRAND** — Brand Monitoring and Reputation Management Platform with Multi-Lingual Sentiment Analysis and Trend Tracking
+
 **Tech Stack:** Python, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Qdrant, Chroma, GCP
 
 ---
@@ -156,6 +168,10 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 * Reduced training time by **35%** using **Optuna**
 * Deployed ML applications using Flask and Docker
 * Built protein classification system (77 markers, 8 classes)
+
+**Projects**
+
+* **Protein Classification System** — Multi-Class Classification Model for High-Throughput Protein Analysis using ML Pipeline Architectures.
 
 **Tech Stack:** Python, Flask, Scikit-Learn, Optuna, MySQL, Cassandra, Docker, AWS
 
@@ -372,7 +388,7 @@ Aisera is a leading provider of Generative AI Solutions that helps enterprises b
 **Development Framework:** FastAPI  
 **Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
 **NLP:** Spacy, NLTK, Hugging Face Transformers, BERT, Large Language Models (LLMs)  
-**Generative AI:** LangChain, Prompt Chaining, RAG, Agent Building  
+**Generative AI & Agentic AI:** LangChain, Prompt Chaining, RAG, Agent Building,Autonomous Agents, Multi-Agent Systems, Agentic Guardrails and Middleware for Enterprise AI  
 **Data Engineering & Databases:** Apache Airflow, MySQL, MongoDB, Chroma, Weaviate      
 **Cloud Platform:** GCP
 
