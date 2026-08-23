@@ -2,41 +2,31 @@ import "../config/env.js";
 import { mongoClient, getNeo4jSession, qdrantClient, neo4jDriver } from "../config/db.js";
 
 async function testDbs() {
-  console.log("=== Testing Database Connections ===");
+  console.log("=== Testing Production Database Connections ===");
   console.log("Current Environment:", process.env.NODE_ENV || "development");
   
   // 1. Test MongoDB
   try {
-    console.log("Connecting to MongoDB...");
+    console.log("Connecting to MongoDB Atlas...");
     await mongoClient.connect();
     const db = mongoClient.db();
     const pingResult = await db.command({ ping: 1 });
     console.log("✅ MongoDB Connection Successful! Ping result:", pingResult);
     
-    // Check for test data in chats, analytics, or legacy chat_sessions
     const chatsCount = await db.collection("chats").countDocuments();
     const analyticsCount = await db.collection("analytics").countDocuments();
     const legacySessionsCount = await db.collection("chat_sessions").countDocuments();
     console.log(`MongoDB Stats - Chats: ${chatsCount}, Analytics: ${analyticsCount}, Legacy Chat Sessions: ${legacySessionsCount}`);
-    
-    if (chatsCount > 0 || analyticsCount > 0 || legacySessionsCount > 0) {
-      console.log("Cleaning up test data in MongoDB collections...");
-      await db.collection("chats").deleteMany({});
-      await db.collection("analytics").deleteMany({});
-      await db.collection("chat_sessions").deleteMany({});
-      console.log("✅ MongoDB Test Data Cleaned Up!");
-    }
   } catch (err: any) {
     console.error("❌ MongoDB Connection Failed:", err.message);
   }
 
   // 2. Test Qdrant
   try {
-    console.log("Connecting to Qdrant...");
+    console.log("Connecting to Qdrant Cloud...");
     const collections = await qdrantClient.getCollections();
     console.log("✅ Qdrant Connection Successful! Collections:", collections.collections.map(c => c.name));
     
-    // Check if resume_chunks has any test data
     const collectionName = "resume_chunks";
     const exists = collections.collections.some(c => c.name === collectionName);
     if (exists) {
@@ -50,7 +40,7 @@ async function testDbs() {
   // 3. Test Neo4j
   const session = getNeo4jSession();
   try {
-    console.log("Connecting to Neo4j...");
+    console.log("Connecting to Neo4j Aura...");
     await neo4jDriver.verifyConnectivity();
     console.log("✅ Neo4j Connection Verification Successful!");
     
@@ -63,8 +53,7 @@ async function testDbs() {
     await session.close();
   }
 
-  console.log("=== Database Connection Tests Completed ===");
-  // Close database drivers/connections
+  console.log("=== Production Database Connection Tests Completed ===");
   await mongoClient.close();
   await neo4jDriver.close();
 }

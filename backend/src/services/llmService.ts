@@ -1,13 +1,25 @@
 import "../config/env.js";
 import axios from "axios";
-import { StreamCensor, SAFE_FALLBACK_RESPONSE } from "./guardrailService.js";
+import { StreamCensor } from "./guardrailService.js";
+import { RetrievalResult } from "./ragService.js";
 
 export async function streamNvidiaNimResponse(
   query: string,
-  context: string,
+  contextOrResult: string | RetrievalResult,
   history: Array<{ role: "user" | "assistant"; content: string }>,
   res: any
 ): Promise<void> {
+  let context = "";
+  let retrievalLog = "";
+
+  if (typeof contextOrResult === "string") {
+    context = contextOrResult;
+    retrievalLog = "- **Context Source**: Retrieved profile context nodes.";
+  } else {
+    context = contextOrResult.context;
+    retrievalLog = contextOrResult.retrievalLog;
+  }
+
   const apiKey = process.env.NVIDIA_NIM_API_KEY?.trim() || process.env.OPENROUTER_API_KEY?.trim() || process.env.NEXT_PUBLIC_OPENROUTER_API_KEY?.trim();
   const model = process.env.NVIDIA_NIM_MODEL?.trim() || process.env.OPENROUTER_MODEL?.trim() || process.env.NEXT_PUBLIC_OPENROUTER_MODEL?.trim() || "meta/llama-3.1-70b-instruct";
   const baseUrl = process.env.NVIDIA_NIM_BASE_URL?.trim() || process.env.OPENROUTER_BASE_URL?.trim() || process.env.NEXT_PUBLIC_OPENROUTER_BASE_URL?.trim() || "https://integrate.api.nvidia.com/v1/chat/completions";
@@ -20,12 +32,35 @@ export async function streamNvidiaNimResponse(
 
   const censor = new StreamCensor();
 
-  if (!apiKey || apiKey === "mock-key") {
-    // Generate reasoning + dynamic response from retrieved context
-    const excerpt = context.trim() ? context.trim() : "Rohan Dhanraj Yadav is a Senior AI/ML Engineer at R Systems International (Client: Lendistry) with 7+ years of total experience.";
-    const cleanExcerpt = excerpt.length > 2000 ? excerpt.slice(0, 2000) + "\n..." : excerpt;
+  // Always stream detailed reasoning & graph node traversal header into the thinking palette
+  const thinkingHeader = `<think>\n### 🧠 Query Reasoning & Strategy\n- **User Query**: "${query}"\n\n🔍 **Graph Knowledge & Retrieval Traversal**:\n${retrievalLog}\n\n🤖 **Model Reasoning & Synthesis**:\nProcessing retrieved context nodes and synthesizing complete response...\n`;
 
-    const mockResponseText = `<think>\nAnalyzing query: "${query}"...\nRetrieved relevant document nodes for context.\n</think>\n\nHere is the information from Rohan's profile:\n\n${cleanExcerpt}`;
+  let hasThinkStarted = true;
+  let hasThinkEnded = false;
+
+  const headerWords = thinkingHeader.split(" ");
+  for (const word of headerWords) {
+    const chunk = word + " ";
+    const safe = censor.append(chunk);
+    if (safe) {
+      res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safe } }] })}\n\n`);
+    }
+    await new Promise(resolve => setTimeout(resolve, 8));
+  }
+
+  if (!apiKey || apiKey === "mock-key") {
+    // End thinking process before streaming mock / fallback response
+    const endThinkChunk = "</think>\n\n";
+    const safeEndThink = censor.append(endThinkChunk);
+    if (safeEndThink) {
+      res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safeEndThink } }] })}\n\n`);
+    }
+    hasThinkEnded = true;
+
+    // Generate dynamic response from retrieved context without any arbitrary truncation
+    const cleanExcerpt = context.trim() ? context.trim() : "Rohan Dhanraj Yadav is a Senior AI/ML Engineer at R Systems International (Client: Lendistry) with 7+ years of total experience.";
+
+    const mockResponseText = `Here is the information from Rohan's profile:\n\n${cleanExcerpt}`;
     const words = mockResponseText.split(" ");
     for (const word of words) {
       const chunk = word + " ";
@@ -33,7 +68,7 @@ export async function streamNvidiaNimResponse(
       if (safe) {
         res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safe } }] })}\n\n`);
       }
-      await new Promise(resolve => setTimeout(resolve, 20));
+      await new Promise(resolve => setTimeout(resolve, 15));
     }
     const final = censor.append("", true);
     if (final) {
@@ -56,7 +91,7 @@ RULES:
 4. Refer to Rohan in third person (he, him, his).
 5. Highlight specific metrics and achievements when relevant (e.g., 45% accuracy boost, 10K+ daily queries).
 6. For project questions, mention the tech stack and key impact.
-7. Keep responses under 200 words unless a detailed breakdown is explicitly needed.
+7. Provide complete and comprehensive answers based on the context. Do not shorten or clip key details.
 8. Format lists with bullet points when appropriate.
 9. Distinguish carefully between experience durations: Rohan is currently working as a Senior AI/ML Engineer at R Systems International (Client: Lendistry) from June 2026 to present. He has 7+ years of total professional experience, 4+ years of AI/ML engineering experience, 2+ years of Generative AI experience, and 1+ year of Agentic AI experience. Do not state or imply he has 7+ years of experience in Generative AI or Agentic AI.
 10. When queried about experience with a specific technology, framework, or tech stack, mention all the relevant projects from the context where Rohan applied that technology.`;
@@ -83,20 +118,18 @@ RULES:
     messages,
     stream: true,
     temperature: 0.7,
-    max_tokens: 512
+    max_tokens: 4096
   };
 
   try {
     const response = await axios.post(invokeUrl, payload, {
       headers,
       responseType: "stream",
-      timeout: 10000
+      timeout: 15000
     });
 
     const stream = response.data;
     let buffer = "";
-    let hasThinkStarted = false;
-    let hasThinkEnded = false;
 
     return new Promise<void>((resolve, reject) => {
       stream.on("data", (chunk: Buffer) => {
@@ -116,15 +149,11 @@ RULES:
 
               let chunkToProcess = "";
               if (reasoning) {
-                if (!hasThinkStarted) {
-                  hasThinkStarted = true;
-                  chunkToProcess += "<think>";
-                }
                 chunkToProcess += reasoning;
               } else if (content) {
                 if (hasThinkStarted && !hasThinkEnded) {
                   hasThinkEnded = true;
-                  chunkToProcess += "</think>";
+                  chunkToProcess += "</think>\n\n";
                 }
                 chunkToProcess += content;
               }
@@ -143,7 +172,7 @@ RULES:
       stream.on("end", () => {
         let endChunk = "";
         if (hasThinkStarted && !hasThinkEnded) {
-          endChunk += "</think>";
+          endChunk += "</think>\n\n";
         }
         const finalContent = censor.append(endChunk, true);
         if (finalContent) {
@@ -160,10 +189,17 @@ RULES:
     });
   } catch (err: any) {
     console.error("LLM Streaming failed, falling back to local context response:", err?.message || err);
-    // Fallback stream from context
-    const excerpt = context.trim() ? context.trim() : "Rohan Dhanraj Yadav is a Senior AI/ML Engineer at R Systems International (Client: Lendistry) with 7+ years of total experience.";
-    const cleanExcerpt = excerpt.length > 2000 ? excerpt.slice(0, 2000) + "\n..." : excerpt;
-    const mockResponseText = `<think>\nAnalyzing query: "${query}"...\nRetrieved relevant document nodes for context.\n</think>\n\nHere is the information from Rohan's profile:\n\n${cleanExcerpt}`;
+    if (hasThinkStarted && !hasThinkEnded) {
+      hasThinkEnded = true;
+      const endThinkChunk = "</think>\n\n";
+      const safeEnd = censor.append(endThinkChunk);
+      if (safeEnd) {
+        res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safeEnd } }] })}\n\n`);
+      }
+    }
+
+    const cleanExcerpt = context.trim() ? context.trim() : "Rohan Dhanraj Yadav is a Senior AI/ML Engineer at R Systems International (Client: Lendistry) with 7+ years of total experience.";
+    const mockResponseText = `Here is the information from Rohan's profile:\n\n${cleanExcerpt}`;
     
     const words = mockResponseText.split(" ");
     for (const word of words) {
@@ -172,7 +208,7 @@ RULES:
       if (safe) {
         res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safe } }] })}\n\n`);
       }
-      await new Promise(resolve => setTimeout(resolve, 20));
+      await new Promise(resolve => setTimeout(resolve, 15));
     }
     const final = censor.append("", true);
     if (final) {

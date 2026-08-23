@@ -1,7 +1,7 @@
 import { Router } from "express";
 import crypto from "crypto";
 import { mongoClient } from "../config/db.js";
-import { retrieveHybridContext } from "../services/ragService.js";
+import { retrieveHybridContextDetailed } from "../services/ragService.js";
 import { validatePreAgentInput, SAFE_FALLBACK_RESPONSE } from "../services/guardrailService.js";
 import { streamNvidiaNimResponse } from "../services/llmService.js";
 
@@ -76,7 +76,7 @@ router.post("/", async (req, res) => {
 
   try {
     // 2. Retrieve Hybrid context with status streaming
-    const context = await retrieveHybridContext(query, (status) => {
+    const retrievalResult = await retrieveHybridContextDetailed(query, (status) => {
       res.write(`data: ${JSON.stringify({ status })}\n\n`);
     });
 
@@ -114,7 +114,7 @@ router.post("/", async (req, res) => {
             messages: {
               $each: [
                 { role: "user", content: query, timestamp: new Date() },
-                { role: "assistant", content: fullResponse || SAFE_FALLBACK_RESPONSE, timestamp: new Date(), contextUsed: context }
+                { role: "assistant", content: fullResponse || SAFE_FALLBACK_RESPONSE, timestamp: new Date(), contextUsed: retrievalResult.context }
               ]
             }
           } as any,
@@ -128,7 +128,7 @@ router.post("/", async (req, res) => {
     };
 
     // 3. Stream LLM Response
-    await streamNvidiaNimResponse(query, context, history, res);
+    await streamNvidiaNimResponse(query, retrievalResult, history, res);
   } catch (err: any) {
     console.error("Error in chat route:", err);
     if (!res.headersSent) {

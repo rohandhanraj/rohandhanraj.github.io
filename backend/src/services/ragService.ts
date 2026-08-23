@@ -88,12 +88,28 @@ const LOCAL_ENTITY_MAP: Record<string, string[]> = {
   honors: ["achievements_awards"]
 };
 
-function fallbackToLocalProfile(query: string): string {
+export interface RetrievalResult {
+  context: string;
+  retrievalLog: string;
+  matchedNodesCount: number;
+}
+
+interface LocalFallbackDetails {
+  context: string;
+  nodeLogs: string[];
+  matchedCount: number;
+}
+
+function fallbackToLocalProfileDetails(query: string): LocalFallbackDetails {
   console.warn("Falling back to local profile graph — vector and graph DBs unavailable");
   const tree = loadDocumentTree();
   const allNodes = flattenDocTree(tree);
   if (allNodes.length === 0) {
-    return "No context available.";
+    return {
+      context: "No context available.",
+      nodeLogs: ["- **Graph Nodes**: No local nodes available"],
+      matchedCount: 0
+    };
   }
 
   const queryLower = query.toLowerCase().trim();
@@ -142,15 +158,17 @@ function fallbackToLocalProfile(query: string): string {
 
   const topNodes = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score);
   let totalChars = 0;
-  const MAX_CHARS = 6000;
+  const MAX_CHARS = 12000;
   const selected: string[] = [];
+  const nodeLogs: string[] = [];
 
-  for (const { node } of topNodes) {
+  for (const { node, score } of topNodes) {
     const text = node.content || "";
     if (text.length === 0) continue;
     if (totalChars + text.length > MAX_CHARS && selected.length > 0) continue;
-    const label = node.label || node.section || "Profile Section";
-    selected.push(`[Source: Local-Profile-Fallback]\n### ${label}\n${text}`);
+    const label = node.label || node.section || node.id;
+    selected.push(`### ${label}\n${text}`);
+    nodeLogs.push(`  - **Graph Node Matched**: \`[${label}]\` (Relevance Score: ${score.toFixed(1)})`);
     totalChars += text.length;
   }
 
@@ -158,11 +176,20 @@ function fallbackToLocalProfile(query: string): string {
     const fallback = allNodes.find(n => n.id === "professional_profile" || n.id === "summary") || allNodes[0];
     if (fallback && fallback.content) {
       const label = fallback.label || fallback.section || "Profile Summary";
-      selected.push(`[Source: Local-Profile-Fallback]\n### ${label}\n${fallback.content}`);
+      selected.push(`### ${label}\n${fallback.content}`);
+      nodeLogs.push(`  - **Fallback Node**: \`[${label}]\` (Default Profile Context)`);
     }
   }
 
-  return selected.join("\n\n---\n\n");
+  return {
+    context: selected.join("\n\n---\n\n"),
+    nodeLogs,
+    matchedCount: selected.length
+  };
+}
+
+function fallbackToLocalProfile(query: string): string {
+  return fallbackToLocalProfileDetails(query).context;
 }
 
 // Simple keyword/entity extractor from user query
@@ -243,10 +270,10 @@ function withTimeout<T>(promise: Promise<T>, ms = 1500): Promise<T> {
   ]);
 }
 
-export async function retrieveHybridContext(
+export async function retrieveHybridContextDetailed(
   query: string,
   onStatusUpdate?: (status: string) => void
-): Promise<string> {
+): Promise<RetrievalResult> {
   if (onStatusUpdate) onStatusUpdate("retrieving");
   console.log(`Retrieving context for query: "${query}"`);
   
@@ -254,6 +281,9 @@ export async function retrieveHybridContext(
   const candidates: RAGContext[] = [];
   const candidateTexts: string[] = [];
   const seenContent = new Set<string>();
+  const retrievalLogs: string[] = [];
+
+  retrievalLogs.push(`- **Extracted Query Entities**: [${keywords.length ? keywords.join(", ") : "general profile"}]`);
 
   const addCandidate = (content: string, source: string) => {
     const trimmed = content.trim();
@@ -275,11 +305,16 @@ export async function retrieveHybridContext(
       1500
     );
 
+    let vectorCount = 0;
     for (const hit of vectorResults) {
       const payload = hit.payload as any;
       if (payload?.content) {
         addCandidate(payload.content, `Vector-Similarity (${hit.score.toFixed(2)})`);
+        vectorCount++;
       }
+    }
+    if (vectorCount > 0) {
+      retrievalLogs.push(`- **Qdrant Vector Search**: Retrieved ${vectorCount} candidate embedding chunks from \`resume_chunks\``);
     }
   } catch (err: any) {
     console.error("Qdrant retrieval failed:", err?.message || err);
@@ -291,6 +326,7 @@ export async function retrieveHybridContext(
       await withTimeout((async () => {
         const session = getNeo4jSession();
         try {
+          let graphMatches = 0;
           for (const kw of keywords) {
             const regexPattern = `(?i).*${kw}.*`;
             
@@ -316,6 +352,7 @@ export async function retrieveHybridContext(
               } else {
                 addCandidate(`Rohan Yadav has skills in: ${skill}.`, "Graph-Skill-Direct");
               }
+              graphMatches++;
             }
 
             const projRes = await session.run(
@@ -332,6 +369,7 @@ export async function retrieveHybridContext(
               const desc = record.get("desc");
               const domain = record.get("domain");
               addCandidate(`Project ${name} (${domain}): ${desc}`, "Graph-Project-Direct");
+              graphMatches++;
             }
 
             const expRes = await session.run(
@@ -348,7 +386,12 @@ export async function retrieveHybridContext(
               const role = record.get("role");
               const duration = record.get("duration");
               addCandidate(`Experience at ${company} as ${role} (${duration}).`, "Graph-Experience-Direct");
+              graphMatches++;
             }
+          }
+
+          if (graphMatches > 0) {
+            retrievalLogs.push(`- **Neo4j Knowledge Graph**: Traversed and retrieved ${graphMatches} relational graph nodes`);
           }
         } finally {
           await session.close();
@@ -364,8 +407,15 @@ export async function retrieveHybridContext(
     if (onStatusUpdate) {
       onStatusUpdate("Please hold on — technical issue connecting to database services. Switching to local profile context...");
     }
-    const fallbackContext = fallbackToLocalProfile(query);
-    return fallbackContext;
+    const fallback = fallbackToLocalProfileDetails(query);
+    retrievalLogs.push("- ⚠️ **Database Connection**: Primary DB cluster unreachable/timed out.");
+    retrievalLogs.push("- 📁 **Local Knowledge Graph Tree (`document_tree.json`)**: Traversed document tree nodes:");
+    retrievalLogs.push(...fallback.nodeLogs);
+    return {
+      context: fallback.context,
+      retrievalLog: retrievalLogs.join("\n"),
+      matchedNodesCount: fallback.matchedCount
+    };
   }
 
   // 3. Cohere Reranking
@@ -377,13 +427,32 @@ export async function retrieveHybridContext(
 
     for (const result of reranked) {
       const candidate = candidates[result.index];
-      selectedContexts.push(`[Source: ${candidate.source}, ReRank Score: ${result.relevance_score.toFixed(3)}]\n${candidate.content}`);
+      selectedContexts.push(candidate.content);
     }
 
-    return selectedContexts.join("\n\n");
+    retrievalLogs.push(`- 🎯 **Cohere Reranker**: Scored and ranked top ${selectedContexts.length} candidates by relevance score`);
+
+    return {
+      context: selectedContexts.join("\n\n"),
+      retrievalLog: retrievalLogs.join("\n"),
+      matchedNodesCount: selectedContexts.length
+    };
   } catch (err) {
     console.error("Reranking process failed, combining directly:", err);
-    return candidateTexts.map((text, idx) => `[Source: ${candidates[idx].source}]\n${text}`).join("\n\n");
+    retrievalLogs.push(`- ℹ️ **Reranking Engine**: Direct combination of ${candidateTexts.length} candidates`);
+    return {
+      context: candidateTexts.join("\n\n"),
+      retrievalLog: retrievalLogs.join("\n"),
+      matchedNodesCount: candidateTexts.length
+    };
   }
+}
+
+export async function retrieveHybridContext(
+  query: string,
+  onStatusUpdate?: (status: string) => void
+): Promise<string> {
+  const result = await retrieveHybridContextDetailed(query, onStatusUpdate);
+  return result.context;
 }
 
