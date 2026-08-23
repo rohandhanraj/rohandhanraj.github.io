@@ -25,16 +25,20 @@ async function convert(inputFile, outputFile) {
 }
 
 (async () => {
+    const baseDir = fs.existsSync(path.join(__dirname, 'frontend/public/resumes'))
+        ? path.join(__dirname, 'frontend/public/resumes')
+        : path.join(__dirname, 'public/resumes');
+
     await convert(
-        path.join(__dirname, 'public/resumes/detailed_resume.md'),
-        path.join(__dirname, 'public/resumes/detailed_resume.pdf')
+        path.join(baseDir, 'detailed_resume.md'),
+        path.join(baseDir, 'detailed_resume.pdf')
     );
     await convert(
-        path.join(__dirname, 'public/resumes/optimized_resume.md'),
-        path.join(__dirname, 'public/resumes/optimized_resume.pdf')
+        path.join(baseDir, 'optimized_resume.md'),
+        path.join(baseDir, 'optimized_resume.pdf')
     );
-    // await convert(
-    //     path.join(__dirname, 'public/resumes/master_cv.md'),
-    //     path.join(__dirname, 'public/resumes/master_cv.pdf')
-    // );
+    await convert(
+        path.join(baseDir, 'master_cv.md'),
+        path.join(baseDir, 'master_cv.pdf')
+    );
 })();

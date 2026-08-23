@@ -4,8 +4,22 @@ import app from "../index.js";
 import { mongoClient, qdrantClient, getNeo4jSession } from "../config/db.js";
 
 vi.mock("../config/db.js", () => {
+  const mockCursor = {
+    sort: vi.fn().mockReturnThis(),
+    limit: vi.fn().mockReturnThis(),
+    toArray: vi.fn().mockResolvedValue([])
+  };
+
   const mockDb = {
-    command: vi.fn().mockResolvedValue({ ok: 1 })
+    command: vi.fn().mockResolvedValue({ ok: 1 }),
+    listCollections: vi.fn().mockReturnValue({
+      toArray: vi.fn().mockResolvedValue([{ name: "analytics" }])
+    }),
+    collection: vi.fn().mockReturnValue({
+      findOne: vi.fn().mockResolvedValue({ _id: "123" }),
+      updateOne: vi.fn().mockResolvedValue({ acknowledged: true }),
+      find: vi.fn().mockReturnValue(mockCursor)
+    })
   };
 
   const mockMongoClient = {

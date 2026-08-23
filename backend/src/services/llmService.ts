@@ -8,9 +8,9 @@ export async function streamNvidiaNimResponse(
   history: Array<{ role: "user" | "assistant"; content: string }>,
   res: any
 ): Promise<void> {
-  const apiKey = process.env.NVIDIA_NIM_API_KEY?.trim();
-  const model = process.env.NVIDIA_NIM_MODEL?.trim() || "meta/llama-3.1-70b-instruct";
-  const baseUrl = process.env.NVIDIA_NIM_BASE_URL?.trim() || "https://integrate.api.nvidia.com/v1/chat/completions";
+  const apiKey = process.env.NVIDIA_NIM_API_KEY?.trim() || process.env.OPENROUTER_API_KEY?.trim() || process.env.NEXT_PUBLIC_OPENROUTER_API_KEY?.trim();
+  const model = process.env.NVIDIA_NIM_MODEL?.trim() || process.env.OPENROUTER_MODEL?.trim() || process.env.NEXT_PUBLIC_OPENROUTER_MODEL?.trim() || "meta/llama-3.1-70b-instruct";
+  const baseUrl = process.env.NVIDIA_NIM_BASE_URL?.trim() || process.env.OPENROUTER_BASE_URL?.trim() || process.env.NEXT_PUBLIC_OPENROUTER_BASE_URL?.trim() || "https://integrate.api.nvidia.com/v1/chat/completions";
 
   if (res.setHeader && !res.headersSent) {
     res.setHeader("Content-Type", "text/event-stream");
@@ -21,8 +21,11 @@ export async function streamNvidiaNimResponse(
   const censor = new StreamCensor();
 
   if (!apiKey || apiKey === "mock-key") {
-    // Generate reasoning + response in mock response block
-    const mockResponseText = `<think>\nAnalyzing prompt for query: "${query}"...\nRetrieving relevant information.\n</think>\nBased on the context, Rohan Yadav is an AI/ML Engineer with 7+ years of experience, including work on OMODORE and SALESMOJI.`;
+    // Generate reasoning + dynamic response from retrieved context
+    const excerpt = context.trim() ? context.trim() : "Rohan Dhanraj Yadav is a Senior AI/ML Engineer at R Systems International (Client: Lendistry) with 7+ years of total experience.";
+    const cleanExcerpt = excerpt.length > 2000 ? excerpt.slice(0, 2000) + "\n..." : excerpt;
+
+    const mockResponseText = `<think>\nAnalyzing query: "${query}"...\nRetrieved relevant document nodes for context.\n</think>\n\nHere is the information from Rohan's profile:\n\n${cleanExcerpt}`;
     const words = mockResponseText.split(" ");
     for (const word of words) {
       const chunk = word + " ";
@@ -55,7 +58,7 @@ RULES:
 6. For project questions, mention the tech stack and key impact.
 7. Keep responses under 200 words unless a detailed breakdown is explicitly needed.
 8. Format lists with bullet points when appropriate.
-9. Distinguish carefully between experience durations: Rohan has 7+ years of total professional experience, 4+ years of AI/ML engineering experience, 3 years of Generative AI experience, and 1.5 years of Agentic AI experience. Do not state or imply he has 7+ years of experience in Generative AI or Agentic AI.
+9. Distinguish carefully between experience durations: Rohan is currently working as a Senior AI/ML Engineer at R Systems International (Client: Lendistry) from June 2026 to present. He has 7+ years of total professional experience, 4+ years of AI/ML engineering experience, 2+ years of Generative AI experience, and 1+ year of Agentic AI experience. Do not state or imply he has 7+ years of experience in Generative AI or Agentic AI.
 10. When queried about experience with a specific technology, framework, or tech stack, mention all the relevant projects from the context where Rohan applied that technology.`;
 
   const messages = [
@@ -64,7 +67,10 @@ RULES:
     { role: "user", content: query }
   ];
 
-  const invokeUrl = baseUrl.endsWith("/chat/completions") ? baseUrl : `${baseUrl}/chat/completions`;
+  let invokeUrl = baseUrl.endsWith("/chat/completions") ? baseUrl : `${baseUrl}/chat/completions`;
+  if (apiKey.startsWith("sk-or-v1-")) {
+    invokeUrl = "https://openrouter.ai/api/v1/chat/completions";
+  }
 
   const headers = {
     "Authorization": `Bearer ${apiKey}`,
@@ -83,7 +89,8 @@ RULES:
   try {
     const response = await axios.post(invokeUrl, payload, {
       headers,
-      responseType: "stream"
+      responseType: "stream",
+      timeout: 10000
     });
 
     const stream = response.data;
@@ -152,25 +159,26 @@ RULES:
       });
     });
   } catch (err: any) {
-    if (err.response) {
-      console.error(`NVIDIA NIM API HTTP error ${err.response.status}`);
-      if (err.response.data && typeof err.response.data.on === "function") {
-        let errBody = "";
-        err.response.data.on("data", (chunk: Buffer) => {
-          errBody += chunk.toString();
-        });
-        await new Promise<void>((resolve) => {
-          err.response.data.on("end", () => {
-            console.error("NVIDIA error response body:", errBody);
-            resolve();
-          });
-        });
-      } else {
-        console.error(err.response.data);
+    console.error("LLM Streaming failed, falling back to local context response:", err?.message || err);
+    // Fallback stream from context
+    const excerpt = context.trim() ? context.trim() : "Rohan Dhanraj Yadav is a Senior AI/ML Engineer at R Systems International (Client: Lendistry) with 7+ years of total experience.";
+    const cleanExcerpt = excerpt.length > 2000 ? excerpt.slice(0, 2000) + "\n..." : excerpt;
+    const mockResponseText = `<think>\nAnalyzing query: "${query}"...\nRetrieved relevant document nodes for context.\n</think>\n\nHere is the information from Rohan's profile:\n\n${cleanExcerpt}`;
+    
+    const words = mockResponseText.split(" ");
+    for (const word of words) {
+      const chunk = word + " ";
+      const safe = censor.append(chunk);
+      if (safe) {
+        res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safe } }] })}\n\n`);
       }
-      throw new Error(`NVIDIA NIM API failed with status ${err.response.status}`);
-    } else {
-      throw err;
+      await new Promise(resolve => setTimeout(resolve, 20));
     }
+    const final = censor.append("", true);
+    if (final) {
+      res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: final } }] })}\n\n`);
+    }
+    res.write("data: [DONE]\n\n");
+    res.end();
   }
 }

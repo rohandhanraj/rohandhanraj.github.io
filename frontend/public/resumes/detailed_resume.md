@@ -49,6 +49,16 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
 
 ## PROFESSIONAL EXPERIENCE
 
+<div class="grid-2"><h3>R Systems International | Senior AI/ML Engineer (Client: Lendistry)</h3><span class="date">Jun 2026 – Present</span></div>
+
+<ul>
+  <li>Architecting enterprise-grade <strong>Agentic AI workflows</strong> and multi-agent systems using Model Context Protocol (MCP) and custom guardrails.</li>
+  <li>Engineering robust <strong>Harness Engineering</strong> and <strong>Agentic Ops</strong> infrastructure for automated tool execution and real-time observability.</li>
+  <li>Developing end-to-end <strong>ML Flow</strong> integration and <strong>Agentic E2E evaluation</strong> frameworks for strategic agent validation and regression testing.</li>
+  <li>Enforcing strict LLM safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows.</li>
+</ul>
+<span class="tech">Tech: Python, Generative AI, Agentic Workflows, MCP Tools, Guardrails, Harness Engineering, Agentic Ops, ML Flow, Strategic Agentic Evaluation, Observability</span>
+
 <div class="grid-2"><h3>AI Tech Solutions Ltd. | AI/ML Engineer — Generative AI & Agentic Systems</h3><span class="date">Nov 2024 – Oct 2025</span></div>
 
 <ul>

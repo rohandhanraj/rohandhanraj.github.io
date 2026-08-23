@@ -5,7 +5,7 @@ interface StreamCallbacks {
   onToken: (token: string) => void;
   onDone: (fullText: string) => void;
   onError: (error: string) => void;
-  onStatus?: (status: "retrieving" | "reranking") => void;
+  onStatus?: (status: string) => void;
 }
 
 /**
@@ -17,12 +17,7 @@ export async function streamChat(
   query: string,
   callbacks: StreamCallbacks
 ): Promise<void> {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-
-  if (!backendUrl) {
-    callbacks.onError("AI service is not configured. Please contact the site owner.");
-    return;
-  }
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
 
   try {
     const response = await fetch(`${backendUrl}/api/chat`, {

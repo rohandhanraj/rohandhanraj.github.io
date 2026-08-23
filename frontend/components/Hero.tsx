@@ -193,7 +193,7 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* Current role badge (Temporarily hidden)
+            {/* Current role badge */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -209,13 +209,12 @@ export default function Hero() {
                 ● CURRENTLY AT
               </p>
               <p className="font-orbitron font-bold text-sm" style={{ color: "var(--accent-cyan)" }}>
-                AI Tech Solutions Ltd.
+                R Systems International <span style={{ color: "var(--text-secondary)", fontSize: "0.8rem", fontWeight: "normal" }}>(Client: Lendistry)</span>
               </p>
               <p className="text-xs mt-1" style={{ color: "var(--text-secondary)" }}>
-                Agentic AI · Multi-Agent Orchestration · RAG Architecture
+                Senior AI/ML Engineer · Generative AI · Agentic AI · MCP Tools
               </p>
             </motion.div>
-            */}
 
             {/* Stats */}
             <motion.div
@@ -316,7 +315,7 @@ export default function Hero() {
               {[
                 { icon: "📍", text: "Bengaluru, India" },
                 { icon: "🎓", text: "GATE Qualified BE" },
-                { icon: "💼", text: "Open to Opportunities" },
+                { icon: "💼", text: "Senior AI/ML Engineer @ R Systems" },
               ].map((item) => (
                 <div
                   key={item.text}

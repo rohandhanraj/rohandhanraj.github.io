@@ -46,6 +46,14 @@ Python, Django, Flask, FastAPI, Streamlit, LLMs (OpenAI, Anthropic, Vertex AI, G
 
 ## EXPERIENCE
 
+### Senior AI/ML Engineer
+
+R Systems International (Client: Lendistry) | Jun 2026 – Present
+
+* Architecting production Agentic AI workflows and multi-agent coordination using MCP tools and guardrails
+* Implementing Harness Engineering and Agentic Ops for automated validation and observability
+* Building ML Flow integration and Agentic E2E evaluation frameworks for strategic agent benchmarking
+
 ### AI/ML Engineer
 
 AI Tech Solutions Ltd. | Nov 2024 – Oct 2025

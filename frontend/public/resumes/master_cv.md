@@ -103,7 +103,24 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ## WORK EXPERIENCE
 
-### 1. AI/ML Engineer — Generative AI | Multi-Agent Systems
+### 1. Senior AI/ML Engineer — Generative AI | Agentic AI | MCP Tools
+
+**R Systems International** | June 2026 – Present | Full-time  
+**Client:** Lendistry  
+**Focus:** Enterprise Agentic AI workflows, MCP tools integration, guardrails, harness engineering, observability, and Agentic Ops
+
+**Key Responsibilities & Achievements:**
+
+* Architected enterprise-grade **Agentic AI workflows** and multi-agent systems using Model Context Protocol (MCP) and custom guardrails for fintech operations
+* Implemented robust **Harness Engineering** and **Agentic Ops** pipelines for automated tool execution, schema validation, and real-time observability
+* Developed **ML Flow** integration and **Agentic E2E evaluation** frameworks for continuous testing, strategic agent evaluation, and regression tracking
+* Pioneered safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions in production workflows
+
+**Tech Stack:** Python, Generative AI, Agentic Workflows, MCP Tools, Guardrails, Harness Engineering, Agentic Ops, ML Flow, Agentic E2E Evaluation, Observability
+
+---
+
+### 2. AI/ML Engineer — Generative AI | Multi-Agent Systems
 
 **AI Tech Solutions Ltd.** | November 2024 – October 2025 | Full-time
 
@@ -129,7 +146,7 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ---
 
-### 2. Software Engineer — Generative AI | ML | Data Science | Python
+### 3. Software Engineer — Generative AI | ML | Data Science | Python
 
 **Aimlytics Technology** | September 2022 – October 2024 | Full-time
 
@@ -156,7 +173,7 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ---
 
-### 3. Machine Learning Engineer Intern
+### 4. Machine Learning Engineer Intern
 
 **iNeuron.ai** | August 2021 – September 2022 | Internship
 

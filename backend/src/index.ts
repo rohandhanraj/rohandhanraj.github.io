@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import chatRouter from "./routes/chat.js";
 import analyticsRouter from "./routes/analytics.js";
 import keepaliveRouter from "./routes/keepalive.js";
+import { startKeepaliveScheduler } from "./services/keepaliveScheduler.js";
 
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
@@ -17,7 +18,9 @@ app.get("/health", (req, res) => {
 app.use("/api/chat", chatRouter);
 app.use("/api/analytics", analyticsRouter);
 app.use("/api/cron/keepalive", keepaliveRouter);
+
 if (process.env.NODE_ENV !== "test") {
+  startKeepaliveScheduler();
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
     console.log(`Backend server listening on port ${PORT}`);

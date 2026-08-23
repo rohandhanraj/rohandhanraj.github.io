@@ -4,6 +4,21 @@ import { motion } from "framer-motion";
 
 const experiences = [
   {
+    company: "R Systems International",
+    role: "Senior AI/ML Engineer (Client: Lendistry)",
+    duration: "Jun 2026 – Present",
+    type: "Full-time",
+    focus: "Enterprise Agentic AI Workflows · MCP Tools · Guardrails & Agentic Ops",
+    dotColor: "#38bdf8",
+    highlights: [
+      "Architecting enterprise Agentic AI workflows and multi-agent coordination systems using Model Context Protocol (MCP) and custom guardrails for fintech operations",
+      "Engineering robust Harness Engineering and Agentic Ops infrastructure for automated tool execution, schema validation, and real-time observability",
+      "Developing end-to-end ML Flow integration and Agentic E2E evaluation frameworks for continuous testing, strategic agent evaluation, and regression tracking",
+      "Enforcing strict LLM safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows",
+    ],
+    tech: ["Python", "Generative AI", "Agentic Workflows", "MCP Tools", "Guardrails", "Harness Engineering", "Agentic Ops", "ML Flow", "Strategic Agentic Evaluation", "Observability"],
+  },
+  {
     company: "AI Tech Solutions Ltd.",
     role: "AI Engineer — Backend & AI Systems Architecture",
     duration: "Nov 2024 – Oct 2025",

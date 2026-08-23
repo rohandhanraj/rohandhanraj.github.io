@@ -40,11 +40,8 @@ export default function About() {
                 <span style={{ color: "var(--accent-cyan)" }} className="font-semibold">
                   Senior AI/ML Engineer
                 </span>{" "}
-                specializing in Generative AI and Agentic AI systems. With 7+ years of total professional
-                experience—including over 4 years building production-grade AI from data pipelines to autonomous agents—I&apos;ve
-                dedicated the last 2+ years to mastering{" "}
-                <span style={{ color: "var(--accent-pink)" }}>Generative AI</span> and
-                the last 1+ year specifically to building autonomous AI agents.
+                at <span style={{ color: "var(--accent-pink)" }}>R Systems International</span> (Client: <span style={{ color: "var(--accent-cyan)" }}>Lendistry</span>), specializing in Generative AI, Model Context Protocol (MCP) tools, and enterprise Agentic AI workflows. With 7+ years of total professional experience—including over 4 years building production-grade AI from data pipelines to autonomous agents—I&apos;ve dedicated the last 2+ years to mastering{" "}
+                <span style={{ color: "var(--accent-pink)" }}>Generative AI</span> and the last 1+ year specifically to building autonomous AI agents with guardrails, harness engineering, and Agentic Ops.
               </p>
               <p>
                 Expert in architecting robust backend infrastructure for{" "}

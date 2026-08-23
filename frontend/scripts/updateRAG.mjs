@@ -1,8 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 
-const publicResumesDir = './public/resumes';
-const outputJsonPath = './lib/documentTree.json';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const publicResumesDir = path.resolve(__dirname, '../public/resumes');
+const outputJsonPath = path.resolve(__dirname, '../lib/documentTree.json');
 
 const stopwords = new Set([
   'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any', 'are', 'arent', 'as', 'at',
@@ -48,8 +52,23 @@ function extractKeywords(title, content) {
   });
 
   // Add specific mappings
-  if (title.toLowerCase().includes('summary') || title.toLowerCase().includes('profile')) {
+  const titleLower = title.toLowerCase();
+  if (titleLower.includes('summary') || titleLower.includes('profile')) {
     keywords.add('who'); keywords.add('about'); keywords.add('rohan'); keywords.add('bio'); keywords.add('profile');
+  }
+  if (titleLower.includes('education') || titleLower.includes('academic') || titleLower.includes('qualification')) {
+    keywords.add('education'); keywords.add('study'); keywords.add('studied'); keywords.add('degree');
+    keywords.add('college'); keywords.add('university'); keywords.add('school'); keywords.add('academics'); keywords.add('btech');
+  }
+  if (titleLower.includes('senior ai') || titleLower.includes('r systems') || titleLower.includes('lendistry')) {
+    keywords.add('rsystems'); keywords.add('r systems'); keywords.add('lendistry'); keywords.add('current');
+    keywords.add('mcp'); keywords.add('guardrails'); keywords.add('agentic ops'); keywords.add('harness engineering');
+  }
+  if (titleLower.includes('certif')) {
+    keywords.add('certifications'); keywords.add('certificate'); keywords.add('certified'); keywords.add('accreditation');
+  }
+  if (titleLower.includes('achievement') || titleLower.includes('award')) {
+    keywords.add('achievements'); keywords.add('awards'); keywords.add('honors'); keywords.add('rank'); keywords.add('gold badge');
   }
 
   return Array.from(keywords);

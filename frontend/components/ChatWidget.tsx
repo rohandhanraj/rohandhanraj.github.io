@@ -260,7 +260,7 @@ export default function ChatWidget() {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [statusText, setStatusText] = useState<"retrieving" | "reranking" | null>(null);
+  const [statusText, setStatusText] = useState<string | null>(null);
   const [sessionId, setSessionIdState] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [showSuggestions, setShowSuggestions] = useState(true);
@@ -539,7 +539,11 @@ export default function ChatWidget() {
                         >
                           <span className="w-3.5 h-3.5 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
                           <span>
-                            {statusText === "retrieving" ? "Retrieving knowledge..." : "Reranking context..."}
+                            {statusText === "retrieving"
+                              ? "Retrieving knowledge..."
+                              : statusText === "reranking"
+                              ? "Reranking context..."
+                              : statusText}
                           </span>
                         </div>
                       </motion.div>

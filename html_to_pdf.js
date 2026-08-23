@@ -24,8 +24,13 @@ async function htmlToPdf(inputHtml, outputPdf) {
 }
 
 (async () => {
-    await htmlToPdf(
-        path.join(__dirname, 'public/resumes/master_cv.html'),
-        path.join(__dirname, 'public/resumes/master_cv_html.pdf')
-    );
+    const fs = require('fs');
+    const inputHtml = fs.existsSync(path.join(__dirname, 'frontend/public/resumes/master_cv.html'))
+        ? path.join(__dirname, 'frontend/public/resumes/master_cv.html')
+        : path.join(__dirname, 'public/resumes/master_cv.html');
+    const outputPdf = fs.existsSync(path.join(__dirname, 'frontend/public/resumes'))
+        ? path.join(__dirname, 'frontend/public/resumes/master_cv_html.pdf')
+        : path.join(__dirname, 'public/resumes/master_cv_html.pdf');
+
+    await htmlToPdf(inputHtml, outputPdf);
 })();
