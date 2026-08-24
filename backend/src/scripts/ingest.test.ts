@@ -42,7 +42,7 @@ describe("Ingestion Pipeline", () => {
 
   it("should successfully run the ingestion logic", async () => {
     // We override process.env to ensure mock embedding is used
-    process.env.OPENROUTER_API_KEY = "mock-key";
+    process.env.COHERE_API_KEY = "mock-key";
     
     await expect(ingestResume()).resolves.toBeUndefined();
     

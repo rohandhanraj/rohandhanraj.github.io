@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { retrieveHybridContext } from "./ragService.js";
+import { retrieveHybridContext, retrieveHybridContextDetailed } from "./ragService.js";
 import { qdrantClient, getNeo4jSession } from "../config/db.js";
 
 vi.mock("../config/db.js", () => {
@@ -58,7 +58,6 @@ describe("RAG Context Service", () => {
   });
 
   it("should successfully retrieve and combine vector and graph context", async () => {
-    process.env.OPENROUTER_API_KEY = "mock-key";
     process.env.COHERE_API_KEY = "mock-key";
 
     const context = await retrieveHybridContext("tell me about Rohan's Python and TypeScript skills");
@@ -69,5 +68,79 @@ describe("RAG Context Service", () => {
     
     expect(qdrantClient.search).toHaveBeenCalled();
     expect(getNeo4jSession).toHaveBeenCalled();
+  });
+});
+
+describe("Degraded response signal", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    process.env.COHERE_API_KEY = "mock-key";
+  });
+
+  it("should mark the result as degraded when both DBs return nothing", async () => {
+    (qdrantClient.search as any).mockResolvedValue([]);
+    const session = getNeo4jSession();
+    (session.run as any).mockResolvedValue({ records: [] });
+
+    const result = await retrieveHybridContextDetailed("tell me about Rohan");
+
+    expect(result.degraded).toBe(true);
+  });
+
+  it("should not mark the result as degraded when vector search returns candidates", async () => {
+    (qdrantClient.search as any).mockResolvedValue([
+      { score: 0.9, payload: { content: "Rohan is an AI engineer." } }
+    ]);
+
+    const result = await retrieveHybridContextDetailed("tell me about Rohan");
+
+    expect(result.degraded).toBe(false);
+  });
+});
+
+describe("Neo4j query consolidation", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    process.env.COHERE_API_KEY = "mock-key";
+  });
+
+  it("should run exactly 3 Cypher queries regardless of keyword count", async () => {
+    await retrieveHybridContext("Python and TypeScript and Docker and FastAPI skills");
+
+    const session = getNeo4jSession();
+    expect(session.run).toHaveBeenCalledTimes(3);
+  });
+});
+
+describe("Golden-set retrieval regression", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    process.env.COHERE_API_KEY = "mock-key";
+  });
+
+  const cases: Array<{ query: string; mockPayload: { content: string }; expectedSubstring: string }> = [
+    {
+      query: "what programming languages does Rohan know",
+      mockPayload: { content: "Rohan is proficient in Python, TypeScript, and SQL." },
+      expectedSubstring: "Python"
+    },
+    {
+      query: "tell me about the OMODORE project",
+      mockPayload: { content: "OMODORE is an AI Agent Platform for non-technical users." },
+      expectedSubstring: "OMODORE"
+    },
+    {
+      query: "where did Rohan study",
+      mockPayload: { content: "Rohan holds a B.Tech degree and cleared GATE." },
+      expectedSubstring: "GATE"
+    }
+  ];
+
+  it.each(cases)("should surface expected content for: $query", async ({ query, mockPayload, expectedSubstring }) => {
+    (qdrantClient.search as any).mockResolvedValue([{ score: 0.95, payload: mockPayload }]);
+
+    const context = await retrieveHybridContext(query);
+
+    expect(context).toContain(expectedSubstring);
   });
 });

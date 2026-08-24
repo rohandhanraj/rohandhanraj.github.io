@@ -29,7 +29,16 @@ export async function streamChat(
     });
 
     if (!response.ok) {
-      callbacks.onError(`AI service error (${response.status}). Please try again.`);
+      let message = `AI service error (${response.status}). Please try again.`;
+      try {
+        const errorBody = await response.json();
+        if (errorBody && typeof errorBody.error === "string") {
+          message = errorBody.error;
+        }
+      } catch {
+        // Response body wasn't JSON (or was empty) — keep the generic message.
+      }
+      callbacks.onError(message);
       return;
     }
 

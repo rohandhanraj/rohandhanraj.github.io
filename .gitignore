@@ -43,7 +43,8 @@ next-env.d.ts
 
 resumes_md/
 resumes_pdf/
-graphify-out/
 qdrant/
 volumes/
-docs/
+graphify-out/
+.superpowers/
+.claude/

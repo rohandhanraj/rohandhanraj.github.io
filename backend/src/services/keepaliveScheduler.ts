@@ -37,7 +37,7 @@ export async function runKeepaliveOperations(): Promise<KeepaliveResults> {
       const collectionName = collections.collections[0].name;
       try {
         await qdrantClient.search(collectionName, {
-          vector: Array(768).fill(0.01),
+          vector: Array(1024).fill(0.01),
           limit: 1
         });
       } catch {
@@ -71,39 +71,4 @@ export async function runKeepaliveOperations(): Promise<KeepaliveResults> {
 
   console.log("[Keepalive] Check completed:", JSON.stringify(results));
   return results;
-}
-
-let keepaliveTimer: NodeJS.Timeout | null = null;
-
-export function startKeepaliveScheduler() {
-  if (keepaliveTimer) {
-    clearTimeout(keepaliveTimer);
-  }
-
-  // Calculate random delay between 4.5 hours and 7.5 hours (avg ~6h)
-  const minHours = 4.5;
-  const maxHours = 7.5;
-  const randomHours = minHours + Math.random() * (maxHours - minHours);
-  const delayMs = Math.floor(randomHours * 60 * 60 * 1000);
-
-  console.log(`[Keepalive] Scheduler started. Next execution in ${(randomHours).toFixed(2)} hours.`);
-
-  // Initial execution after 15s server startup delay
-  setTimeout(() => {
-    runKeepaliveOperations().catch(err => console.error("[Keepalive] Initial run error:", err));
-  }, 15000);
-
-  const scheduleNext = () => {
-    keepaliveTimer = setTimeout(async () => {
-      try {
-        await runKeepaliveOperations();
-      } catch (err) {
-        console.error("[Keepalive] Scheduled execution error:", err);
-      } finally {
-        scheduleNext();
-      }
-    }, delayMs);
-  };
-
-  scheduleNext();
 }

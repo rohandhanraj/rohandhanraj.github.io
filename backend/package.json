@@ -8,8 +8,10 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "test": "vitest run",
+    "test:unit": "vitest run --exclude \"**/prodDbConnectivity.test.ts\"",
     "test:prod-db": "vitest run src/config/prodDbConnectivity.test.ts",
-    "ingest": "tsx src/scripts/ingest.ts"
+    "ingest": "tsx src/scripts/ingest.ts",
+    "verify-ingest": "tsx src/scripts/verifyIngest.ts"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.18.0",
@@ -18,6 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-rate-limit": "^8.6.2",
     "mongodb": "^7.3.0",
     "neo4j-driver": "^6.1.0",
     "swagger-ui-express": "^5.0.1"

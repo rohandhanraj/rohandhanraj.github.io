@@ -1,0 +1,20 @@
+# Pings the backend's keepalive endpoint on a schedule so free-tier
+# Mongo Atlas / Qdrant Cloud / Neo4j Aura instances don't auto-pause
+# from inactivity. Runs independently of Vercel's own Cron Jobs
+# (backend/vercel.json), which may be restricted on the free plan.
+
+name: Keepalive Ping
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call backend keepalive endpoint
+        run: |
+          curl -sf -X GET "${{ secrets.BACKEND_URL }}/api/cron/keepalive" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"

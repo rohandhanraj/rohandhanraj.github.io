@@ -4,6 +4,7 @@ import { mongoClient } from "../config/db.js";
 import { retrieveHybridContextDetailed } from "../services/ragService.js";
 import { validatePreAgentInput, SAFE_FALLBACK_RESPONSE } from "../services/guardrailService.js";
 import { streamNvidiaNimResponse } from "../services/llmService.js";
+import { chatRateLimiter } from "../middleware/rateLimiter.js";
 
 const router = Router();
 
@@ -51,7 +52,7 @@ router.get("/history", async (req, res) => {
 });
 
 // POST /api/chat
-router.post("/", async (req, res) => {
+router.post("/", chatRateLimiter, async (req, res) => {
   const { query, history = [] } = req.body;
 
   if (!query || typeof query !== "string") {
@@ -114,7 +115,7 @@ router.post("/", async (req, res) => {
             messages: {
               $each: [
                 { role: "user", content: query, timestamp: new Date() },
-                { role: "assistant", content: fullResponse || SAFE_FALLBACK_RESPONSE, timestamp: new Date(), contextUsed: retrievalResult.context }
+                { role: "assistant", content: fullResponse || SAFE_FALLBACK_RESPONSE, timestamp: new Date(), contextUsed: retrievalResult.context, degraded: retrievalResult.degraded }
               ]
             }
           } as any,

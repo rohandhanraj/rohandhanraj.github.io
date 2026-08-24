@@ -1,5 +1,9 @@
 # Deploy Next.js static export to GitHub Pages
 # Secrets are injected as NEXT_PUBLIC_* env vars during build — never in source code.
+#
+# Resume/profile ingestion is NOT run here. It runs locally in the
+# pre-commit hook (.githooks/pre-commit) before a change reaches main,
+# so a bad ingest or an unreachable database never blocks this deploy.
 
 name: Deploy to GitHub Pages
 
@@ -35,41 +39,16 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Lint
+        working-directory: frontend
+        run: npm run lint
+
       - name: Build static export
         working-directory: frontend
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ secrets.BASE_PATH }}
           NEXT_PUBLIC_BACKEND_URL: ${{ secrets.NEXT_PUBLIC_BACKEND_URL }}
         run: npm run build
-
-      - name: Check for resume modifications
-        uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            resume:
-              - 'frontend/public/resumes/**'
-              - 'frontend/lib/documentTree.json'
-
-      - name: Install Ingestion Dependencies
-        if: steps.changes.outputs.resume == 'true'
-        working-directory: ./backend
-        run: npm ci
-
-      - name: Run Database Ingestion Pipeline
-        if: steps.changes.outputs.resume == 'true'
-        working-directory: ./backend
-        env:
-          NODE_ENV: production
-          MONGO_URI: ${{ secrets.MONGO_URI }}
-          QDRANT_BASE_URL: ${{ secrets.QDRANT_BASE_URL }}
-          QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}
-          NEO4J_URI: ${{ secrets.NEO4J_URI }}
-          NEO4J_USERNAME: ${{ secrets.NEO4J_USERNAME }}
-          NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENROUTER_EMBEDDING_MODEL: ${{ secrets.OPENROUTER_EMBEDDING_MODEL || 'google/gemini-embedding-001' }}
-        run: npx tsx src/scripts/ingest.ts
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

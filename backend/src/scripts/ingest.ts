@@ -18,16 +18,17 @@ interface DocumentNode {
 const documentTreePath = path.resolve(__dirname, "../../../frontend/lib/documentTree.json");
 
 async function getEmbedding(text: string): Promise<number[]> {
-  const apiKey = process.env.OPENROUTER_API_KEY;
-  const model = process.env.OPENROUTER_EMBEDDING_MODEL || "nomic-ai/nomic-embed-text-v1.5";
+  const apiKey = process.env.COHERE_API_KEY?.trim();
+  const model = process.env.COHERE_EMBEDDING_MODEL?.trim() || "embed-english-v3.0";
+  const baseUrl = process.env.COHERE_BASE_URL?.trim() || "https://api.cohere.com/v2";
 
   if (!apiKey || apiKey === "mock-key") {
-    // Generate a mock 768-dimensional embedding for testing/fallback
-    const embedding = Array.from({ length: 768 }, () => Math.random() - 0.5);
+    // Generate a mock 1024-dimensional embedding for testing/fallback
+    const embedding = Array.from({ length: 1024 }, () => Math.random() - 0.5);
     return embedding;
   }
 
-  const res = await fetch("https://openrouter.ai/api/v1/embeddings", {
+  const res = await fetch(`${baseUrl}/embed`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -35,7 +36,9 @@ async function getEmbedding(text: string): Promise<number[]> {
     },
     body: JSON.stringify({
       model,
-      input: text.replace(/\n/g, " ")
+      texts: [text.replace(/\n/g, " ")],
+      input_type: "search_document",
+      embedding_types: ["float"]
     })
   });
 
@@ -44,12 +47,12 @@ async function getEmbedding(text: string): Promise<number[]> {
     throw new Error(`Embedding API failed: ${res.status} ${res.statusText} - ${errorText}`);
   }
 
-  const data = await res.json() as any;
-  if (!data?.data?.[0]?.embedding) {
+  const data = (await res.json()) as any;
+  if (!data?.embeddings?.float?.[0]) {
     throw new Error(`Invalid response structure from embedding API: ${JSON.stringify(data)}`);
   }
 
-  return data.data[0].embedding;
+  return data.embeddings.float[0];
 }
 
 export async function ingestResume() {
@@ -94,6 +97,7 @@ export async function ingestResume() {
   // 3. Process and Upload to Qdrant (Vector DB)
   console.log("Embedding and upserting chunks to Qdrant...");
   const points = [];
+  let failedCount = 0;
   for (let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
     if (!node.content.trim()) continue;
@@ -113,8 +117,13 @@ export async function ingestResume() {
         }
       });
     } catch (err) {
+      failedCount++;
       console.error(`Failed to embed node ${node.id}:`, err);
     }
+  }
+
+  if (failedCount > 0) {
+    throw new Error(`Ingestion failed: ${failedCount} of ${nodes.length} nodes failed to embed.`);
   }
 
   if (points.length > 0) {

@@ -92,6 +92,7 @@ export interface RetrievalResult {
   context: string;
   retrievalLog: string;
   matchedNodesCount: number;
+  degraded: boolean;
 }
 
 interface LocalFallbackDetails {
@@ -202,20 +203,26 @@ function extractKeywords(query: string): string[] {
 
 // Fetch embeddings for Qdrant querying
 async function getQueryEmbedding(text: string): Promise<number[]> {
-  const apiKey = process.env.OPENROUTER_API_KEY?.trim();
-  const model = process.env.OPENROUTER_EMBEDDING_MODEL?.trim() || "nomic-ai/nomic-embed-text-v1.5";
+  const apiKey = process.env.COHERE_API_KEY?.trim();
+  const model = process.env.COHERE_EMBEDDING_MODEL?.trim() || "embed-english-v3.0";
+  const baseUrl = process.env.COHERE_BASE_URL?.trim() || "https://api.cohere.com/v2";
 
   if (!apiKey || apiKey === "mock-key") {
-    return Array.from({ length: 768 }, () => Math.random() - 0.5);
+    return Array.from({ length: 1024 }, () => Math.random() - 0.5);
   }
 
-  const res = await fetch("https://openrouter.ai/api/v1/embeddings", {
+  const res = await fetch(`${baseUrl}/embed`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${apiKey}`
     },
-    body: JSON.stringify({ model, input: text.replace(/\n/g, " ") }),
+    body: JSON.stringify({
+      model,
+      texts: [text.replace(/\n/g, " ")],
+      input_type: "search_query",
+      embedding_types: ["float"]
+    }),
     signal: AbortSignal.timeout(1000)
   });
 
@@ -224,7 +231,7 @@ async function getQueryEmbedding(text: string): Promise<number[]> {
   }
 
   const data = (await res.json()) as any;
-  return data.data[0].embedding;
+  return data.embeddings.float[0];
 }
 
 // Query Cohere Rerank API
@@ -326,70 +333,68 @@ export async function retrieveHybridContextDetailed(
       await withTimeout((async () => {
         const session = getNeo4jSession();
         try {
-          let graphMatches = 0;
-          for (const kw of keywords) {
-            const regexPattern = `(?i).*${kw}.*`;
-            
-            const skillRes = await session.run(
-              `
-              MATCH (sk:Skill) WHERE sk.name =~ $pattern
-              OPTIONAL MATCH (connected)-[:USES_SKILL|APPLIED_SKILL]->(sk)
-              RETURN sk.name as skill, labels(connected)[0] as type, connected.name as projName, connected.company as compName
-              LIMIT 5
-              `,
-              { pattern: regexPattern }
-            );
+          const patterns = keywords.map(kw => `(?i).*${kw}.*`);
 
-            for (const record of skillRes.records) {
-              const skill = record.get("skill");
-              const type = record.get("type");
-              if (type === "Project") {
-                const projName = record.get("projName");
-                addCandidate(`Project ${projName} uses the skill ${skill}.`, "Graph-Skill-Project");
-              } else if (type === "Experience") {
-                const compName = record.get("compName");
-                addCandidate(`Rohan applied the skill ${skill} during his experience at ${compName}.`, "Graph-Skill-Experience");
-              } else {
-                addCandidate(`Rohan Yadav has skills in: ${skill}.`, "Graph-Skill-Direct");
-              }
-              graphMatches++;
-            }
+          const skillRes = await session.run(
+            `
+            UNWIND $patterns AS pattern
+            MATCH (sk:Skill) WHERE sk.name =~ pattern
+            OPTIONAL MATCH (connected)-[:USES_SKILL|APPLIED_SKILL]->(sk)
+            RETURN DISTINCT sk.name as skill, labels(connected)[0] as type, connected.name as projName, connected.company as compName
+            LIMIT 15
+            `,
+            { patterns }
+          );
 
-            const projRes = await session.run(
-              `
-              MATCH (p:Project) WHERE p.name =~ $pattern OR p.domain =~ $pattern
-              RETURN p.name as name, p.description as desc, p.domain as domain
-              LIMIT 3
-              `,
-              { pattern: regexPattern }
-            );
-
-            for (const record of projRes.records) {
-              const name = record.get("name");
-              const desc = record.get("desc");
-              const domain = record.get("domain");
-              addCandidate(`Project ${name} (${domain}): ${desc}`, "Graph-Project-Direct");
-              graphMatches++;
-            }
-
-            const expRes = await session.run(
-              `
-              MATCH (e:Experience) WHERE e.company =~ $pattern OR e.role =~ $pattern
-              RETURN e.company as company, e.role as role, e.duration as duration
-              LIMIT 3
-              `,
-              { pattern: regexPattern }
-            );
-
-            for (const record of expRes.records) {
-              const company = record.get("company");
-              const role = record.get("role");
-              const duration = record.get("duration");
-              addCandidate(`Experience at ${company} as ${role} (${duration}).`, "Graph-Experience-Direct");
-              graphMatches++;
+          for (const record of skillRes.records) {
+            const skill = record.get("skill");
+            const type = record.get("type");
+            if (type === "Project") {
+              const projName = record.get("projName");
+              addCandidate(`Project ${projName} uses the skill ${skill}.`, "Graph-Skill-Project");
+            } else if (type === "Experience") {
+              const compName = record.get("compName");
+              addCandidate(`Rohan applied the skill ${skill} during his experience at ${compName}.`, "Graph-Skill-Experience");
+            } else {
+              addCandidate(`Rohan Yadav has skills in: ${skill}.`, "Graph-Skill-Direct");
             }
           }
 
+          const projRes = await session.run(
+            `
+            UNWIND $patterns AS pattern
+            MATCH (p:Project) WHERE p.name =~ pattern OR p.domain =~ pattern
+            RETURN DISTINCT p.name as name, p.description as desc, p.domain as domain
+            LIMIT 9
+            `,
+            { patterns }
+          );
+
+          for (const record of projRes.records) {
+            const name = record.get("name");
+            const desc = record.get("desc");
+            const domain = record.get("domain");
+            addCandidate(`Project ${name} (${domain}): ${desc}`, "Graph-Project-Direct");
+          }
+
+          const expRes = await session.run(
+            `
+            UNWIND $patterns AS pattern
+            MATCH (e:Experience) WHERE e.company =~ pattern OR e.role =~ pattern
+            RETURN DISTINCT e.company as company, e.role as role, e.duration as duration
+            LIMIT 9
+            `,
+            { patterns }
+          );
+
+          for (const record of expRes.records) {
+            const company = record.get("company");
+            const role = record.get("role");
+            const duration = record.get("duration");
+            addCandidate(`Experience at ${company} as ${role} (${duration}).`, "Graph-Experience-Direct");
+          }
+
+          const graphMatches = skillRes.records.length + projRes.records.length + expRes.records.length;
           if (graphMatches > 0) {
             retrievalLogs.push(`- **Neo4j Knowledge Graph**: Traversed and retrieved ${graphMatches} relational graph nodes`);
           }
@@ -414,7 +419,8 @@ export async function retrieveHybridContextDetailed(
     return {
       context: fallback.context,
       retrievalLog: retrievalLogs.join("\n"),
-      matchedNodesCount: fallback.matchedCount
+      matchedNodesCount: fallback.matchedCount,
+      degraded: true
     };
   }
 
@@ -435,7 +441,8 @@ export async function retrieveHybridContextDetailed(
     return {
       context: selectedContexts.join("\n\n"),
       retrievalLog: retrievalLogs.join("\n"),
-      matchedNodesCount: selectedContexts.length
+      matchedNodesCount: selectedContexts.length,
+      degraded: false
     };
   } catch (err) {
     console.error("Reranking process failed, combining directly:", err);
@@ -443,7 +450,8 @@ export async function retrieveHybridContextDetailed(
     return {
       context: candidateTexts.join("\n\n"),
       retrievalLog: retrievalLogs.join("\n"),
-      matchedNodesCount: candidateTexts.length
+      matchedNodesCount: candidateTexts.length,
+      degraded: false
     };
   }
 }
