@@ -1,5 +1,9 @@
 import fs from "fs";
+import path from "path";
 import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export interface RetrievalResult {
   context: string;
@@ -51,7 +55,7 @@ interface CertificationItem {
   achievement?: string;
 }
 
-interface ProfessionalFacts {
+export interface ProfessionalFacts {
   full_name: string;
   name: string;
   current_role: string;
@@ -70,20 +74,101 @@ interface ProfessionalFacts {
 
 let cachedFacts: ProfessionalFacts | null = null;
 
-function loadProfessionalFacts(): ProfessionalFacts {
+export function loadProfessionalFacts(): ProfessionalFacts {
   if (cachedFacts) return cachedFacts;
+
+  const candidatePaths = [
+    path.resolve(__dirname, "../data/professionalFacts.json"),
+    path.resolve(__dirname, "../../src/data/professionalFacts.json"),
+    path.resolve(__dirname, "../../../src/data/professionalFacts.json"),
+    path.resolve(process.cwd(), "src/data/professionalFacts.json"),
+    path.resolve(process.cwd(), "backend/src/data/professionalFacts.json"),
+    path.resolve(process.cwd(), "data/professionalFacts.json")
+  ];
+
+  for (const candidate of candidatePaths) {
+    try {
+      if (fs.existsSync(candidate)) {
+        const content = fs.readFileSync(candidate, "utf-8");
+        cachedFacts = JSON.parse(content) as ProfessionalFacts;
+        return cachedFacts;
+      }
+    } catch {
+      // Continue checking remaining candidates
+    }
+  }
+
+  // Fallback to URL-based resolution
   try {
     const factsUrl = new URL("../data/professionalFacts.json", import.meta.url);
     const content = fs.readFileSync(factsUrl, "utf-8");
     cachedFacts = JSON.parse(content) as ProfessionalFacts;
     return cachedFacts;
   } catch (err) {
-    console.error("Failed to load professionalFacts.json:", err);
-    throw err;
+    throw new Error(
+      `Could not load professionalFacts.json from any candidate path:\n${candidatePaths.join("\n")}`
+    );
   }
 }
 
-const GREETING_REGEX = /^(hi|hello|hey|who are you|introduce yourself|greetings)\b/i;
+function escapeRegExp(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+export function extractSkillAliases(skill: string): string[] {
+  const aliases = new Set<string>();
+  const lower = skill.toLowerCase().trim();
+  aliases.add(lower);
+
+  // Extract content inside parentheses: e.g. "Retrieval-Augmented Generation (RAG)" -> "RAG"
+  // e.g. "OpenAI (GPT-4 / GPT-4o)" -> "GPT-4", "GPT-4o"
+  const parensMatch = skill.match(/\(([^)]+)\)/);
+  if (parensMatch) {
+    const inside = parensMatch[1];
+    inside.split(/[/,]/).forEach(part => {
+      const trimmed = part.trim().toLowerCase();
+      if (trimmed.length > 0) {
+        aliases.add(trimmed);
+      }
+    });
+
+    // Also part before parenthesis
+    const beforeParens = skill.replace(/\s*\([^)]*\)/, "").trim().toLowerCase();
+    if (beforeParens.length > 0) {
+      aliases.add(beforeParens);
+    }
+  }
+
+  return Array.from(aliases);
+}
+
+function matchesSkillAlias(query: string, alias: string): boolean {
+  if (alias.length <= 4) {
+    return new RegExp(`\\b${escapeRegExp(alias)}\\b`, "i").test(query);
+  }
+  return query.includes(alias) || new RegExp(`\\b${escapeRegExp(alias)}\\b`, "i").test(query);
+}
+
+const PURE_GREETING_REGEX =
+  /^(hi|hello|hey|hey there|who are you|introduce yourself|greetings|good morning|good afternoon|good evening)[!?.]*$/i;
+
+function isPureGreeting(query: string): boolean {
+  const q = query.trim().toLowerCase();
+  if (PURE_GREETING_REGEX.test(q)) return true;
+
+  const stripped = q
+    .replace(/^(hi|hello|hey|greetings|good\s+(morning|afternoon|evening))[,\s!.]*/i, "")
+    .replace(/\bplease\b/gi, "")
+    .replace(/[?!.]/g, "")
+    .trim();
+
+  if (stripped.length === 0) return true;
+  if (/^(who are you|introduce yourself|tell me about yourself|who is rohan)$/i.test(stripped)) {
+    return true;
+  }
+  return false;
+}
+
 const MAX_CONTEXT_LENGTH = 10000;
 
 export async function retrieveFactsContext(
@@ -100,9 +185,10 @@ export async function retrieveFactsContext(
   const logs: string[] = [];
   let matchedCount = 0;
 
-  // 1. Intent: Greeting Detector
-  // For pure greetings or introduction requests, return concise identity without project/experience dumps
-  if (GREETING_REGEX.test(normalizedQuery)) {
+  // 1. Intent: Pure Greeting Detector
+  // For pure greetings or introduction requests without specific entity queries,
+  // return concise identity without project/experience dumps.
+  if (isPureGreeting(normalizedQuery)) {
     if (onStatusUpdate) onStatusUpdate("Retrieving identity summary...");
 
     const identityText = [
@@ -205,29 +291,55 @@ export async function retrieveFactsContext(
   const matchedSpecialties: Array<{ category: string; skills: string[] }> = [];
 
   for (const [category, skillsList] of Object.entries(facts.specialties)) {
+    const categoryAliases = extractSkillAliases(category);
+    const categoryMatches = categoryAliases.some(alias => matchesSkillAlias(normalizedQuery, alias));
+
     const matchingSkills = skillsList.filter(skill => {
-      const lowerSkill = skill.toLowerCase();
-      // Match full skill name or token
-      return normalizedQuery.includes(lowerSkill) || queryWords.includes(lowerSkill.replace(/[^a-z0-9]/g, ""));
+      const aliases = extractSkillAliases(skill);
+      return aliases.some(alias => matchesSkillAlias(normalizedQuery, alias));
     });
 
     if (isTechStackQuery) {
       matchedSpecialties.push({ category, skills: skillsList });
     } else if (matchingSkills.length > 0) {
       matchedSpecialties.push({ category, skills: matchingSkills });
+    } else if (categoryMatches) {
+      matchedSpecialties.push({ category, skills: skillsList });
     }
   }
 
-  // If specific skills were searched, also find projects that used those skills
+  // If specific skills were searched, also find projects and experience that used those skills
   if (matchedSpecialties.length > 0 && !isTechStackQuery) {
-    const skillTerms = matchedSpecialties.flatMap(s => s.skills.map(k => k.toLowerCase()));
+    const matchedSkillAliases = matchedSpecialties.flatMap(s =>
+      s.skills.flatMap(skill => extractSkillAliases(skill))
+    );
+
+    // Cross-match projects
     for (const project of facts.projects) {
       if (!matchedProjects.includes(project)) {
-        const hasSkill = project.skills_used.some(s =>
-          skillTerms.some(term => s.toLowerCase().includes(term) || term.includes(s.toLowerCase()))
-        );
+        const hasSkill = project.skills_used.some(projSkill => {
+          const projAliases = extractSkillAliases(projSkill);
+          return matchedSkillAliases.some(skillAlias =>
+            projAliases.some(projAlias => matchesSkillAlias(projAlias, skillAlias) || matchesSkillAlias(skillAlias, projAlias))
+          );
+        });
         if (hasSkill) {
           matchedProjects.push(project);
+        }
+      }
+    }
+
+    // Cross-match experience
+    for (const exp of facts.experience) {
+      if (!matchedExperience.includes(exp)) {
+        const hasSkill = exp.skills_used.some(expSkill => {
+          const expAliases = extractSkillAliases(expSkill);
+          return matchedSkillAliases.some(skillAlias =>
+            expAliases.some(expAlias => matchesSkillAlias(expAlias, skillAlias) || matchesSkillAlias(skillAlias, expAlias))
+          );
+        });
+        if (hasSkill) {
+          matchedExperience.push(exp);
         }
       }
     }
@@ -304,16 +416,29 @@ export async function retrieveFactsContext(
 
   // Fallback if no specific entity matched
   if (sections.length === 0) {
-    sections.push([
-      "### Identity & Profile Overview",
-      `- **Full Name**: ${facts.full_name} (${facts.name})`,
-      `- **Current Role**: ${facts.current_role}`,
-      `- **Experience**: ${facts.years_experience.total}+ years total (${facts.years_experience.generative_ai}+ in Generative AI)`,
-      `- **Location**: ${facts.location}`,
-      `- **Key Focus**: Enterprise GenAI architectures, multi-agent systems with MCP & LangGraph, and high-performance ML pipelines.`
-    ].join("\n"));
-    logs.push("- ℹ️ **Default Profile Overview**: General profile overview returned.");
-    matchedCount = 1;
+    if (/^(hi|hello|hey|greetings|good\s+(morning|afternoon|evening))\b/i.test(normalizedQuery)) {
+      sections.push([
+        "### Identity & Current Role",
+        `- **Full Name**: ${facts.full_name} (${facts.name})`,
+        `- **Current Role**: ${facts.current_role}`,
+        `- **Location**: ${facts.location}`,
+        `- **Summary**: Experienced AI Engineer with ${facts.years_experience.total}+ years total experience (${facts.years_experience.generative_ai}+ years in Generative AI, ${facts.years_experience.agentic_ai}+ year(s) in Agentic AI), currently leading production GenAI engineering at Publicis Sapient.`,
+        `- **Contact**: ${facts.email} | [LinkedIn](${facts.linkedin}) | [GitHub](${facts.github}) | [Portfolio](${facts.portfolio})`
+      ].join("\n"));
+      logs.push("- 👤 **Intent: Greeting / Conversational Opening**: Returned concise identity and current role.");
+      matchedCount = 1;
+    } else {
+      sections.push([
+        "### Identity & Profile Overview",
+        `- **Full Name**: ${facts.full_name} (${facts.name})`,
+        `- **Current Role**: ${facts.current_role}`,
+        `- **Experience**: ${facts.years_experience.total}+ years total (${facts.years_experience.generative_ai}+ in Generative AI)`,
+        `- **Location**: ${facts.location}`,
+        `- **Key Focus**: Enterprise GenAI architectures, multi-agent systems with MCP & LangGraph, and high-performance ML pipelines.`
+      ].join("\n"));
+      logs.push("- ℹ️ **Default Profile Overview**: General profile overview returned.");
+      matchedCount = 1;
+    }
   }
 
   // Length budget control

@@ -1,7 +1,44 @@
 import { describe, it, expect, vi } from "vitest";
-import { retrieveFactsContext, RetrievalResult } from "./factsRagAdapter.js";
+import {
+  retrieveFactsContext,
+  RetrievalResult,
+  loadProfessionalFacts,
+  extractSkillAliases
+} from "./factsRagAdapter.js";
 
 describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
+  describe("Asset Resolution & Loading", () => {
+    it("should resolve and load professionalFacts.json across environments", () => {
+      const facts = loadProfessionalFacts();
+      expect(facts).toBeDefined();
+      expect(facts.full_name).toBe("Rohan Dhanraj Yadav");
+      expect(facts.current_role).toContain("Publicis Sapient");
+      expect(facts.years_experience.total).toBe(7);
+      expect(facts.years_experience.generative_ai).toBe(2);
+    });
+  });
+
+  describe("Skill Aliases & Acronym Extraction", () => {
+    it("should extract acronyms and clean aliases from parenthesized strings", () => {
+      const ragAliases = extractSkillAliases("Retrieval-Augmented Generation (RAG)");
+      expect(ragAliases).toContain("rag");
+      expect(ragAliases).toContain("retrieval-augmented generation");
+
+      const mcpAliases = extractSkillAliases("Model Context Protocol (MCP)");
+      expect(mcpAliases).toContain("mcp");
+      expect(mcpAliases).toContain("model context protocol");
+
+      const gptAliases = extractSkillAliases("OpenAI (GPT-4 / GPT-4o)");
+      expect(gptAliases).toContain("gpt-4");
+      expect(gptAliases).toContain("gpt-4o");
+      expect(gptAliases).toContain("openai");
+
+      const awsAliases = extractSkillAliases("Amazon Web Services (AWS)");
+      expect(awsAliases).toContain("aws");
+      expect(awsAliases).toContain("amazon web services");
+    });
+  });
+
   describe("Greeting Queries", () => {
     it.each([
       "hi",
@@ -9,7 +46,9 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
       "who are you",
       "introduce yourself",
       "hey there",
-    ])("should return concise identity and role for greeting '%s' without project or experience dumps", async (greeting) => {
+      "Hello, who are you?",
+      "Hi! Introduce yourself please"
+    ])("should return concise identity and role for pure greeting '%s' without project or experience dumps", async (greeting) => {
       const result: RetrievalResult = await retrieveFactsContext(greeting);
 
       expect(result.context).toBeDefined();
@@ -28,7 +67,42 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
     });
   });
 
-  describe("Skills & Tech Stack Queries", () => {
+  describe("Compound Queries Starting with a Greeting", () => {
+    it("should retrieve Publicis Sapient work when greeting is followed by company inquiry", async () => {
+      const result = await retrieveFactsContext("Hello, tell me about your work at Publicis Sapient");
+
+      expect(result.context).toContain("Publicis Sapient");
+      expect(result.context).toContain("Senior Associate Data Science L2");
+      expect(result.context).toContain("Enterprise data science delivery");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should retrieve tech stack when greeting is followed by skills question", async () => {
+      const result = await retrieveFactsContext("Hi! What is your tech stack?");
+
+      expect(result.context).toContain("Generative AI & LLMs");
+      expect(result.context).toContain("Python");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should retrieve project details when greeting is followed by project name", async () => {
+      const result = await retrieveFactsContext("Hey there, tell me about Omodore");
+
+      expect(result.context).toContain("Omodore");
+      expect(result.context).toContain("AI Agent Platform");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should retrieve numeric experience when greeting is followed by years inquiry", async () => {
+      const result = await retrieveFactsContext("Hello, how many years of experience do you have in Generative AI?");
+
+      expect(result.context).toMatch(/2\+?\s*years?.*(?:Generative AI|GenAI)/i);
+      expect(result.context).toMatch(/7\+?\s*years?.*total/i);
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  describe("Skills & Tech Stack Queries (including Acronym Matching)", () => {
     it("should return matching specialties for tech stack inquiry", async () => {
       const result = await retrieveFactsContext("What is your tech stack?");
 
@@ -38,6 +112,33 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
       expect(result.context).toContain("LangGraph");
       expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
       expect(result.retrievalLog).toMatch(/skills|specialties/i);
+    });
+
+    it("should match parenthesized acronym 'RAG' and return both specialties and projects using RAG", async () => {
+      const result = await retrieveFactsContext("experience with RAG");
+
+      expect(result.context).toContain("Retrieval-Augmented Generation (RAG)");
+      // Projects using RAG
+      expect(result.context).toContain("Omodore");
+      expect(result.context).toContain("Skills Used");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should match parenthesized acronym 'MCP' and return specialty and related experience", async () => {
+      const result = await retrieveFactsContext("tell me about MCP");
+
+      expect(result.context).toContain("Model Context Protocol (MCP)");
+      expect(result.context).toContain("R Systems International");
+      expect(result.context).toContain("Lendistry");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should match 'AWS' and return specialty and relevant projects", async () => {
+      const result = await retrieveFactsContext("What experience do you have with AWS?");
+
+      expect(result.context).toContain("Amazon Web Services (AWS)");
+      expect(result.context).toContain("Mice Protein Expression Analysis");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
     });
 
     it("should return matching specialties and relevant projects with skills_used for specific skills", async () => {
