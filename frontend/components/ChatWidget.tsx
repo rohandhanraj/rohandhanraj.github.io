@@ -5,8 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { marked } from "marked";
 import { streamChat, getChatHistory, logAnalyticsEvent } from "@/lib/chatClient";
 import { getVisitorInfo } from "@/lib/visitorInfo";
-import { retrieveContext } from "@/lib/ragEngine";
-import { buildDocumentTree } from "@/lib/documentTree";
 import type { ChatMessage, VisitorInfo } from "@/lib/types";
 
 // Configure marked options
@@ -14,9 +12,6 @@ marked.setOptions({
   gfm: true,
   breaks: true,
 });
-
-// Build once — reused across all queries (pure data, no side effects)
-const docTree = buildDocumentTree();
 
 interface UIMessage {
   id: string;
@@ -390,9 +385,6 @@ export default function ChatWidget() {
       setIsLoading(true);
       setStatusText("retrieving");
 
-      // RAG: retrieve relevant context from the document tree (client-side)
-      const context = retrieveContext(query, docTree);
-
       // Create streaming assistant message
       const assistantMsgId = crypto.randomUUID();
       setMessages((prev) => [
@@ -401,7 +393,7 @@ export default function ChatWidget() {
       ]);
 
       // Stream from OpenRouter
-      await streamChat(context, chatHistory, query, {
+      await streamChat(chatHistory, query, {
         onStatus(status) {
           setStatusText(status);
         },

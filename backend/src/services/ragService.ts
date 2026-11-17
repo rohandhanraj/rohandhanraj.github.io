@@ -18,12 +18,18 @@ let cachedDocTree: any[] | null = null;
 function loadDocumentTree(): any[] {
   if (cachedDocTree) return cachedDocTree;
   try {
+    const primaryPath = path.resolve(__dirname, "../data/documentTree.json");
+    const cwdPath = path.resolve(process.cwd(), "src/data/documentTree.json");
+    const cwdBackendPath = path.resolve(process.cwd(), "backend/src/data/documentTree.json");
     const treePath = path.resolve(__dirname, "../../../frontend/lib/documentTree.json");
     const altPath = path.resolve(process.cwd(), "frontend/lib/documentTree.json");
     const altPath2 = path.resolve(process.cwd(), "../frontend/lib/documentTree.json");
     
     let finalPath = "";
-    if (fs.existsSync(treePath)) finalPath = treePath;
+    if (fs.existsSync(primaryPath)) finalPath = primaryPath;
+    else if (fs.existsSync(cwdPath)) finalPath = cwdPath;
+    else if (fs.existsSync(cwdBackendPath)) finalPath = cwdBackendPath;
+    else if (fs.existsSync(treePath)) finalPath = treePath;
     else if (fs.existsSync(altPath)) finalPath = altPath;
     else if (fs.existsSync(altPath2)) finalPath = altPath2;
 

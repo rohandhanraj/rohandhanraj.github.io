@@ -12,7 +12,7 @@ console.log("=== Starting Resume & PDF Sync Pipeline ===");
 try {
   // 1. Regenerate RAG document tree from detailed_resume.md
   console.log("\n[1/3] Updating RAG Document Tree (documentTree.json)...");
-  const updateRagPath = path.join(rootDir, "frontend/scripts/updateRAG.mjs");
+  const updateRagPath = path.join(rootDir, "backend/src/scripts/updateRAG.mjs");
   execSync(`node "${updateRagPath}"`, { stdio: "inherit", cwd: rootDir });
 
   // 2. Compile HTML Master CV to PDF

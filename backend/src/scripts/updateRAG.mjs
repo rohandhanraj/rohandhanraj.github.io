@@ -1,12 +1,17 @@
 import fs from 'fs';
 import path from 'path';
-
 import { fileURLToPath } from 'url';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const publicResumesDir = path.resolve(__dirname, '../public/resumes');
-const outputJsonPath = path.resolve(__dirname, '../lib/documentTree.json');
+const candidateDirs = [
+  path.resolve(__dirname, '../../../frontend/public/resumes'),
+  path.resolve(process.cwd(), 'frontend/public/resumes'),
+  path.resolve(process.cwd(), '../frontend/public/resumes')
+];
+const publicResumesDir = candidateDirs.find(d => fs.existsSync(d)) || candidateDirs[0];
+const outputJsonPath = path.resolve(__dirname, '../data/documentTree.json');
 
 const stopwords = new Set([
   'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any', 'are', 'arent', 'as', 'at',
