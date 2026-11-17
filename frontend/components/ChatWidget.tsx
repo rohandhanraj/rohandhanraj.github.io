@@ -193,7 +193,7 @@ function MessageBubble({ msg }: { msg: UIMessage }) {
         <div
           className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-2 mt-0.5 overflow-hidden border border-slate-700 bg-slate-900"
         >
-          <img src="/avatar_sticker.png" alt="AI Assistant" className="w-full h-full object-cover" />
+          <img src="/assistant_avatar.jpg" alt="AI Assistant" className="w-full h-full object-cover" />
         </div>
       )}
       <div
@@ -479,7 +479,7 @@ export default function ChatWidget() {
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-700 bg-slate-900">
-                      <img src="/avatar_sticker.png" alt="AI Avatar" className="w-full h-full object-cover" />
+                      <img src="/assistant_avatar.jpg" alt="AI Avatar" className="w-full h-full object-cover" />
                     </div>
                     <div>
                       <p
@@ -516,7 +516,7 @@ export default function ChatWidget() {
                           className="flex items-center gap-2 mb-3"
                       >
                         <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-700 bg-slate-900">
-                          <img src="/avatar_sticker.png" alt="AI Assistant" className="w-full h-full object-cover" />
+                          <img src="/assistant_avatar.jpg" alt="AI Assistant" className="w-full h-full object-cover" />
                         </div>
                         <div
                             className="flex items-center gap-2 px-3 py-1.5"
