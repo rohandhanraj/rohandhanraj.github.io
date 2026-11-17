@@ -1,0 +1,551 @@
+{
+  "full_name": "Rohan Dhanraj Yadav",
+  "name": "Rohan",
+  "current_role": "Senior Associate Data Science L2 — Delivery, Engineering at Publicis Sapient",
+  "location": "Bengaluru, Karnataka, India",
+  "email": "rohan.dhanraj.y@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/rohan-dhanraj-yadav",
+  "github": "https://github.com/rohandhanraj",
+  "portfolio": "https://rohandhanraj.github.io",
+  "years_experience": {
+    "total": 7,
+    "ai_ml": 4,
+    "generative_ai": 2,
+    "agentic_ai": 1
+  },
+  "specialties": {
+    "Generative AI & LLMs": [
+      "OpenAI (GPT-4 / GPT-4o)",
+      "Anthropic (Claude)",
+      "Vertex AI",
+      "Google Gen AI Platform",
+      "Cohere",
+      "AI21 Labs",
+      "LangChain",
+      "Prompt Engineering",
+      "Prompt Chaining",
+      "Chain-of-Thought (CoT) Reasoning",
+      "Structured Output Generation",
+      "Retrieval-Augmented Generation (RAG)",
+      "Hybrid RAG",
+      "Embedding Generation"
+    ],
+    "Agentic AI & Multi-Agent Systems": [
+      "LangGraph",
+      "Model Context Protocol (MCP)",
+      "Multi-Agent Systems",
+      "Agent Orchestration",
+      "Agentic Workflows",
+      "Autonomous AI Agents",
+      "Tool Use & Function Calling",
+      "ReAct Pattern",
+      "Reflexion",
+      "Plan-and-Execute",
+      "Human-in-the-Loop",
+      "Tree of Thoughts (ToT)",
+      "Deep Research",
+      "Agentic Guardrails",
+      "Harness Engineering",
+      "Agentic Ops"
+    ],
+    "Deep Learning & Machine Learning": [
+      "Scikit-Learn",
+      "PyCaret",
+      "TensorFlow",
+      "Keras",
+      "PyTorch",
+      "Optuna (Hyperparameter Optimization)",
+      "Transformers (Hugging Face)",
+      "BERT",
+      "RoBERTa",
+      "CLIP",
+      "Flan-T5",
+      "Parameter-Efficient Fine-Tuning (PEFT)",
+      "LoRA",
+      "QLoRA",
+      "Supervised Fine-Tuning (SFT)",
+      "RLHF",
+      "DPO"
+    ],
+    "Natural Language Processing (NLP)": [
+      "SpaCy",
+      "NLTK",
+      "Named Entity Recognition (NER)",
+      "Sentiment Analysis",
+      "Aspect-Based Sentiment Analysis (ABSA)",
+      "Text Classification",
+      "Text Summarization",
+      "Question Answering",
+      "Machine Translation"
+    ],
+    "MLOps & Cloud Infrastructure": [
+      "Docker",
+      "MLflow",
+      "Strategic Agentic Evaluation",
+      "Observability",
+      "CI/CD",
+      "Git",
+      "GitHub Actions",
+      "Google Cloud Platform (GCP)",
+      "Amazon Web Services (AWS)",
+      "Model Monitoring",
+      "Model Deployment"
+    ],
+    "Programming & Frameworks": [
+      "Python",
+      "FastAPI",
+      "Flask",
+      "Django",
+      "Streamlit",
+      "Pydantic",
+      "Poetry"
+    ],
+    "Data Engineering": [
+      "Apache Airflow",
+      "ETL Pipelines",
+      "Kafka",
+      "PostgreSQL",
+      "MySQL",
+      "BigQuery",
+      "MongoDB",
+      "Cassandra",
+      "Vector Databases (Pinecone, Qdrant, LanceDB, Chroma, Pgvector, Milvus, Weaviate, SQLite-vec)",
+      "Graph Databases (Neo4j)"
+    ],
+    "Web Scraping & Data Extraction": [
+      "Playwright",
+      "Selenium",
+      "BeautifulSoup",
+      "Scrapy",
+      "AI Tech Crawler"
+    ]
+  },
+  "experience": [
+    {
+      "company": "Publicis Sapient",
+      "title": "Senior Associate Data Science L2 — Delivery, Engineering",
+      "start_date": "September 2026",
+      "end_date": "Present",
+      "location": "Bengaluru, Karnataka, India",
+      "responsibilities": [
+        "Enterprise data science delivery across strategic transformation initiatives",
+        "Production GenAI & LLM architectures, scalable pipeline engineering, and client transformation",
+        "Designing and deploying resilient, scalable enterprise AI/ML platforms",
+        "Leading technical architecture for generative AI, agentic systems, and high-throughput data pipelines"
+      ],
+      "skills_used": [
+        "Generative AI",
+        "LLMs",
+        "Enterprise AI Architecture",
+        "Data Science Delivery",
+        "Agentic Systems",
+        "Cloud & MLOps",
+        "Python"
+      ]
+    },
+    {
+      "company": "R Systems International",
+      "client": "Lendistry",
+      "title": "Senior AI/ML Engineer",
+      "start_date": "June 2026",
+      "end_date": "September 2026",
+      "location": "Bengaluru, Karnataka, India",
+      "responsibilities": [
+        "Architecting enterprise-grade Agentic AI workflows and multi-agent systems using Model Context Protocol (MCP) and custom guardrails",
+        "Engineering robust Harness Engineering and Agentic Ops infrastructure for automated tool execution and real-time observability",
+        "Developing end-to-end ML Flow integration and Agentic E2E evaluation frameworks for strategic agent validation and regression testing",
+        "Enforcing strict LLM safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows"
+      ],
+      "skills_used": [
+        "Python",
+        "Generative AI",
+        "Agentic Workflows",
+        "MCP Tools",
+        "Guardrails",
+        "Harness Engineering",
+        "Agentic Ops",
+        "ML Flow",
+        "Strategic Agentic Evaluation",
+        "Observability"
+      ]
+    },
+    {
+      "company": "AI Tech Solutions Ltd.",
+      "title": "AI/ML Engineer — Generative AI & Agentic Systems",
+      "start_date": "November 2024",
+      "end_date": "October 2025",
+      "location": "Bengaluru, Karnataka, India",
+      "responsibilities": [
+        "Led a 15-member team building scalable AI workflows using LangGraph, natively achieving a 38% accuracy improvement via hybrid RAG",
+        "Architected multi-modal autonomous assistants executing GPT-4 context orchestration, rapid image search, and LLM-based tool decisions",
+        "Developed AI-Tech-Crawler, an open-source web scraping platform natively utilizing LLMs and Pydantic schemas for data extraction",
+        "Scaled complex containerized orchestration models deploying Docker against Vector DBs for robust enterprise semantic search"
+      ],
+      "skills_used": [
+        "Python",
+        "LangChain",
+        "LangGraph",
+        "FastAPI",
+        "LLMs",
+        "RAG",
+        "Agent Orchestration",
+        "Docker",
+        "Vector DBs"
+      ]
+    },
+    {
+      "company": "Aimlytics Technology",
+      "title": "Software Engineer — Generative AI & ML",
+      "start_date": "September 2022",
+      "end_date": "October 2024",
+      "location": "Bengaluru, Karnataka, India",
+      "responsibilities": [
+        "Led an 8-member team resolving 50%+ of critical deployment issues and delivering custom AI workflows for Fortune 500 clients (Cisco, ITC, Omnitrax, PDS, KDP, Marco Technologies)",
+        "Architected a robust RAG-based virtual sales pipeline (SalesMoji) structurally scaling to consistently process 4,500+ daily API requests",
+        "Fine-tuned BERT & RoBERTa NLP models driving 18% performance improvements across a 15-language sentiment tracking stack",
+        "Automated rigorous ETL architectures utilizing Apache Airflow to seamlessly ingest and process 100K+ daily records"
+      ],
+      "skills_used": [
+        "Python",
+        "RAG",
+        "LangChain",
+        "Airflow",
+        "BERT",
+        "RoBERTa",
+        "FastAPI",
+        "Flask",
+        "TensorFlow",
+        "PyTorch",
+        "Vector DBs",
+        "GCP"
+      ]
+    },
+    {
+      "company": "iNeuron.ai",
+      "title": "Machine Learning Engineer Intern",
+      "start_date": "August 2021",
+      "end_date": "September 2022",
+      "location": "Bengaluru, Karnataka, India",
+      "responsibilities": [
+        "Led 10 engineers building automated ML pipeline architectures, natively deploying scalable classification networks via Flask and Docker",
+        "Reduced backend model training times by natively 35% employing Optuna for strictly automated hyperparameter optimizations",
+        "Built a multi-class bioinformatics processing system successfully parsing 77 protein expression markers accurately across 8 functional classes"
+      ],
+      "skills_used": [
+        "Python",
+        "Flask",
+        "Scikit-Learn",
+        "Optuna",
+        "MySQL",
+        "Cassandra",
+        "Docker",
+        "AWS"
+      ]
+    },
+    {
+      "company": "Bureau Veritas Group",
+      "title": "Metallurgical Quality Engineer",
+      "start_date": "August 2016",
+      "end_date": "November 2019",
+      "location": "Odisha, India",
+      "responsibilities": [
+        "Directed quality assurance and supervised metallurgical standards compliance across major industry frameworks (Jindal, Tata Steels)",
+        "Targeted data-driven quality enhancement leveraging Python (NumPy, Pandas, SciPy) for rigorous technical statistical and predictive tracking"
+      ],
+      "skills_used": [
+        "Data Analysis",
+        "Python",
+        "NumPy",
+        "Pandas",
+        "SciPy",
+        "Statistical Analysis",
+        "Quality Control"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Omodore",
+      "domain": "AI Agent Platform",
+      "description": "No-code AI agent platform enabling non-technical users to build domain-specific AI agents without coding expertise. The platform leverages advanced RAG pipelines to deliver accurate, context-aware responses with a 45% accuracy boost.",
+      "skills_used": [
+        "Python",
+        "FastAPI",
+        "LangChain",
+        "LangGraph",
+        "GPT",
+        "LLMs",
+        "Prompt Chaining",
+        "Chain of Thoughts",
+        "RAG",
+        "Agent Building",
+        "Autonomous Agents",
+        "Multi-Agent Systems",
+        "Qdrant",
+        "Milvus",
+        "Weaviate",
+        "MongoDB",
+        "PostgreSQL",
+        "PgVector",
+        "Neo4j",
+        "Docker"
+      ],
+      "responsibilities": [
+        "Led 15-member team developing Gen AI and Agentic AI solutions",
+        "Architected scalable RAG pipelines using LangChain and LangGraph",
+        "Implemented prompt chaining and Chain of Thoughts methodology for improved reasoning",
+        "Built automated agent building workflows using FastAPI",
+        "Integrated multiple LLMs for optimal performance",
+        "Implemented vector database solutions (Qdrant, Milvus, Weaviate) for efficient information retrieval",
+        "Resolved critical production issues ensuring system reliability"
+      ]
+    },
+    {
+      "name": "Rbetraj",
+      "domain": "E-commerce Data Intelligence",
+      "description": "Automated Dropshipping Platform powered by Shop Scan Agent which specializes in e-commerce data extraction with advanced price tracking and competitive analysis capabilities, powered by the open-source automated scraper AI Tech Crawler.",
+      "skills_used": [
+        "Python",
+        "FastAPI",
+        "Selenium",
+        "Playwright",
+        "BeautifulSoup",
+        "GPT",
+        "LLMs",
+        "LangChain",
+        "Pydantic for structured output",
+        "Apache Airflow",
+        "Qdrant",
+        "MongoDB",
+        "Docker"
+      ],
+      "responsibilities": [
+        "Developed open-source automated scraping framework AI Tech Crawler (https://pypi.org/project/ai-tech-crawler/)",
+        "Built Shop Scan Agent for e-commerce intelligence",
+        "Implemented GPT-powered and LLM-based structured data extraction",
+        "Created robust scraping pipelines using Playwright",
+        "Designed RESTful APIs using FastAPI for data access",
+        "Integrated LangChain for intelligent data processing workflows",
+        "Implemented Pydantic models for data validation and structured output",
+        "Implemented error handling and retry mechanisms for reliable scraping"
+      ]
+    },
+    {
+      "name": "Galambo",
+      "domain": "Multi-Modal AI Assistant",
+      "description": "Sophisticated multi-modal virtual agent that combines context-aware GPT responses with advanced image search capabilities, providing users with comprehensive visual and textual information retrieval.",
+      "skills_used": [
+        "Python",
+        "FastAPI",
+        "GPT",
+        "LLMs",
+        "LangChain",
+        "Agent Orchestration",
+        "Image Search Tools",
+        "Docker"
+      ],
+      "responsibilities": [
+        "Architected multi-modal AI system integrating text and image processing",
+        "Implemented context-aware response generation using GPT and LLMs",
+        "Integrated search engine tools for enhanced information retrieval",
+        "Built scalable API infrastructure using FastAPI",
+        "Implemented LangChain workflows for agent orchestration",
+        "Optimized response times and accuracy for production use"
+      ]
+    },
+    {
+      "name": "Salesmoji",
+      "domain": "Sales & Marketing Intelligence",
+      "description": "AI-powered sales intelligence platform harnessing GPT and LLMs to understand sales data, answer questions in plain English, and deliver instant, actionable sales intelligence processing 1M+ daily records and 10K+ daily queries.",
+      "skills_used": [
+        "Python",
+        "FastAPI",
+        "LangChain",
+        "LangGraph",
+        "GPT",
+        "LLMs",
+        "Prompt Chaining",
+        "Chain of Thoughts",
+        "RAG",
+        "Agent Building",
+        "Apache Airflow",
+        "MySQL",
+        "MongoDB",
+        "Qdrant",
+        "Milvus",
+        "Weaviate",
+        "Docker"
+      ],
+      "responsibilities": [
+        "Led 8-member team delivering custom AI workflows for Fortune 500 clients",
+        "Built RAG-based Virtual Sales Assistant responding to natural language queries",
+        "Achieved 10K+ daily query handling with 89% accuracy using context-aware GPT responses",
+        "Developed RAG pipelines for various sales channels using Vector Databases",
+        "Constructed and orchestrated data pipelines processing 1M+ daily records using Airflow",
+        "Architected Machine Learning pipelines for predictive analytics",
+        "Generated predictive insights for sales forecasting and trend analysis",
+        "Implemented vector database solutions (Qdrant, Milvus, Weaviate) for efficient retrieval",
+        "Applied Prompt Chaining and Chain of Thoughts for complex reasoning",
+        "Built agent workflows using LangChain and LangGraph",
+        "Resolved critical production issues maintaining high system availability"
+      ]
+    },
+    {
+      "name": "Aisera",
+      "domain": "Customer Service & IT Operations Management",
+      "description": "Enterprise Generative AI solutions helping enterprises boost revenue, improve user productivity, and lower operating expenses by automating and personalizing customer support using NLP, BERT fine-tuning, and the TRAPS ethical AI framework.",
+      "skills_used": [
+        "Python",
+        "FastAPI",
+        "LangChain",
+        "Prompt Chaining",
+        "RAG",
+        "Agent Building",
+        "Autonomous Agents",
+        "Multi-Agent Systems",
+        "Agentic Guardrails",
+        "BERT",
+        "SpaCy",
+        "NLTK",
+        "Hugging Face Transformers",
+        "Apache Airflow",
+        "MySQL",
+        "MongoDB",
+        "Chroma",
+        "Weaviate",
+        "GCP"
+      ],
+      "responsibilities": [
+        "Led 8-member team comprising 5 Data Engineers and 3 Software Developers",
+        "Delivered custom AI workflows for Fortune 500 clients including Cisco, ITC Fairview, Omnitrax, PDS, KDP, Marco Technologies",
+        "Fine-tuned BERT models for sentiment analysis achieving 50% performance improvement",
+        "Developed and scheduled system triggers using Airflow for automated operations",
+        "Implemented custom field prediction using advanced BERT architectures",
+        "Architected scalable ML pipelines ensuring reliability and performance",
+        "Implemented vector database solutions (Chroma, Weaviate) for RAG applications",
+        "Integrated LangChain for building conversational AI workflows",
+        "Resolved critical production issues maintaining high system availability"
+      ]
+    },
+    {
+      "name": "evalmyBRAND",
+      "domain": "Aspect-Based Sentiment Analysis & Brand Intelligence",
+      "description": "Aspect-based sentiment analysis and brand monitoring platform fine-tuning RoBERTa models across 15+ languages with an 18% performance improvement.",
+      "skills_used": [
+        "Python",
+        "FastAPI",
+        "RoBERTa",
+        "BERT",
+        "Hugging Face Transformers",
+        "NLP",
+        "Aspect-Based Sentiment Analysis (ABSA)",
+        "Apache Airflow",
+        "Docker",
+        "GCP"
+      ],
+      "responsibilities": [
+        "Fine-tuned RoBERTa and BERT models for aspect-based sentiment analysis across 15+ languages",
+        "Delivered 18% performance improvement over baseline models",
+        "Built scalable data ingestion and sentiment scoring pipelines"
+      ]
+    },
+    {
+      "name": "Inventted",
+      "domain": "Educational Technology",
+      "description": "Pioneering education platform designed to help educators and students become more efficient and productive with intelligent text summarization, automated essay grading, virtual tutor Q&A bot, and multi-modal models using CLIP and Flan-T5.",
+      "skills_used": [
+        "Python",
+        "Poetry",
+        "Flask",
+        "FastAPI",
+        "CLIP",
+        "Flan-T5",
+        "LangChain",
+        "Prompt Engineering",
+        "Prompt Chaining",
+        "RAG",
+        "Oracle",
+        "MongoDB",
+        "Cassandra",
+        "GCP"
+      ],
+      "responsibilities": [
+        "Performed advanced prompt engineering to fetch questions and answers from ChatGPT using optimized prompts",
+        "Fine-tuned CLIP (Multi-Modal Vision Transformer) to generate images from text descriptions",
+        "Fine-tuned Flan-T5 model to generate keyword-based MCQs from given educational context",
+        "Designed scalable Phishing Classifier using classical Machine Learning algorithms for email security",
+        "Built multi-modal model for social media content classification (Input: post text + image, Output: category)",
+        "Integrated multiple AI models into cohesive educational platform",
+        "Optimized Transformer models for real-time educational applications"
+      ]
+    },
+    {
+      "name": "Mice Protein Expression Analysis",
+      "domain": "Bioinformatics & Machine Learning",
+      "description": "Multi-class bioinformatics processing system accurately analyzing 77 protein expression markers across 8 functional classes, with automated ML pipelines and 35-40% training time reduction via Optuna.",
+      "skills_used": [
+        "Python",
+        "Flask",
+        "Scikit-Learn",
+        "Optuna",
+        "PyCaret",
+        "Cassandra DB",
+        "MySQL",
+        "Docker",
+        "AWS"
+      ],
+      "responsibilities": [
+        "Led team of 10 members in developing ML solution",
+        "Projected and architected comprehensive Machine Learning System",
+        "Built automated ML architectures for efficient model development",
+        "Automated Machine Learning pipelines for hyperparameter tuning achieving 35-40% training time reduction via Optuna",
+        "Implemented model selection algorithms to identify best performing models for production deployment",
+        "Developed data preprocessing pipelines for protein expression data",
+        "Created scalable architecture for handling large biological datasets",
+        "Deployed scalable ML applications with Flask web framework",
+        "Integrated Cassandra DB and MySQL for efficient data management"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "B.Tech. Mechanical Engineering",
+      "institution": "Biju Patnaik University of Technology, Odisha",
+      "year": "2016",
+      "details": "GATE Qualified (Credential ID: A2WR3)"
+    },
+    {
+      "title": "GATE Qualified (Graduate Aptitude Test in Engineering)",
+      "discipline": "Mechanical Engineering (ME)",
+      "issuer": "IIT / NTA",
+      "year": "2016",
+      "credential_id": "A2WR3"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Machine Learning Zoom Camp",
+      "issuer": "DataTalksClub",
+      "credential_id": "8F163B"
+    },
+    {
+      "name": "Gold Badge: Python",
+      "issuer": "HackerRank",
+      "credential_id": "6920934A49FA"
+    },
+    {
+      "name": "Gold Badge: Problem Solving",
+      "issuer": "HackerRank",
+      "credential_id": "113775E95540"
+    },
+    {
+      "name": "Gold Badge: Statistics (10 Days)",
+      "issuer": "HackerRank"
+    },
+    {
+      "name": "30 Days of ML Challenge",
+      "issuer": "Kaggle",
+      "achievement": "Rank 69 / 7,573 teams"
+    }
+  ]
+}
