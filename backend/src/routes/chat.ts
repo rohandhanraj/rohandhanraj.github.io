@@ -1,7 +1,7 @@
 import { Router } from "express";
 import crypto from "crypto";
 import { mongoClient } from "../config/db.js";
-import { retrieveHybridContextDetailed } from "../services/ragService.js";
+import { retrieveRAGContext } from "../services/ragProvider.js";
 import { validatePreAgentInput, SAFE_FALLBACK_RESPONSE } from "../services/guardrailService.js";
 import { streamNvidiaNimResponse } from "../services/llmService.js";
 
@@ -75,8 +75,8 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    // 2. Retrieve Hybrid context with status streaming
-    const retrievalResult = await retrieveHybridContextDetailed(query, (status) => {
+    // 2. Retrieve RAG context with status streaming
+    const retrievalResult = await retrieveRAGContext(query, (status) => {
       res.write(`data: ${JSON.stringify({ status })}\n\n`);
     });
 
