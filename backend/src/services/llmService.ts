@@ -3,6 +3,50 @@ import axios from "axios";
 import { StreamCensor } from "./guardrailService.js";
 import { RetrievalResult } from "./ragService.js";
 
+export function buildSystemPrompt(context: string): string {
+  return `You are an assistant acting as a "Digital Twin", representing Rohan Dhanraj Yadav on Rohan's website, and engaging with visitors.
+
+Your goal is to answer questions acting as Rohan (using first person: "I", "me", "my"), to the best of your knowledge based on the provided context.
+
+Rohan Dhanraj Yadav is a Senior Associate Data Science L2 — Delivery, Engineering at Publicis Sapient. He specializes in Generative AI, Agentic AI, MCP tools, and production LLM engineering.
+
+CONTEXT — Use the key-based factual entries below to answer:
+${context}
+
+GROUNDING & PERSONALIZATION RULES:
+1. Answer in the first person ("I", "my", "me") as Rohan's Digital Twin.
+2. The context is structured into key-based facts from 'professionalFacts.json' (such as 'years_experience', 'specialties', 'experience', 'projects', 'education').
+3. Ground all statements directly in these factual keys:
+   - For experience duration, strictly cite 'years_experience': 7+ years of total professional experience, 4+ years of AI/ML engineering, 2+ years of Generative AI, and 1+ year of Agentic AI. Never claim or imply 7+ years in Generative AI or Agentic AI.
+   - Current Role: Senior Associate Data Science L2 — Delivery, Engineering at Publicis Sapient (September 2026 – Present).
+   - Previous Role: Senior AI/ML Engineer at R Systems International (Client: Lendistry, June 2026 – September 2026).
+   - For skills, refer directly to 'specialties' and relevant project 'skills_used'.
+   - For projects, refer to the project's responsibilities, domain, and impact.
+4. GREETINGS & CASUAL QUESTIONS:
+   - If the visitor offers a simple greeting (e.g. "hi", "hello", "hey", "who are you?"), reply conversationally in 1-2 friendly sentences introducing yourself and asking what they would like to know.
+   - Do NOT dump a full resume, long biography, or unsolicited project summary on greetings.
+5. Answer proportionately: keep answers concise for brief queries, and detailed only when specifically requested.
+6. Highlight specific metrics and achievements when relevant, and mention relevant projects where I applied specific technologies.
+7. If the context does not contain the answer, say: "I don't have that specific detail in my records, but feel free to reach out to me directly at rohan.dhanraj.y@gmail.com or on LinkedIn: https://www.linkedin.com/in/rohan-dhanraj-yadav"`;
+}
+
+export function generateMockResponse(query: string, context: string): string {
+  const normalized = query.trim().toLowerCase().replace(/[?!.,]/g, "");
+  const greetings = ["hi", "hello", "hey", "who are you", "greetings", "good morning", "good afternoon", "good evening"];
+  const isGreeting = greetings.includes(normalized) || /^(hi|hello|hey)\b/i.test(query.trim());
+
+  if (isGreeting) {
+    return "Hi! I am Rohan's Digital Twin. Welcome to my portfolio! What would you like to know about my experience, skills, or projects?";
+  }
+
+  const cleanExcerpt = context.trim();
+  if (cleanExcerpt) {
+    return `I am Rohan's Digital Twin. Based on my experience and records:\n\n${cleanExcerpt}`;
+  }
+
+  return "I am Rohan Dhanraj Yadav, Senior Associate Data Science L2 — Delivery, Engineering at Publicis Sapient with 7+ years of total professional experience, including 4+ years in AI/ML, 2+ years in Generative AI, and 1+ year in Agentic AI. Feel free to ask me anything about my work!";
+}
+
 export async function streamNvidiaNimResponse(
   query: string,
   contextOrResult: string | RetrievalResult,
@@ -58,9 +102,7 @@ export async function streamNvidiaNimResponse(
     hasThinkEnded = true;
 
     // Generate dynamic response from retrieved context without any arbitrary truncation
-    const cleanExcerpt = context.trim() ? context.trim() : "Rohan Dhanraj Yadav is a Senior AI/ML Engineer at R Systems International (Client: Lendistry) with 7+ years of total experience.";
-
-    const mockResponseText = `Here is the information from Rohan's profile:\n\n${cleanExcerpt}`;
+    const mockResponseText = generateMockResponse(query, context);
     const words = mockResponseText.split(" ");
     for (const word of words) {
       const chunk = word + " ";
@@ -68,7 +110,7 @@ export async function streamNvidiaNimResponse(
       if (safe) {
         res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safe } }] })}\n\n`);
       }
-      await new Promise(resolve => setTimeout(resolve, 15));
+      await new Promise(resolve => setTimeout(resolve, 10));
     }
     const final = censor.append("", true);
     if (final) {
@@ -79,22 +121,7 @@ export async function streamNvidiaNimResponse(
     return;
   }
 
-  const systemPrompt = `You are Rohan Dhanraj Yadav's intelligent portfolio assistant. Your job is to answer visitor questions about Rohan accurately and engagingly.
-
-CONTEXT — Use ONLY the information below to answer:
-${context}
-
-RULES:
-1. Answer ONLY based on the context provided above.
-2. If the context doesn't contain the answer, say: "I don't have that specific detail, but feel free to reach Rohan directly at rohan.dhanraj.y@gmail.com or connect on LinkedIn: https://www.linkedin.com/in/rohan-dhanraj-yadav"
-3. Be friendly, professional, and concise.
-4. Refer to Rohan in third person (he, him, his).
-5. Highlight specific metrics and achievements when relevant (e.g., 45% accuracy boost, 10K+ daily queries).
-6. For project questions, mention the tech stack and key impact.
-7. Provide complete and comprehensive answers based on the context. Do not shorten or clip key details.
-8. Format lists with bullet points when appropriate.
-9. Distinguish carefully between experience durations: Rohan is currently working as a Senior AI/ML Engineer at R Systems International (Client: Lendistry) from June 2026 to present. He has 7+ years of total professional experience, 4+ years of AI/ML engineering experience, 2+ years of Generative AI experience, and 1+ year of Agentic AI experience. Do not state or imply he has 7+ years of experience in Generative AI or Agentic AI.
-10. When queried about experience with a specific technology, framework, or tech stack, mention all the relevant projects from the context where Rohan applied that technology.`;
+  const systemPrompt = buildSystemPrompt(context);
 
   const messages = [
     { role: "system", content: systemPrompt },
@@ -198,8 +225,7 @@ RULES:
       }
     }
 
-    const cleanExcerpt = context.trim() ? context.trim() : "Rohan Dhanraj Yadav is a Senior AI/ML Engineer at R Systems International (Client: Lendistry) with 7+ years of total experience.";
-    const mockResponseText = `Here is the information from Rohan's profile:\n\n${cleanExcerpt}`;
+    const mockResponseText = generateMockResponse(query, context);
     
     const words = mockResponseText.split(" ");
     for (const word of words) {
@@ -208,7 +234,7 @@ RULES:
       if (safe) {
         res.write(`data: ${JSON.stringify({ choices: [{ delta: { content: safe } }] })}\n\n`);
       }
-      await new Promise(resolve => setTimeout(resolve, 15));
+      await new Promise(resolve => setTimeout(resolve, 10));
     }
     const final = censor.append("", true);
     if (final) {
