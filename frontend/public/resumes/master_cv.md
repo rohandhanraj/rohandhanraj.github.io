@@ -103,9 +103,26 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ## WORK EXPERIENCE
 
-### 1. Senior AI/ML Engineer — Generative AI | Agentic AI | MCP Tools
+### 1. Senior Associate Data Science L2 — Delivery, Engineering
 
-**R Systems International** | June 2026 – Present | Full-time  
+**Publicis Sapient** | September 2026 – Present | Full-time  
+**Location:** Bengaluru, Karnataka, India  
+**Focus:** Enterprise data science delivery, production GenAI & LLM architectures, scalable pipeline engineering, and client transformation
+
+**Key Responsibilities & Achievements:**
+
+* Leading enterprise data science delivery and client transformation initiatives across strategic enterprise accounts
+* Architecting and deploying production **GenAI & LLM architectures**, multi-agent systems, and scalable enterprise AI platforms
+* Engineering resilient, high-throughput data pipelines and robust cloud infrastructure for mission-critical client workloads
+* Driving enterprise client transformation through generative AI, LangGraph agentic workflows, and end-to-end MLOps
+
+**Tech Stack:** Python, Generative AI, LLMs, Agentic AI, LangGraph, FastAPI, Cloud Infrastructure, MLOps
+
+---
+
+### 2. Senior AI/ML Engineer — Generative AI | Agentic AI | MCP Tools
+
+**R Systems International** | June 2026 – September 2026 | Full-time  
 **Client:** Lendistry  
 **Focus:** Enterprise Agentic AI workflows, MCP tools integration, guardrails, harness engineering, observability, and Agentic Ops
 
@@ -120,7 +137,7 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ---
 
-### 2. AI/ML Engineer — Generative AI | Multi-Agent Systems
+### 3. AI/ML Engineer — Generative AI | Multi-Agent Systems
 
 **AI Tech Solutions Ltd.** | November 2024 – October 2025 | Full-time
 
@@ -146,7 +163,7 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ---
 
-### 3. Software Engineer — Generative AI | ML | Data Science | Python
+### 4. Software Engineer — Generative AI | ML | Data Science | Python
 
 **Aimlytics Technology** | September 2022 – October 2024 | Full-time
 
@@ -173,7 +190,7 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ---
 
-### 4. Machine Learning Engineer Intern
+### 5. Machine Learning Engineer Intern
 
 **iNeuron.ai** | August 2021 – September 2022 | Internship
 
@@ -194,7 +211,7 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ---
 
-### 4. Metallurgical Quality Engineer
+### 6. Metallurgical Quality Engineer
 
 **Bureau Veritas Group** | August 2016 – November 2019 | Full-time
 

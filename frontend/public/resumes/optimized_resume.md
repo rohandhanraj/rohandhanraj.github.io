@@ -46,9 +46,17 @@ Python, Django, Flask, FastAPI, Streamlit, LLMs (OpenAI, Anthropic, Vertex AI, G
 
 ## EXPERIENCE
 
+### Senior Associate Data Science L2
+
+Publicis Sapient | Sep 2026 – Present
+
+* Leading enterprise data science delivery and client transformation initiatives
+* Architecting production GenAI & LLM architectures and scalable pipeline engineering
+* Deploying resilient enterprise AI/ML platforms, cloud infrastructure, and MLOps
+
 ### Senior AI/ML Engineer
 
-R Systems International (Client: Lendistry) | Jun 2026 – Present
+R Systems International (Client: Lendistry) | Jun 2026 – Sep 2026
 
 * Architecting production Agentic AI workflows and multi-agent coordination using MCP tools and guardrails
 * Implementing Harness Engineering and Agentic Ops for automated validation and observability

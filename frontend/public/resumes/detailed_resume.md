@@ -49,7 +49,17 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
 
 ## PROFESSIONAL EXPERIENCE
 
-<div class="grid-2"><h3>R Systems International | Senior AI/ML Engineer (Client: Lendistry)</h3><span class="date">Jun 2026 – Present</span></div>
+<div class="grid-2"><h3>Publicis Sapient | Senior Associate Data Science L2 — Delivery, Engineering</h3><span class="date">Sep 2026 – Present</span></div>
+
+<ul>
+  <li>Enterprise data science delivery across strategic client transformation initiatives and production AI deployments.</li>
+  <li>Architecting production <strong>GenAI & LLM architectures</strong>, multi-agent workflows, and scalable AI platforms.</li>
+  <li>Engineering scalable high-throughput data pipelines, cloud infrastructure, and robust MLOps practices.</li>
+  <li>Delivering client transformation through agentic systems, LangGraph orchestration, and enterprise-grade LLM applications.</li>
+</ul>
+<span class="tech">Tech: Python, Generative AI, LLMs, Agentic AI, LangGraph, FastAPI, Cloud Infrastructure, MLOps</span>
+
+<div class="grid-2"><h3>R Systems International | Senior AI/ML Engineer (Client: Lendistry)</h3><span class="date">Jun 2026 – Sep 2026</span></div>
 
 <ul>
   <li>Architecting enterprise-grade <strong>Agentic AI workflows</strong> and multi-agent systems using Model Context Protocol (MCP) and custom guardrails.</li>
