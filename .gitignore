@@ -47,3 +47,7 @@ graphify-out/
 qdrant/
 volumes/
 docs/
+
+.superpowers/
+.vite/
+
