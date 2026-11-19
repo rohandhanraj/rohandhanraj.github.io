@@ -142,6 +142,53 @@ export function extractSkillAliases(skill: string): string[] {
     }
   }
 
+  // Handle compound phrases with "&", "and", "/", "," (e.g. "Agentic AI & Multi-Agent Systems")
+  const strippedParens = lower.replace(/\s*\([^)]*\)/, "").trim();
+  const compoundParts = strippedParens.split(/\s*(?:&|\band\b|\/|,)\s*/i);
+  if (compoundParts.length > 1) {
+    for (const part of compoundParts) {
+      const trimmed = part.trim();
+      if (trimmed.length > 1) {
+        aliases.add(trimmed);
+      }
+    }
+  }
+
+  // Specialized canonical aliases for common AI domains
+  if (lower.includes("agentic") || lower.includes("multi-agent") || lower.includes("autonomous agent")) {
+    aliases.add("agentic ai");
+    aliases.add("agentic");
+    aliases.add("multi-agent");
+    aliases.add("multi agent");
+    aliases.add("multi-agent systems");
+    aliases.add("multi agent systems");
+  }
+  if (lower.includes("generative ai") || lower.includes("genai") || lower.includes("llm")) {
+    aliases.add("generative ai");
+    aliases.add("genai");
+    aliases.add("gen ai");
+    aliases.add("llms");
+    aliases.add("llm");
+  }
+  if (lower.includes("machine learning") || lower.includes("deep learning")) {
+    aliases.add("ml");
+    aliases.add("ai/ml");
+  }
+
+  // Add space versions of hyphenated aliases and vice-versa
+  const additional = new Set<string>();
+  for (const a of aliases) {
+    if (a.includes("-")) {
+      additional.add(a.replace(/-/g, " "));
+    }
+    if (a.includes(" ")) {
+      additional.add(a.replace(/\s+/g, "-"));
+    }
+  }
+  for (const a of additional) {
+    aliases.add(a);
+  }
+
   return Array.from(aliases);
 }
 
@@ -176,8 +223,8 @@ const MAX_CONTEXT_LENGTH = 10000;
 
 export const PROJECT_ALIASES: Record<string, string[]> = {
   "Document Intelligence": ["document intelligence", "document extraction", "lending documents", "document processing"],
-  "Origen Assistant": ["origen assistant", "origen", "lending portal", "smart fill", "loan application", "lending assistant"],
-  "Omodore": ["omodore"],
+  "Origen Assistant": ["origen assistant", "origen", "lending portal", "smart fill", "loan application", "lending assistant", "origen agent"],
+  "Omodore": ["omodore", "ai agent platform", "no-code ai agent"],
   "Rbetraj": ["rbetraj", "shop scan agent", "ai tech crawler", "ai-tech-crawler", "crawler", "scraping", "scraper"],
   "Salesmoji": ["salesmoji", "sales virtual assistant", "sales agent", "sales intelligence"],
   "Aisera": ["aisera", "customer service", "traps", "4500", "4,500", "daily queries", "100k"],
@@ -256,15 +303,25 @@ export async function retrieveFactsContext(
     const aliases = projectAliases[project.name] || [project.name.toLowerCase()];
     const isDirectMatch = aliases.some(alias => normalizedQuery.includes(alias));
     const isClientMatch = Boolean(project.client && normalizedQuery.includes(project.client.toLowerCase()));
-    if (isDirectMatch || isClientMatch) {
+
+    // Check if query mentions any skill used in this project
+    const isSkillMatch = project.skills_used.some(skill => {
+      const skillAliases = extractSkillAliases(skill);
+      return skillAliases.some(alias => matchesSkillAlias(normalizedQuery, alias));
+    });
+
+    if (isDirectMatch || isClientMatch || isSkillMatch) {
       matchedProjects.push(project);
     }
   }
 
-  // If user asked generally about projects and no specific one matched, return top 2 flagship projects
+  // If user asked generally about projects and no specific one matched, return flagship projects
   if (matchedProjects.length === 0 && projectMentions) {
-    matchedProjects.push(facts.projects[0]); // Omodore
-    matchedProjects.push(facts.projects[1]); // Rbetraj
+    const flagshipNames = ["Omodore", "Origen Assistant", "Document Intelligence", "Salesmoji", "Rbetraj"];
+    for (const name of flagshipNames) {
+      const p = facts.projects.find(proj => proj.name === name);
+      if (p) matchedProjects.push(p);
+    }
   }
 
   // 4. Intent: Company / Work Experience Matching
@@ -328,7 +385,7 @@ export async function retrieveFactsContext(
         const hasSkill = project.skills_used.some(projSkill => {
           const projAliases = extractSkillAliases(projSkill);
           return matchedSkillAliases.some(skillAlias =>
-            projAliases.some(projAlias => matchesSkillAlias(projAlias, skillAlias) || matchesSkillAlias(skillAlias, projAlias))
+            projAliases.some(projAlias => matchesSkillAlias(projAlias, skillAlias))
           );
         });
         if (hasSkill) {
@@ -343,7 +400,7 @@ export async function retrieveFactsContext(
         const hasSkill = exp.skills_used.some(expSkill => {
           const expAliases = extractSkillAliases(expSkill);
           return matchedSkillAliases.some(skillAlias =>
-            expAliases.some(expAlias => matchesSkillAlias(expAlias, skillAlias) || matchesSkillAlias(skillAlias, expAlias))
+            expAliases.some(expAlias => matchesSkillAlias(expAlias, skillAlias))
           );
         });
         if (hasSkill) {

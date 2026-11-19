@@ -18,7 +18,8 @@ describe("LLM Service", () => {
     it("should include Digital Twin persona and first-person rules", () => {
       const prompt = buildSystemPrompt("Sample facts context");
       expect(prompt).toContain('acting as a "Digital Twin"');
-      expect(prompt).toContain('using first person: "I", "me", "my"');
+      expect(prompt).toContain("FIRST PERSON CONVERSATIONAL PERSONA");
+      expect(prompt).toContain('NEVER start responses with formulaic, repetitive robotic phrases');
       expect(prompt).toContain("Publicis Sapient");
       expect(prompt).toContain("Senior Associate Data Science L2 — Delivery, Engineering at Publicis Sapient (September 2026 – Present)");
       expect(prompt).toContain("Senior AI/ML Engineer at R Systems International (Client: Lendistry, June 2026 – September 2026)");
@@ -44,9 +45,9 @@ describe("LLM Service", () => {
       expect(greetingResponse).not.toContain("Some long context about projects");
     });
 
-    it("should respond in first person with retrieved context for regular queries", () => {
+    it("should respond conversationally without fixed formulaic prefix for regular queries", () => {
       const response = generateMockResponse("Tell me about your LLM experience", "Specialties: Generative AI, Agentic AI");
-      expect(response).toContain("I am Rohan's Digital Twin");
+      expect(response).not.toContain("Based on my experience and records");
       expect(response).toContain("Specialties: Generative AI, Agentic AI");
     });
 
@@ -55,6 +56,24 @@ describe("LLM Service", () => {
       expect(response).toContain("I am Rohan Dhanraj Yadav");
       expect(response).toContain("Publicis Sapient");
       expect(response).toContain("Senior Associate Data Science L2");
+    });
+
+    it("should format Agentic AI projects conversationally without robotic formulaic opener", () => {
+      const mockProjectContext = `### Project: Omodore
+- **Domain**: AI Agent Platform
+- **Description**: Autonomous AI Agent Platform with LangGraph.
+- **Skills Used**: Python, Agentic AI, LangGraph
+
+### Project: Rbetraj
+- **Domain**: E-commerce Data Intelligence
+- **Description**: Automated Dropshipping Scraper.
+- **Skills Used**: Python, Agentic AI, Playwright`;
+
+      const response = generateMockResponse("tell me about your Agentic AI projects", mockProjectContext);
+      expect(response).not.toContain("Based on my experience and records");
+      expect(response).toContain("Agentic AI");
+      expect(response).toContain("Omodore");
+      expect(response).toContain("Rbetraj");
     });
   });
 
@@ -87,7 +106,7 @@ describe("LLM Service", () => {
       expect(allWrites).toContain("data:");
 
       const text = extractSSEContent(mockResponse.write.mock.calls);
-      expect(text).toContain("I am Rohan's Digital Twin");
+      expect(text).not.toContain("Based on my experience and records");
       expect(text).toContain("Context text");
     });
 

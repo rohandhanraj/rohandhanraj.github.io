@@ -30,8 +30,10 @@ GROUNDING & PERSONALIZATION RULES:
    - Note: Lendistry is a CLIENT, not an employer or project.
    - For skills, refer directly to 'specialties' and relevant project 'skills_used'.
    - For projects, refer to the project's responsibilities, domain, client, and impact.
-4. FIRST PERSON PERSONA:
-   - Answer in the first person ("I", "my", "me") as Rohan's Digital Twin.
+4. FIRST PERSON CONVERSATIONAL PERSONA:
+   - Answer naturally, conversationally, and engagingly in the first person ("I", "my", "me") as Rohan's Digital Twin.
+   - NEVER start responses with formulaic, repetitive robotic phrases like "I am Rohan's Digital Twin. Based on my experience and records:" or "Based on my verified records:".
+   - Dive directly into answering the visitor's question in a warm, professional, conversational voice.
 5. GREETINGS & CASUAL QUESTIONS:
    - If the visitor offers a simple greeting (e.g. "hi", "hello", "hey", "who are you?"), reply conversationally in 1-2 friendly sentences introducing yourself and asking what they would like to know.
    - Do NOT dump a full resume, long biography, or unsolicited project summary on greetings.
@@ -44,19 +46,131 @@ GROUNDING & PERSONALIZATION RULES:
 
 export function generateMockResponse(query: string, context: string): string {
   const normalized = query.trim().toLowerCase().replace(/[?!.,]/g, "");
-  const greetings = ["hi", "hello", "hey", "who are you", "greetings", "good morning", "good afternoon", "good evening"];
+  const greetings = [
+    "hi",
+    "hello",
+    "hey",
+    "who are you",
+    "greetings",
+    "good morning",
+    "good afternoon",
+    "good evening",
+    "hey there"
+  ];
   const isGreeting = greetings.includes(normalized) || /^(hi|hello|hey)\b/i.test(query.trim());
 
   if (isGreeting) {
     return "Hi! I am Rohan's Digital Twin. Welcome to my portfolio! What would you like to know about my experience, skills, or projects?";
   }
 
-  const cleanExcerpt = context.trim();
-  if (cleanExcerpt) {
-    return `I am Rohan's Digital Twin. Based on my experience and records:\n\n${cleanExcerpt}`;
+  const cleanContext = (context || "").trim();
+  if (!cleanContext) {
+    return "I am Rohan Dhanraj Yadav, Senior Associate Data Science L2 — Delivery, Engineering at Publicis Sapient with 7+ years of total professional experience, including 4+ years in AI/ML, 2+ years in Generative AI, and 1+ year in Agentic AI. Feel free to ask me anything about my work!";
   }
 
-  return "I am Rohan Dhanraj Yadav, Senior Associate Data Science L2 — Delivery, Engineering at Publicis Sapient with 7+ years of total professional experience, including 4+ years in AI/ML, 2+ years in Generative AI, and 1+ year in Agentic AI. Feel free to ask me anything about my work!";
+  const queryLower = query.toLowerCase();
+  const isAgenticQuery = /agentic/i.test(queryLower);
+  const isProjectQuery = /\b(projects?|portfolio|built|apps?|applications?)\b/i.test(queryLower);
+  const isTenureQuery = /years?(?:\s+of)?\s+experience|how\s+many\s+years|total\s+(?:years|experience)|tenure/i.test(queryLower);
+  const isSkillQuery = /\b(tech stack|skills|specialties|technologies|tools|languages|frameworks)\b/i.test(queryLower);
+
+  // 1. Projects Conversational Response
+  if (/### Project:/i.test(cleanContext) || (isProjectQuery && cleanContext.includes("- **Domain**:"))) {
+    const rawBlocks = cleanContext.split(/(?=### Project:)/i);
+    const projectBlocks = rawBlocks.filter(b => /### Project:/i.test(b));
+
+    if (projectBlocks.length > 0) {
+      const intro = isAgenticQuery
+        ? "Here are the key projects where I've built and engineered Agentic AI solutions and autonomous systems:"
+        : "Here are the key projects highlighting my engineering work and impact:";
+
+      const formattedProjects = projectBlocks.map(block => {
+        const nameMatch = block.match(/### Project:\s*([^\n]+)/i);
+        const name = nameMatch ? nameMatch[1].trim() : "Project";
+
+        const domainMatch = block.match(/- \*\*Domain\*\*:\s*([^\n]+)/i);
+        const domain = domainMatch ? domainMatch[1].trim() : "";
+
+        const clientMatch = block.match(/- \*\*Client\*\*:\s*([^\n]+)/i);
+        const client = clientMatch ? clientMatch[1].trim() : "";
+
+        const descMatch = block.match(/- \*\*Description\*\*:\s*([^\n]+)/i);
+        const desc = descMatch ? descMatch[1].trim() : "";
+
+        const skillsMatch = block.match(/- \*\*Skills Used\*\*:\s*([^\n]+)/i);
+        const skills = skillsMatch ? skillsMatch[1].trim() : "";
+
+        let entry = `- **${name}**${domain ? ` (${domain}${client ? ` | Client: ${client}` : ""})` : ""}: ${desc}`;
+        if (skills) {
+          entry += `\n  - *Tech Stack*: ${skills}`;
+        }
+        return entry;
+      });
+
+      return `${intro}\n\n${formattedProjects.join("\n\n")}\n\nFeel free to ask if you would like me to dive deeper into the technical architecture or deliverables for any of these!`;
+    }
+  }
+
+  // 2. Years of Experience / Tenure Conversational Response
+  if (isTenureQuery || /### Experience Summary/i.test(cleanContext)) {
+    return `I have over 7 years of total professional engineering experience, including:
+- **Generative AI & LLMs**: 2+ years of production experience (RAG architectures, LLM fine-tuning, vector & graph databases).
+- **Agentic AI & Multi-Agent Systems**: 1+ year engineering autonomous agent workflows, LangGraph orchestration, MCP tools, and safety guardrails.
+- **AI / Machine Learning**: 4+ years building high-scale ML pipelines, deep learning models, and NLP systems.
+
+Currently, I serve as a **Senior Associate Data Science L2 — Delivery, Engineering at Publicis Sapient** (September 2026 – Present). Prior to this, I was a Senior AI/ML Engineer at **R Systems International** from June 2026 to September 2026 (~3-4 months) engineering Agentic AI workflows for our client, **Lendistry**.`;
+  }
+
+  // 3. Technical Specialties / Skills Conversational Response
+  if (/### Technical Specialties/i.test(cleanContext) || isSkillQuery) {
+    const specialtyLines = cleanContext
+      .split("\n")
+      .filter(l => l.trim().startsWith("- **"))
+      .join("\n");
+
+    if (specialtyLines) {
+      return `Here is an overview of my core technical specialties and skills:\n\n${specialtyLines}\n\nI apply these tools across production LLM systems, agent orchestration, and enterprise data science pipelines. Is there a specific technology or use-case you'd like to explore?`;
+    }
+  }
+
+  // 4. Experience / Company Conversational Response
+  if (/### Professional Experience:/i.test(cleanContext)) {
+    const expBlocks = cleanContext.split(/(?=### Professional Experience:)/i).filter(b => /### Professional Experience:/i.test(b));
+    if (expBlocks.length > 0) {
+      const formattedExp = expBlocks.map(block => {
+        const compMatch = block.match(/### Professional Experience:\s*([^\n]+)/i);
+        const company = compMatch ? compMatch[1].trim() : "Company";
+
+        const roleMatch = block.match(/- \*\*Role & Title\*\*:\s*([^\n]+)/i);
+        const role = roleMatch ? roleMatch[1].trim() : "";
+
+        const durMatch = block.match(/- \*\*Duration\*\*:\s*([^\n]+)/i);
+        const dur = durMatch ? durMatch[1].trim() : "";
+
+        const clientMatch = block.match(/- \*\*Client\*\*:\s*([^\n]+)/i);
+        const client = clientMatch ? clientMatch[1].trim() : "";
+
+        const skillsMatch = block.match(/- \*\*Skills Used\*\*:\s*([^\n]+)/i);
+        const skills = skillsMatch ? skillsMatch[1].trim() : "";
+
+        let entry = `### ${company}\n- **Role**: ${role} (${dur})${client ? `\n- **Client**: ${client}` : ""}`;
+        if (skills) {
+          entry += `\n- **Skills Used**: ${skills}`;
+        }
+        return entry;
+      });
+
+      return `Here is a summary of my professional experience:\n\n${formattedExp.join("\n\n---\n\n")}\n\nFeel free to ask about any specific project, technology, or client engagement!`;
+    }
+  }
+
+  // 5. Clean Conversational Fallback without rigid robotic headers
+  const cleanedExcerpt = cleanContext
+    .replace(/^### Identity & Profile Overview\s*/gim, "")
+    .replace(/^### Identity & Current Role\s*/gim, "")
+    .trim();
+
+  return `Here are the details regarding your inquiry:\n\n${cleanedExcerpt}`;
 }
 
 export async function streamNvidiaNimResponse(

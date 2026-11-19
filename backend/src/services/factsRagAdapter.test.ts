@@ -38,6 +38,17 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
       expect(awsAliases).toContain("aws");
       expect(awsAliases).toContain("amazon web services");
     });
+
+    it("should extract subphrases from compound categories with '&' or '/'", () => {
+      const agenticAliases = extractSkillAliases("Agentic AI & Multi-Agent Systems");
+      expect(agenticAliases).toContain("agentic ai");
+      expect(agenticAliases).toContain("multi-agent systems");
+      expect(agenticAliases).toContain("agentic");
+
+      const genAiAliases = extractSkillAliases("Generative AI & LLMs");
+      expect(genAiAliases).toContain("generative ai");
+      expect(genAiAliases).toContain("llms");
+    });
   });
 
   describe("Greeting Queries", () => {
@@ -229,6 +240,28 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
       expect(PROJECT_ALIASES["Origen Assistant"]).toContain("origen assistant");
       expect(PROJECT_ALIASES["Origen Assistant"]).toContain("lending portal");
       expect(PROJECT_ALIASES["Origen Assistant"]).toContain("smart fill");
+    });
+
+    it("should return all Agentic AI projects and exclude Document Intelligence for 'tell me about your Agentic AI projects' query", async () => {
+      const result = await retrieveFactsContext("tell me about your Agentic AI projects");
+
+      expect(result.context).toContain("Omodore");
+      expect(result.context).toContain("Rbetraj");
+      expect(result.context).toContain("Salesmoji");
+      expect(result.context).toContain("Aisera");
+      expect(result.context).toContain("Origen Assistant");
+      expect(result.context).not.toContain("### Project: Document Intelligence");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(4);
+    });
+
+    it("should return Agentic AI projects for short query 'Agentic AI projects'", async () => {
+      const result = await retrieveFactsContext("Agentic AI projects");
+
+      expect(result.context).toContain("Omodore");
+      expect(result.context).toContain("Rbetraj");
+      expect(result.context).toContain("Salesmoji");
+      expect(result.context).toContain("Aisera");
+      expect(result.context).not.toContain("### Project: Document Intelligence");
     });
   });
 
