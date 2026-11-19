@@ -53,12 +53,14 @@ describe("ragProvider", () => {
       context: "Mock facts context",
       retrievalLog: "- Mock facts log",
       matchedNodesCount: 2,
+      degraded: false,
     };
 
     const mockHybridResult = {
       context: "Mock hybrid context",
       retrievalLog: "- Mock hybrid log",
       matchedNodesCount: 5,
+      degraded: false,
     };
 
     it("should delegate to retrieveFactsContext by default when RAG_STRATEGY is unset", async () => {

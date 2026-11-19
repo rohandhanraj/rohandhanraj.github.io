@@ -1,6 +1,6 @@
 import "../config/env.js";
-import { retrieveFactsContext, type RetrievalResult } from "./factsRagAdapter.js";
-import { retrieveHybridContextDetailed } from "./ragService.js";
+import { retrieveFactsContext } from "./factsRagAdapter.js";
+import { retrieveHybridContextDetailed, type RetrievalResult } from "./ragService.js";
 
 export type { RetrievalResult };
 

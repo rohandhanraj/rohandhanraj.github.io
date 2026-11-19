@@ -9,6 +9,7 @@ export interface RetrievalResult {
   context: string;
   retrievalLog: string;
   matchedNodesCount: number;
+  degraded: boolean;
 }
 
 interface YearsExperience {
@@ -217,7 +218,8 @@ export async function retrieveFactsContext(
     return {
       context: identityText,
       retrievalLog: "- 👤 **Intent: Greeting / Identity**: Returned concise identity and current role without dumps.",
-      matchedNodesCount: 1
+      matchedNodesCount: 1,
+      degraded: false
     };
   }
 
@@ -458,6 +460,7 @@ export async function retrieveFactsContext(
   return {
     context: assembledContext,
     retrievalLog: logs.join("\n"),
-    matchedNodesCount: matchedCount
+    matchedNodesCount: matchedCount,
+    degraded: false
   };
 }
