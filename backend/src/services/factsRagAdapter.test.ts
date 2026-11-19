@@ -3,7 +3,8 @@ import {
   retrieveFactsContext,
   RetrievalResult,
   loadProfessionalFacts,
-  extractSkillAliases
+  extractSkillAliases,
+  PROJECT_ALIASES
 } from "./factsRagAdapter.js";
 
 describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
@@ -133,10 +134,13 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
       expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
     });
 
-    it("should match 'AWS' and return specialty and relevant projects", async () => {
+    it("should match 'AWS' and return specialty, experience, and relevant projects", async () => {
       const result = await retrieveFactsContext("What experience do you have with AWS?");
 
       expect(result.context).toContain("Amazon Web Services (AWS)");
+      expect(result.context).toContain("R Systems International");
+      expect(result.context).toContain("Document Intelligence");
+      expect(result.context).toContain("Origen Assistant");
       expect(result.context).toContain("Mice Protein Expression Analysis");
       expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
     });
@@ -154,6 +158,32 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
   });
 
   describe("Project Queries", () => {
+    it("should return exact project details, skills, and responsibilities for Document Intelligence", async () => {
+      const result = await retrieveFactsContext("Tell me about Document Intelligence");
+
+      expect(result.context).toContain("Document Intelligence");
+      expect(result.context).toContain("Financial Lending & Document Processing");
+      expect(result.context).toContain("AI-powered document intelligence system classifying financial documents");
+      expect(result.context).toContain("Multi-Modal AI");
+      expect(result.context).toContain("AWS");
+      expect(result.context).toContain("Classified complex loan and financial documents");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+      expect(result.retrievalLog).toContain("Document Intelligence");
+    });
+
+    it("should return exact project details, skills, and responsibilities for Origen Assistant", async () => {
+      const result = await retrieveFactsContext("Tell me about Origen Assistant");
+
+      expect(result.context).toContain("Origen Assistant");
+      expect(result.context).toContain("Fintech & Lending Agent");
+      expect(result.context).toContain("Conversational lending portal assistant");
+      expect(result.context).toContain("Agentic Workflows");
+      expect(result.context).toContain("AWS");
+      expect(result.context).toContain("Guided borrowers through financial terminology");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+      expect(result.retrievalLog).toContain("Origen Assistant");
+    });
+
     it("should return exact project details, skills, and responsibilities for Omodore", async () => {
       const result = await retrieveFactsContext("Tell me about Omodore");
 
@@ -174,6 +204,24 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
       expect(result.context).toContain("AI Tech Crawler");
       expect(result.context).toContain("Playwright");
       expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should return Aisera for queries about sales intelligence and 4,500+ daily queries", async () => {
+      const result = await retrieveFactsContext("Tell me about sales intelligence and 4500 daily queries");
+
+      expect(result.context).toContain("Aisera");
+      expect(result.context).toContain("4,500+ daily API requests");
+      expect(result.context).toContain("100K+ daily records");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should verify PROJECT_ALIASES contains Document Intelligence and Origen Assistant", () => {
+      expect(PROJECT_ALIASES["Document Intelligence"]).toContain("document intelligence");
+      expect(PROJECT_ALIASES["Document Intelligence"]).toContain("document extraction");
+      expect(PROJECT_ALIASES["Document Intelligence"]).toContain("lending documents");
+      expect(PROJECT_ALIASES["Origen Assistant"]).toContain("origen assistant");
+      expect(PROJECT_ALIASES["Origen Assistant"]).toContain("lending portal");
+      expect(PROJECT_ALIASES["Origen Assistant"]).toContain("smart fill");
     });
   });
 

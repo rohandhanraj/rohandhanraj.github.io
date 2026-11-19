@@ -171,6 +171,17 @@ function isPureGreeting(query: string): boolean {
 
 const MAX_CONTEXT_LENGTH = 10000;
 
+export const PROJECT_ALIASES: Record<string, string[]> = {
+  "Document Intelligence": ["document intelligence", "document extraction", "lending documents"],
+  "Origen Assistant": ["origen assistant", "origen", "lending portal", "smart fill", "loan application"],
+  "Omodore": ["omodore"],
+  "Rbetraj": ["rbetraj", "shop scan agent", "ai tech crawler", "ai-tech-crawler", "crawler", "scraping", "scraper"],
+  "Aisera": ["aisera", "customer service", "traps", "sales intelligence", "salesmoji", "sales", "4500", "4,500", "daily queries", "100k"],
+  "evalmyBRAND": ["evalmybrand", "sentiment analysis", "absa"],
+  "Inventted": ["inventted", "education", "clip", "flan-t5", "galambo", "multi-modal vision", "tool use"],
+  "Mice Protein Expression Analysis": ["mice", "protein", "bioinformatics"]
+};
+
 export async function retrieveFactsContext(
   query: string,
   onStatusUpdate?: (status: string) => void
@@ -231,16 +242,7 @@ export async function retrieveFactsContext(
   }
 
   // 3. Intent: Specific Projects Matching
-  const projectAliases: Record<string, string[]> = {
-    "Omodore": ["omodore"],
-    "Rbetraj": ["rbetraj", "shop scan agent", "ai tech crawler", "ai-tech-crawler", "crawler", "scraping", "scraper"],
-    "Galambo": ["galambo", "multi-modal", "multimodal"],
-    "Salesmoji": ["salesmoji", "sales", "sales intelligence"],
-    "Aisera": ["aisera", "customer service", "traps"],
-    "evalmyBRAND": ["evalmybrand", "sentiment analysis", "absa"],
-    "Inventted": ["inventted", "education", "clip", "flan-t5"],
-    "Mice Protein Expression Analysis": ["mice", "protein", "bioinformatics"]
-  };
+  const projectAliases = PROJECT_ALIASES;
 
   const matchedProjects: ProjectItem[] = [];
   const projectMentions = /\b(projects?|portfolio|what have you built|apps?|applications?)\b/i.test(normalizedQuery);

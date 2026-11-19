@@ -166,7 +166,8 @@
         "Agentic Ops",
         "ML Flow",
         "Strategic Agentic Evaluation",
-        "Observability"
+        "Observability",
+        "AWS"
       ]
     },
     {
@@ -201,7 +202,7 @@
       "location": "Bengaluru, Karnataka, India",
       "responsibilities": [
         "Led an 8-member team resolving 50%+ of critical deployment issues and delivering custom AI workflows for Fortune 500 clients (Cisco, ITC, Omnitrax, PDS, KDP, Marco Technologies)",
-        "Architected a robust RAG-based virtual sales pipeline (SalesMoji) structurally scaling to consistently process 4,500+ daily API requests",
+        "Architected a robust RAG-based virtual assistant pipeline (AISERA) structurally scaling to consistently process 4,500+ daily API requests",
         "Fine-tuned BERT & RoBERTa NLP models driving 18% performance improvements across a 15-language sentiment tracking stack",
         "Automated rigorous ETL architectures utilizing Apache Airflow to seamlessly ingest and process 100K+ daily records"
       ],
@@ -264,6 +265,44 @@
     }
   ],
   "projects": [
+    {
+      "name": "Document Intelligence",
+      "domain": "Financial Lending & Document Processing",
+      "description": "AI-powered document intelligence system classifying financial documents required for lending processes and extracting critical data for credit and underwriting pipelines.",
+      "skills_used": [
+        "Python",
+        "FastAPI",
+        "Multi-Modal AI",
+        "NLP",
+        "Pydantic",
+        "AWS",
+        "Docker"
+      ],
+      "responsibilities": [
+        "Classified complex loan and financial documents for lending workflows",
+        "Extracted structured financial data for loan and credit processing",
+        "Integrated document extraction pipelines with downstream credit evaluation services"
+      ]
+    },
+    {
+      "name": "Origen Assistant",
+      "domain": "Fintech & Lending Agent",
+      "description": "Conversational lending portal assistant guiding borrowers to understand financial jargons and smart-filling lending applications using data extracted through Document Intelligence.",
+      "skills_used": [
+        "Python",
+        "Generative AI",
+        "LLMs",
+        "RAG",
+        "Agentic Workflows",
+        "FastAPI",
+        "AWS"
+      ],
+      "responsibilities": [
+        "Guided borrowers through financial terminology and loan portal navigation",
+        "Automated smart-filling of lending applications using extracted document data",
+        "Engineered conversational safety guardrails and lending guidance workflows"
+      ]
+    },
     {
       "name": "Omodore",
       "domain": "AI Agent Platform",
@@ -331,74 +370,16 @@
       ]
     },
     {
-      "name": "Galambo",
-      "domain": "Multi-Modal AI Assistant",
-      "description": "Sophisticated multi-modal virtual agent that combines context-aware GPT responses with advanced image search capabilities, providing users with comprehensive visual and textual information retrieval.",
-      "skills_used": [
-        "Python",
-        "FastAPI",
-        "GPT",
-        "LLMs",
-        "LangChain",
-        "Agent Orchestration",
-        "Image Search Tools",
-        "Docker"
-      ],
-      "responsibilities": [
-        "Architected multi-modal AI system integrating text and image processing",
-        "Implemented context-aware response generation using GPT and LLMs",
-        "Integrated search engine tools for enhanced information retrieval",
-        "Built scalable API infrastructure using FastAPI",
-        "Implemented LangChain workflows for agent orchestration",
-        "Optimized response times and accuracy for production use"
-      ]
-    },
-    {
-      "name": "Salesmoji",
-      "domain": "Sales & Marketing Intelligence",
-      "description": "AI-powered sales intelligence platform harnessing GPT and LLMs to understand sales data, answer questions in plain English, and deliver instant, actionable sales intelligence processing 1M+ daily records and 10K+ daily queries.",
+      "name": "Aisera",
+      "domain": "Customer Service & IT Operations Management",
+      "description": "Enterprise Generative AI solutions helping enterprises boost revenue, improve user productivity, and lower operating expenses by automating and personalizing customer support using NLP, BERT fine-tuning, and the TRAPS ethical AI framework, processing 100K+ daily records and 4,500+ daily API requests.",
       "skills_used": [
         "Python",
         "FastAPI",
         "LangChain",
         "LangGraph",
-        "GPT",
-        "LLMs",
         "Prompt Chaining",
         "Chain of Thoughts",
-        "RAG",
-        "Agent Building",
-        "Apache Airflow",
-        "MySQL",
-        "MongoDB",
-        "Qdrant",
-        "Milvus",
-        "Weaviate",
-        "Docker"
-      ],
-      "responsibilities": [
-        "Led 8-member team delivering custom AI workflows for Fortune 500 clients",
-        "Built RAG-based Virtual Sales Assistant responding to natural language queries",
-        "Achieved 10K+ daily query handling with 89% accuracy using context-aware GPT responses",
-        "Developed RAG pipelines for various sales channels using Vector Databases",
-        "Constructed and orchestrated data pipelines processing 1M+ daily records using Airflow",
-        "Architected Machine Learning pipelines for predictive analytics",
-        "Generated predictive insights for sales forecasting and trend analysis",
-        "Implemented vector database solutions (Qdrant, Milvus, Weaviate) for efficient retrieval",
-        "Applied Prompt Chaining and Chain of Thoughts for complex reasoning",
-        "Built agent workflows using LangChain and LangGraph",
-        "Resolved critical production issues maintaining high system availability"
-      ]
-    },
-    {
-      "name": "Aisera",
-      "domain": "Customer Service & IT Operations Management",
-      "description": "Enterprise Generative AI solutions helping enterprises boost revenue, improve user productivity, and lower operating expenses by automating and personalizing customer support using NLP, BERT fine-tuning, and the TRAPS ethical AI framework.",
-      "skills_used": [
-        "Python",
-        "FastAPI",
-        "LangChain",
-        "Prompt Chaining",
         "RAG",
         "Agent Building",
         "Autonomous Agents",
@@ -411,19 +392,20 @@
         "Apache Airflow",
         "MySQL",
         "MongoDB",
+        "Qdrant",
         "Chroma",
         "Weaviate",
         "GCP"
       ],
       "responsibilities": [
-        "Led 8-member team comprising 5 Data Engineers and 3 Software Developers",
-        "Delivered custom AI workflows for Fortune 500 clients including Cisco, ITC Fairview, Omnitrax, PDS, KDP, Marco Technologies",
+        "Led 8-member team delivering custom AI workflows for Fortune 500 clients including Cisco, ITC Fairview, Omnitrax, PDS, KDP, Marco Technologies",
+        "Architected RAG-based virtual assistant pipelines structurally scaling to consistently process 4,500+ daily API requests and 100K+ daily records",
         "Fine-tuned BERT models for sentiment analysis achieving 50% performance improvement",
         "Developed and scheduled system triggers using Airflow for automated operations",
         "Implemented custom field prediction using advanced BERT architectures",
         "Architected scalable ML pipelines ensuring reliability and performance",
-        "Implemented vector database solutions (Chroma, Weaviate) for RAG applications",
-        "Integrated LangChain for building conversational AI workflows",
+        "Implemented vector database solutions (Chroma, Weaviate, Qdrant) for RAG applications",
+        "Integrated LangChain and LangGraph for building conversational AI workflows",
         "Resolved critical production issues maintaining high system availability"
       ]
     },
@@ -451,8 +433,8 @@
     },
     {
       "name": "Inventted",
-      "domain": "Educational Technology",
-      "description": "Pioneering education platform designed to help educators and students become more efficient and productive with intelligent text summarization, automated essay grading, virtual tutor Q&A bot, and multi-modal models using CLIP and Flan-T5.",
+      "domain": "Educational Technology & Multi-Modal Vision",
+      "description": "Pioneering education platform designed to help educators and students become more efficient and productive with intelligent text summarization, automated essay grading, virtual tutor Q&A bot with real-time tool use, and multi-modal vision models using CLIP and Flan-T5.",
       "skills_used": [
         "Python",
         "Poetry",
@@ -460,6 +442,10 @@
         "FastAPI",
         "CLIP",
         "Flan-T5",
+        "Multi-Modal Vision",
+        "Tool Use",
+        "Agent Orchestration",
+        "Image Search Tools",
         "LangChain",
         "Prompt Engineering",
         "Prompt Chaining",
@@ -470,12 +456,13 @@
         "GCP"
       ],
       "responsibilities": [
+        "Architected multi-modal vision pipelines combining context-aware LLM responses with real-time tool use and visual Q&A",
         "Performed advanced prompt engineering to fetch questions and answers from ChatGPT using optimized prompts",
         "Fine-tuned CLIP (Multi-Modal Vision Transformer) to generate images from text descriptions",
         "Fine-tuned Flan-T5 model to generate keyword-based MCQs from given educational context",
         "Designed scalable Phishing Classifier using classical Machine Learning algorithms for email security",
         "Built multi-modal model for social media content classification (Input: post text + image, Output: category)",
-        "Integrated multiple AI models into cohesive educational platform",
+        "Integrated search engine tools and multiple AI models into cohesive educational platform",
         "Optimized Transformer models for real-time educational applications"
       ]
     },
