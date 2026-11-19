@@ -1,5 +1,5 @@
 // Client-side chat engine — interacts only with the backend API
-import { ChatMessage, VisitorInfo } from "./types";
+import { ChatMessage } from "./types";
 
 interface StreamCallbacks {
   onToken: (token: string) => void;
@@ -12,7 +12,6 @@ interface StreamCallbacks {
  * Streams a chat response from the backend server.
  */
 export async function streamChat(
-  context: string,
   history: ChatMessage[],
   query: string,
   callbacks: StreamCallbacks

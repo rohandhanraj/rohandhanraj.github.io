@@ -103,9 +103,26 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ## WORK EXPERIENCE
 
-### 1. Senior AI/ML Engineer — Generative AI | Agentic AI | MCP Tools
+### 1. Senior Associate Data Science L2 — Delivery, Engineering
 
-**R Systems International** | June 2026 – Present | Full-time  
+**Publicis Sapient** | September 2026 – Present | Full-time  
+**Location:** Bengaluru, Karnataka, India  
+**Focus:** Enterprise data science delivery, production GenAI & LLM architectures, scalable pipeline engineering, and client transformation
+
+**Key Responsibilities & Achievements:**
+
+* Leading enterprise data science delivery and client transformation initiatives across strategic enterprise accounts
+* Architecting and deploying production **GenAI & LLM architectures**, multi-agent systems, and scalable enterprise AI platforms
+* Engineering resilient, high-throughput data pipelines and robust cloud infrastructure for mission-critical client workloads
+* Driving enterprise client transformation through generative AI, LangGraph agentic workflows, and end-to-end MLOps
+
+**Tech Stack:** Python, Generative AI, LLMs, Agentic AI, LangGraph, FastAPI, Cloud Infrastructure, MLOps
+
+---
+
+### 2. Senior AI/ML Engineer — Generative AI | Agentic AI | MCP Tools
+
+**R Systems International** | June 2026 – September 2026 | Full-time  
 **Client:** Lendistry  
 **Focus:** Enterprise Agentic AI workflows, MCP tools integration, guardrails, harness engineering, observability, and Agentic Ops
 
@@ -114,13 +131,18 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 * Architected enterprise-grade **Agentic AI workflows** and multi-agent systems using Model Context Protocol (MCP) and custom guardrails for fintech operations
 * Implemented robust **Harness Engineering** and **Agentic Ops** pipelines for automated tool execution, schema validation, and real-time observability
 * Developed **ML Flow** integration and **Agentic E2E evaluation** frameworks for continuous testing, strategic agent evaluation, and regression tracking
-* Pioneered safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions in production workflows
+* Pioneered safety guardrails, automated PII redaction, and multi-layered retrieval backstops to ensure reliable autonomous decisions in production workflows
 
-**Tech Stack:** Python, Generative AI, Agentic Workflows, MCP Tools, Guardrails, Harness Engineering, Agentic Ops, ML Flow, Agentic E2E Evaluation, Observability
+**Projects**
+
+* **Document Intelligence** — Multi-modal financial document intelligence system classifying loan documentation and extracting critical data for credit decisioning with automated PII redaction and strict guardrails.
+* **Origen Assistant** — Conversational lending assistant guiding borrowers through financial terminology, portal navigation, and smart-filling application forms using extracted data with safety guardrails and PII redaction.
+
+**Tech Stack:** Python, AWS, Generative AI, Agentic Workflows, MCP Tools, Guardrails, PII Redaction, Harness Engineering, Agentic Ops, ML Flow, Agentic E2E Evaluation, Observability
 
 ---
 
-### 2. AI/ML Engineer — Generative AI | Multi-Agent Systems
+### 3. AI/ML Engineer — Generative AI | Multi-Agent Systems
 
 **AI Tech Solutions Ltd.** | November 2024 – October 2025 | Full-time
 
@@ -134,19 +156,18 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 * Implemented prompt chaining and **chain-of-thought reasoning** mechanisms
 * Deployed containerized AI systems using **Docker** with vector databases (Qdrant, LanceDB, Chroma)
 * Built automated web scraping systems (Rbetraj) with **Playwright** and **Selenium** for real-time data extraction
-* Architected multi-modal virtual agent (GALAMBO) integrating GPT-4 and autonomous tool use
+* Architected multi-modal virtual agent integrating GPT-4, vision models, and autonomous tool use
 
 **Projects**
 
 * **Omodore** — Autonomous Agentic AI platform demonstrating LangGraph state orchestration
-* **GALAMBO** — Multi-modal AI assistant integrating vision models and real-time tool use
 * **Rbetraj** — Automated Dropshipping Platform with AI-Powered Product Research and Listing Generation by scanning Global E-Commerce Sites.
 
-**Tech Stack:** Python, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Multi-Agent Systems, Docker, Qdrant, LanceDB, Chroma, Playwright, Selenium
+**Tech Stack:** Python, Agentic AI, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Multi-Agent Systems, Docker, Qdrant, LanceDB, Chroma, Playwright, Selenium
 
 ---
 
-### 3. Software Engineer — Generative AI | ML | Data Science | Python
+### 4. Software Engineer — Generative AI | ML | Data Science | Python
 
 **Aimlytics Technology** | September 2022 – October 2024 | Full-time
 
@@ -155,25 +176,26 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 **Key Responsibilities & Achievements:**
 
 * Led team of 8 engineers delivering AI solutions for **Fortune 500 clients**
-* Built RAG-based virtual sales assistant (SalesMoji) handling **4,500+ daily API requests**
-* Built ML pipelines processing **100K+ daily records** using **Apache Airflow**
+* Architected a robust RAG-based virtual assistant pipeline (**AISERA**) structurally scaling to consistently process **4,500+ daily API requests** and **100K+ daily records**
+* Automated rigorous ETL architectures utilizing **Apache Airflow** to seamlessly ingest and process **100K+ daily records**
 * Fine-tuned **BERT** and **RoBERTa** models achieving **18% performance improvement**
 * Implemented vector database solutions (Qdrant, Chroma) for semantic search
-* Built multi-modal educational AI system (InventtEd)
+* Built multi-modal educational AI platform (**InventtEd**) integrating vision models, automated essay grading, and real-time tool usage
 * Developed multilingual NLP pipeline supporting **15+ languages** (evalmyBRAND)
 * Resolved **28 critical production issues** with 100% on-time delivery
 
 **Projects**
 
-* **SalesMoji** — AI-Powered Lead Generation Platform with Context-Aware Follow-up Automation and Real-time LinkedIn Integration.
-* **InventtEd** — Multi-Modal AI Learning Assistant Enhancing STEM Education with Visual Explanations and Interactive Problem-Solving
+* **AISERA** — Enterprise AI system for Fortune 500 clients with BERT fine-tuning, processing 100K+ daily records and 4,500+ daily API requests.
+* **SalesMoji** — RAG-based Virtual Sales Assistant and conversational agent answering natural language sales queries, managing leads, and driving pipeline conversions.
+* **InventtEd** — Multi-Modal AI platform with vision models, CLIP, and Flan-T5 for automated essay grading, visual tutoring, and real-time tool usage.
 * **evalmyBRAND** — Brand Monitoring and Reputation Management Platform with Multi-Lingual Sentiment Analysis and Trend Tracking
 
-**Tech Stack:** Python, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Qdrant, Chroma, GCP
+**Tech Stack:** Python, Agentic AI, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Qdrant, Chroma, GCP
 
 ---
 
-### 4. Machine Learning Engineer Intern
+### 5. Machine Learning Engineer Intern
 
 **iNeuron.ai** | August 2021 – September 2022 | Internship
 
@@ -194,7 +216,7 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ---
 
-### 4. Metallurgical Quality Engineer
+### 6. Metallurgical Quality Engineer
 
 **Bureau Veritas Group** | August 2016 – November 2019 | Full-time
 
@@ -211,7 +233,80 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 
 ## PROJECT SYNOPSIS
 
-### 1. Project Name: OMODORE
+### 1. Project Name: DOCUMENT INTELLIGENCE
+**Duration:** June 2026 to September 2026  
+**Role:** Senior AI/ML Engineer  
+**Client:** Lendistry  
+**Company:** R Systems International  
+
+**Description:**
+
+**Domain:** Financial Lending & Document Processing
+
+AI-powered document intelligence system classifying financial and loan documentation required for lending workflows and extracting critical structured data for credit decisioning and underwriting pipelines with automated PII redaction and strict guardrails.
+
+**Key Features:**
+- Multi-modal financial document classification for complex loan documentation
+- Automated critical data extraction for loan and credit underwriting
+- Schema validation and structured data mapping for financial records
+- Automated PII redaction and strict validation guardrails
+- Integration with downstream credit scoring and decisioning services
+- Enterprise-grade accuracy, security, and compliance in financial data pipelines
+
+**Roles and Responsibilities:**
+- Architected multi-modal document intelligence pipeline classifying diverse loan documents (W-2s, tax returns, bank statements)
+- Extracted and validated structured financial data using multi-modal models and Pydantic schemas
+- Implemented safety guardrails, automated PII redaction, and privacy compliance backstops to ensure zero data leakage
+- Integrated document extraction pipelines with automated credit decisioning engines via FastAPI
+- Built observability and evaluation harnesses to track extraction accuracy across document varieties
+
+**Skills Used:**
+
+**Language:** Python  
+**Development Framework:** FastAPI  
+**Generative AI & Agentic AI:** Multi-Modal AI, LLMs, Agentic Workflows, Pydantic, Guardrails, PII Redaction  
+**NLP & Extraction:** Document Parsing, Information Extraction, Text Classification  
+**Cloud & DevOps:** AWS, Docker  
+
+---
+
+### 2. Project Name: ORIGEN ASSISTANT
+**Duration:** June 2026 to September 2026  
+**Role:** Senior AI/ML Engineer  
+**Client:** Lendistry  
+**Company:** R Systems International  
+
+**Description:**
+
+**Domain:** Fintech & Lending Conversational Agent
+
+Conversational lending portal assistant guiding borrowers to understand complex financial terminology, navigate the lending portal, and smart-fill loan application forms using data extracted through Document Intelligence with safety guardrails and PII redaction.
+
+**Key Features:**
+- Context-aware conversational guidance for borrowers on financial and lending terminology
+- Intelligent portal navigation assistance and real-time application support
+- Automated smart-filling of lending applications using extracted document data
+- Strict safety guardrails, automated PII redaction, and multi-layered retrieval backstops for financial compliance
+- Human-in-the-loop workflows for loan application verification
+
+**Roles and Responsibilities:**
+- Architected conversational agent workflows using Model Context Protocol (MCP) and custom guardrails
+- Designed and implemented borrower guidance dialogues demystifying lending terms and portal steps
+- Automated application form smart-fill by mapping structured extraction outputs from Document Intelligence
+- Implemented MLflow tracking and agentic E2E evaluation frameworks for conversation quality and safety
+- Integrated secure APIs with AWS services ensuring regulatory compliance and data protection
+
+**Skills Used:**
+
+**Language:** Python  
+**Development Framework:** FastAPI  
+**Generative AI & Agentic AI:** Generative AI, LLMs, RAG, Agentic Workflows, MCP Tools, Guardrails, PII Redaction  
+**Agentic Ops & MLOps:** ML Flow, Agentic E2E Evaluation, Observability  
+**Cloud & DevOps:** AWS, Docker  
+
+---
+
+### 3. Project Name: OMODORE
 **Duration:** November 2024 to October 2025  
 **Role:** Senior AI Engineer  
 
@@ -244,13 +339,13 @@ Omodore is an auto-agent platform enabling non-technical users to build domain-s
 **Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
 **NLP:** Hugging Face Transformers, Large Language Models (LLMs)  
 **Model Development:** Model Tuning, Model Training, Model Evaluation, Model Deployment, Model Monitoring, Model Optimization, Model Versioning, Model Management  
-**Generative AI & Agentic AI:** LangChain, LangGraph, GPT, LLMs, Prompt Chaining, Chain of Thoughts, RAG, Agent Building, Autonomous Agents, Multi-Agent Systems  
+**Generative AI & Agentic AI:** Agentic AI, LangChain, LangGraph, GPT, LLMs, Prompt Chaining, Chain of Thoughts, RAG, Agent Building, Autonomous Agents, Multi-Agent Systems  
 **Data Engineering & Databases:** Apache Airflow, Qdrant, MongoDB, Postgresql, PgVector, Neo4j  
 **Cloud & DevOps:** Docker
 
 ---
 
-### 2. Project Name: RBETRAJ
+### 4. Project Name: RBETRAJ
 **Duration:** November 2024 to October 2025  
 **Role:** Senior AI Engineer  
 
@@ -282,90 +377,8 @@ Rbetraj is an Automated Dropshipping Platform powered by Shop Scan Agent which s
 **Language:** Python  
 **Development Framework:** FastAPI  
 **Web Scraping:** Selenium, Playwright, BeautifulSoup  
-**Generative AI & Agentic AI:** GPT, LLMs, LangChain, Pydantic for structured output 
+**Generative AI & Agentic AI:** Agentic AI, GPT, LLMs, LangChain, Pydantic for structured output 
 **Data Engineering & Databases:** Apache Airflow, Qdrant, MongoDB  
-**Cloud & DevOps:** Docker
-
----
-
-### 3. Project Name: GALAMBO
-**Duration:** November 2024 to October 2025  
-**Role:** Senior AI Engineer  
-
-**Description:**
-
-**Domain:** Multi-Modal AI Assistant
-
-GALAMBO is a sophisticated multi-modal virtual agent that combines context-aware GPT responses with advanced image search capabilities, providing users with comprehensive visual and textual information retrieval.
-
-**Key Features:**
-- Multi-modal AI processing (text and images)
-- Context-aware conversational responses using LLMs
-- Intelligent image search and analysis
-- Integration with search engine tools
-- Real-time information retrieval
-
-**Roles and Responsibilities:**
-- Architected multi-modal AI system integrating text and image processing
-- Implemented context-aware response generation using GPT and LLMs
-- Integrated search engine tools for enhanced information retrieval
-- Built scalable API infrastructure using FastAPI
-- Implemented LangChain workflows for agent orchestration
-- Optimized response times and accuracy for production use
-
-**Skills Used:**
-
-**Language:** Python  
-**Development Framework:** FastAPI  
-**Generative AI & Agentic AI:** GPT, LLMs, Multi-modal AI, LangChain, Agent Building  
-**Tools:** Search Engine Integration  
-**Cloud & DevOps:** Docker
-
----
-
-### 4. Project Name: SALESMOJI
-**Duration:** November 2023 to October 2024  
-**Role:** Software Engineer (Gen AI | ML | Data Science | PYTHON)
-
-**Description:**
-
-**Domain:** Sales and Marketing
-
-SalesMoji harnesses the power of GPT and Large Language Models to understand sales data, answer questions in plain English, and deliver instant, actionable sales intelligence. The platform processes 1M+ daily records through sophisticated Airflow pipelines, transforming raw data into strategic insights.
-
-**How it Works:**
-Chat-bot interface where users can type sample questions and receive instant data analytics with visual representations and actionable recommendations.
-
-**Key Features:**
-- AI-Powered Sales Insights using GPT and LLMs
-- User-Friendly Conversational Interface
-- Customizable Templates and Dashboards
-- Real-Time Data Visualization
-- Interactive Chat Interaction with 10K+ daily queries
-- 89% accuracy in query responses
-- 1M+ daily records processing capability
-
-**Roles and Responsibilities:**
-- Led 8-member team delivering custom AI workflows for Fortune 500 clients
-- Built RAG-based Virtual Sales Assistant responding to natural language queries
-- Achieved 10K+ daily query handling with 89% accuracy using context-aware GPT responses
-- Developed RAG pipelines for various sales channels using Vector Databases
-- Constructed and orchestrated data pipelines processing 1M+ daily records using Airflow
-- Architected Machine Learning pipelines for predictive analytics
-- Generated predictive insights for sales forecasting and trend analysis
-- Implemented vector database solutions (Qdrant, Milvus, Weaviate) for efficient retrieval
-- Applied Prompt Chaining and Chain of Thoughts for complex reasoning
-- Built agent workflows using LangChain and LangGraph
-- Resolved critical production issues maintaining high system availability
-
-**Skills Used:**
-
-**Language:** Python  
-**Development Framework:** FastAPI  
-**Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
-**NLP:** Hugging Face Transformers, Large Language Models (LLMs)  
-**Generative AI & Agentic AI:** LangChain, LangGraph, GPT, Prompt Chaining, Chain of Thoughts, RAG, Agent Building  
-**Data Engineering & Databases:** Apache Airflow, MySQL, MongoDB, Qdrant, Milvus, Weaviate   
 **Cloud & DevOps:** Docker
 
 ---
@@ -378,35 +391,36 @@ Chat-bot interface where users can type sample questions and receive instant dat
 
 **Domain:** Customer Service and IT Operations Management
 
-Aisera is a leading provider of Generative AI Solutions that helps enterprises boost revenue, improve user productivity, lower operating expenses, and create magical user experiences by automating and personalizing customer support. The platform uses Natural Language Processing (NLP) and Machine Learning (ML) to understand customer queries and provide relevant information or solutions.
+Aisera is an enterprise Generative AI solution helping organizations automate customer support and operational workflows through Natural Language Processing (NLP) and Machine Learning (ML). The platform structurally scales to consistently process 4,500+ daily API requests and ingest 100K+ daily records via Apache Airflow pipelines, transforming enterprise queries into instant resolutions.
 
 **Key Features:**
-- Custom AI models for various enterprise tasks
+- Scalable RAG assistant processing 4,500+ daily API requests
+- High-throughput Airflow ETL pipelines ingesting 100K+ daily records
+- Custom AI models for enterprise customer support and IT operations
 - AI Service Management (AISM) for automated operations support
 - TRAPS Framework for ethical and secure AI practices
-- Positive customer feedback on efficiency and automation
-- Enterprise-grade workflows for Fortune 500 clients
+- Enterprise-grade workflows for Fortune 500 clients (Cisco, ITC)
 
 **Roles and Responsibilities:**
-- Led 8-member team comprising 5 Data Engineers and 3 Software Developers
-- Delivered custom AI workflows for Fortune 500 clients including Cisco, ITC Fairview, Omnitrax, PDS, KDP, Marco Technologies
-- Fine-tuned BERT models for sentiment analysis achieving 50% performance improvement
+- Led 8-member team comprising 5 Data Engineers and 3 Software Developers delivering custom AI workflows for Fortune 500 clients (Cisco, ITC Fairview, Omnitrax, PDS, KDP, Marco Technologies)
+- Architected a robust RAG-based virtual assistant pipeline handling 4,500+ daily API requests with high availability
+- Automated rigorous ETL architectures utilizing Apache Airflow to ingest and process 100K+ daily records
+- Fine-tuned BERT and RoBERTa models for sentiment analysis achieving 50% performance improvement
 - Developed and scheduled system triggers using Airflow for automated operations
 - Implemented custom field prediction using advanced BERT architectures
 - Architected scalable ML pipelines ensuring reliability and performance
-- Implemented vector database solutions (Chroma, Weaviate) for RAG applications
+- Implemented vector database solutions (Chroma, Weaviate, Qdrant) for RAG applications
 - Integrated LangChain for building conversational AI workflows
-- Resolved critical production issues maintaining high system availability
-- Handled 28 tickets overall and individually resolved 16 tickets out of 63 tickets assigned to Aimlytics Technologies Workflow team
+- Resolved 28 critical production issues maintaining high system availability
 
 **Skills Used:**
 
 **Language:** Python, Nashorn JAVA  
 **Development Framework:** FastAPI  
 **Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
-**NLP:** Spacy, NLTK, Hugging Face Transformers, BERT, Large Language Models (LLMs)  
-**Generative AI & Agentic AI:** LangChain, Prompt Chaining, RAG, Agent Building,Autonomous Agents, Multi-Agent Systems, Agentic Guardrails and Middleware for Enterprise AI  
-**Data Engineering & Databases:** Apache Airflow, MySQL, MongoDB, Chroma, Weaviate      
+**NLP:** Spacy, NLTK, Hugging Face Transformers, BERT, RoBERTa, Large Language Models (LLMs)  
+**Generative AI & Agentic AI:** Agentic AI, LangChain, Prompt Chaining, RAG, Agent Building, Autonomous Agents, Multi-Agent Systems, Agentic Guardrails and Middleware for Enterprise AI  
+**Data Engineering & Databases:** Apache Airflow, MySQL, MongoDB, Chroma, Weaviate, Qdrant      
 **Cloud Platform:** GCP
 
 ---
@@ -458,13 +472,14 @@ evalmyBRAND is an AI-powered platform designed to turn unstructured customer fee
 
 **Description:**
 
-**Domain:** Educational Technology
+**Domain:** Educational Technology & Multi-Modal AI
 
-InventtEd™ is a pioneering education platform designed to help educators and students become more efficient, effective, and productive. It provides infinite ways to improve productivity, enhance student learning outcomes, and increase engagement through AI-powered tools.
+InventtEd™ is a pioneering multi-modal educational AI platform designed to help educators and students become more efficient, effective, and productive. It combines vision models, CLIP, Flan-T5, and autonomous tool use for automated essay grading, visual tutoring, and interactive learning.
 
 **Key Features:**
-- Intelligent Text Summarization
-- Automated Essay Grading with detailed feedback
+- Multi-modal vision processing and intelligent image search/generation (CLIP)
+- Autonomous tool use integration for real-time external information retrieval
+- Intelligent Text Summarization and Automated Essay Grading with detailed feedback
 - Feedback/Complaint Analysis for institutional improvement
 - Unusual Language Detection for content moderation
 - Automated Timetable Generator
@@ -472,13 +487,14 @@ InventtEd™ is a pioneering education platform designed to help educators and s
 - Student Performance Prediction analytics
 
 **Roles and Responsibilities:**
-- Performed advanced prompt engineering to fetch questions and answers from ChatGPT using optimized prompts
-- Fine-tuned CLIP (Multi-Modal Vision Transformer) to generate images from text descriptions
+- Architected multi-modal AI subsystems integrating vision models and autonomous tool usage for visual explanations and real-time search
+- Fine-tuned CLIP (Multi-Modal Vision Transformer) to generate images from text descriptions and support visual information retrieval
 - Fine-tuned Flan-T5 model to generate keyword-based MCQs from given educational context
+- Integrated search engine tools and autonomous tool-use workflows for real-time educational information retrieval
+- Performed advanced prompt engineering for ChatGPT-based virtual tutoring
 - Designed scalable Phishing Classifier using classical Machine Learning algorithms for email security
 - Built multi-modal model for social media content classification (Input: post text + image, Output: category)
-- Integrated multiple AI models into cohesive educational platform
-- Optimized Transformer models for real-time educational applications
+- Integrated multiple AI models into cohesive educational platform and optimized Transformers for real-time performance
 
 **Skills Used:**
 
@@ -490,7 +506,7 @@ InventtEd™ is a pioneering education platform designed to help educators and s
 
 **Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
 **NLP:** Spacy, NLTK, Hugging Face Transformers, Large Language Models (LLMs), CLIP, Flan-T5  
-**Generative AI:** LangChain, Prompt Chaining, RAG, Agent Building, Prompt Engineering  
+**Generative AI & Multi-Modal AI:** Multi-Modal AI, Vision Transformers, CLIP, LangChain, Prompt Chaining, RAG, Agent Building, Tool Use, Prompt Engineering  
 **Translation Tools:** Google Translate, LibreOffice Translate, Mixed Code Language Translation  
 **Cloud Platform:** GCP
 

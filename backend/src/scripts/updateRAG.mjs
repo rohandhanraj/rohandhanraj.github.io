@@ -1,12 +1,17 @@
 import fs from 'fs';
 import path from 'path';
-
 import { fileURLToPath } from 'url';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const publicResumesDir = path.resolve(__dirname, '../public/resumes');
-const outputJsonPath = path.resolve(__dirname, '../lib/documentTree.json');
+const candidateDirs = [
+  path.resolve(__dirname, '../../../frontend/public/resumes'),
+  path.resolve(process.cwd(), 'frontend/public/resumes'),
+  path.resolve(process.cwd(), '../frontend/public/resumes')
+];
+const publicResumesDir = candidateDirs.find(d => fs.existsSync(d)) || candidateDirs[0];
+const outputJsonPath = path.resolve(__dirname, '../data/documentTree.json');
 
 const stopwords = new Set([
   'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any', 'are', 'arent', 'as', 'at',
@@ -44,7 +49,7 @@ function extractKeywords(title, content) {
     if (cleaned.length > 2 && !stopwords.has(cleaned)) {
       if (
         /^[a-zA-Z]/.test(cleaned) || 
-        ['omodore', 'rbetraj', 'galambo', 'salesmoji', 'aisera', 'evalmybrand', 'inventted', 'mice'].includes(cleaned)
+        ['omodore', 'rbetraj', 'galambo', 'salesmoji', 'aisera', 'evalmybrand', 'inventted', 'mice', 'document', 'intelligence', 'origen'].includes(cleaned)
       ) {
         keywords.add(cleaned);
       }
@@ -60,9 +65,22 @@ function extractKeywords(title, content) {
     keywords.add('education'); keywords.add('study'); keywords.add('studied'); keywords.add('degree');
     keywords.add('college'); keywords.add('university'); keywords.add('school'); keywords.add('academics'); keywords.add('btech');
   }
+  if (titleLower.includes('publicis') || titleLower.includes('sapient') || titleLower.includes('senior associate')) {
+    keywords.add('publicis'); keywords.add('sapient'); keywords.add('publicis sapient'); keywords.add('current');
+    keywords.add('delivery'); keywords.add('engineering'); keywords.add('enterprise');
+  }
   if (titleLower.includes('senior ai') || titleLower.includes('r systems') || titleLower.includes('lendistry')) {
-    keywords.add('rsystems'); keywords.add('r systems'); keywords.add('lendistry'); keywords.add('current');
+    keywords.add('rsystems'); keywords.add('r systems'); keywords.add('lendistry');
     keywords.add('mcp'); keywords.add('guardrails'); keywords.add('agentic ops'); keywords.add('harness engineering');
+    keywords.add('pii redaction'); keywords.add('pii');
+  }
+  if (titleLower.includes('document intelligence')) {
+    keywords.add('document intelligence'); keywords.add('document'); keywords.add('intelligence');
+    keywords.add('lendistry'); keywords.add('client'); keywords.add('pii redaction'); keywords.add('guardrails');
+  }
+  if (titleLower.includes('origen assistant') || titleLower.includes('origen')) {
+    keywords.add('origen assistant'); keywords.add('origen');
+    keywords.add('lendistry'); keywords.add('client'); keywords.add('pii redaction'); keywords.add('guardrails');
   }
   if (titleLower.includes('certif')) {
     keywords.add('certifications'); keywords.add('certificate'); keywords.add('certified'); keywords.add('accreditation');

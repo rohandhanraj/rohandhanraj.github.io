@@ -4,6 +4,36 @@ import { motion } from "framer-motion";
 
 const projects = [
   {
+    id: "document-intelligence",
+    name: "DOCUMENT INTELLIGENCE",
+    tagline: "Multi-Modal Financial Document Intelligence",
+    domain: "Financial Lending",
+    client: "Lendistry",
+    company: "R Systems",
+    featured: true,
+    description:
+      "AI-powered document intelligence system classifying loan documents (W-2s, tax returns, bank statements) and extracting structured data for credit decisioning with automated PII redaction and strict validation guardrails.",
+    highlights: ["Multi-modal document parsing", "Automated PII redaction & safety guardrails", "Credit underwriting pipeline integration"],
+    tech: ["Python", "FastAPI", "Multi-Modal AI", "Pydantic", "AWS", "Docker", "PII Redaction", "Guardrails"],
+    accentColor: "var(--accent-cyan)",
+    icon: "📄",
+  },
+  {
+    id: "origen-assistant",
+    name: "ORIGEN ASSISTANT",
+    tagline: "Fintech Conversational Lending Agent",
+    domain: "Fintech & Lending Agent",
+    client: "Lendistry",
+    company: "R Systems",
+    featured: true,
+    description:
+      "Conversational lending portal assistant guiding borrowers to understand complex financial terminology, navigate the portal, and smart-fill loan applications using extracted document data with conversational safety guardrails and PII redaction.",
+    highlights: ["Model Context Protocol (MCP)", "Smart-fill loan applications", "Strict safety guardrails & PII redaction"],
+    tech: ["Python", "Generative AI", "LLMs", "RAG", "Agentic Workflows", "MCP Tools", "FastAPI", "AWS", "PII Redaction", "Guardrails"],
+    accentColor: "var(--accent-pink)",
+    icon: "🤝",
+  },
+  {
     id: "omodore",
     name: "OMODORE",
     tagline: "Autonomous Agent Platform",
@@ -14,8 +44,8 @@ const projects = [
     description:
       "Revolutionary no-code platform enabling non-technical users to build sophisticated domain-specific AI agents. Achieved 38% accuracy improvement through advanced RAG pipeline architecture.",
     highlights: ["38% accuracy boost via RAG", "No-code agent builder", "LangGraph multi-agent orchestration"],
-    tech: ["LangChain", "LangGraph", "FastAPI", "RAG", "Qdrant", "Docker"],
-    accentColor: "var(--accent-cyan)",
+    tech: ["Agentic AI", "LangChain", "LangGraph", "FastAPI", "RAG", "Qdrant", "Docker"],
+    accentColor: "var(--accent-purple)",
     icon: "🤖",
   },
   {
@@ -29,37 +59,22 @@ const projects = [
     description:
       "Open-source agentic scraping platform combining LLM intelligence with Pydantic-validated structured data extraction for e-commerce competitive analysis.",
     highlights: ["LLM-guided extraction", "Pydantic structured output", "Real-time price tracking"],
-    tech: ["Python", "Playwright", "GPT", "LangChain", "Pydantic", "FastAPI"],
-    accentColor: "var(--accent-pink)",
+    tech: ["Agentic AI", "Python", "Playwright", "GPT", "LangChain", "Pydantic", "FastAPI"],
+    accentColor: "var(--accent-green)",
     icon: "🕷️",
-  },
-  {
-    id: "galambo",
-    name: "GALAMBO",
-    tagline: "Multi-Modal Virtual Agent",
-    domain: "Multi-Modal AI",
-    featured: true,
-    url: "https://galambo.com",
-    github: "https://github.com/rohandhanraj/galambo",
-    description:
-      "Sophisticated multi-modal virtual agent integrating text and image processing with real-time information retrieval and advanced context management.",
-    highlights: ["Text + image processing", "Context-aware responses", "Real-time web retrieval"],
-    tech: ["Python", "FastAPI", "LangChain", "Multi-modal GPT", "Docker"],
-    accentColor: "var(--accent-purple)",
-    icon: "🌐",
   },
   {
     id: "salesmoji",
     name: "SALESMOJI",
-    tagline: "AI Sales Intelligence Platform",
-    domain: "Sales & Marketing",
-    featured: true,
+    tagline: "Agentic Virtual Sales Assistant",
+    domain: "Sales Intelligence",
+    featured: false,
     description:
-      "Production-scale GPT-powered sales intelligence platform processing 100K+ daily records and handling 4,500+ daily API requests for Fortune 500 clients.",
-    highlights: ["100K+ daily records via Airflow", "4,500+ daily API requests", "Fortune 500 clients"],
-    tech: ["GPT", "RAG", "LangGraph", "Airflow", "Qdrant", "FastAPI"],
-    accentColor: "var(--accent-green)",
-    icon: "📊",
+      "RAG-based virtual sales assistant and conversational agent answering natural language sales queries, managing leads, and driving pipeline conversions.",
+    highlights: ["Virtual sales agent", "RAG-driven pipeline insights", "Natural language lead queries"],
+    tech: ["Agentic AI", "Python", "FastAPI", "LangChain", "LangGraph", "RAG", "Qdrant", "Docker"],
+    accentColor: "var(--accent-purple)",
+    icon: "💼",
   },
   {
     id: "aisera",
@@ -68,9 +83,9 @@ const projects = [
     domain: "Customer Service AI",
     featured: false,
     description:
-      "RAG-based conversational AI assistants for Fortune 500 clients (Cisco, ITC, KDP, Marco, PDS, Omnitrax). BERT fine-tuning with 18% performance gain.",
-    highlights: ["BERT 18% performance gain", "Cisco, ITC, KDP clients", "28 tickets resolved"],
-    tech: ["BERT", "LangChain", "RAG", "Weaviate", "FastAPI", "GCP"],
+      "Enterprise Generative AI virtual assistant processing 100K+ daily records and 4,500+ daily API requests for Fortune 500 clients (Cisco, ITC, KDP, Marco, PDS, Omnitrax). BERT fine-tuning with 18% performance gain.",
+    highlights: ["100K+ daily records via Airflow", "4,500+ daily API requests", "Cisco, ITC, KDP clients"],
+    tech: ["Agentic AI", "BERT", "LangChain", "LangGraph", "RAG", "Airflow", "FastAPI", "GCP"],
     accentColor: "var(--accent-cyan)",
     icon: "🏢",
   },
@@ -91,12 +106,12 @@ const projects = [
     id: "inventted",
     name: "InventtEd",
     tagline: "AI Education Platform",
-    domain: "EdTech",
+    domain: "EdTech & Multi-Modal",
     featured: false,
     description:
-      "Pioneer education platform with CLIP fine-tuning for text-to-image, Flan-T5 for MCQ generation, and AI-powered grading and tutoring.",
-    highlights: ["CLIP fine-tuning", "Flan-T5 MCQ gen", "AI tutoring bot"],
-    tech: ["CLIP", "Flan-T5", "LangChain", "FastAPI", "GCP"],
+      "Pioneer education platform with multi-modal vision models (CLIP, Flan-T5), real-time tool usage, intelligent text summarization, automated essay grading, and AI tutoring bot.",
+    highlights: ["CLIP & Flan-T5 models", "Multi-modal vision & tool use", "Automated essay grading"],
+    tech: ["CLIP", "Flan-T5", "LangChain", "Multi-Modal AI", "FastAPI", "GCP"],
     accentColor: "var(--accent-purple)",
     icon: "🎓",
   },
@@ -160,7 +175,7 @@ export default function Projects() {
                       className="block text-xs uppercase tracking-widest mb-0.5"
                       style={{ color: p.accentColor, fontFamily: "'Fira Code', monospace" }}
                     >
-                      {p.domain}
+                      {p.domain}{(p as any).client ? ` · Client: ${(p as any).client}` : ""}
                     </span>
                     <h3
                       className="font-orbitron font-bold"

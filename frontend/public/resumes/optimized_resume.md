@@ -1,19 +1,19 @@
 <style>
-  @page { margin: 15mm; }
-  body { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; line-height: 1.2; margin: 0; padding: 0; color: #222; }
-  h1 { font-size: 24px; margin: 0 0 8px 0; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; color: #111; }
-  h2 { font-size: 16px; margin: 16px 0 8px 0; border-bottom: 2px solid #ddd; padding-bottom: 4px; text-transform: uppercase; color: #333; }
-  h3 { font-size: 14px; margin: 0; font-weight: bold; padding-top: 8px; color: #222; }
-  p, ul, li { margin: 0 0 6px 0; }
-  ul { padding-left: 20px; margin-bottom: 12px; margin-top: 4px; }
-  hr { display: none; }
+  @page { margin: 8mm 10mm; }
+  body { font-family: system-ui, -apple-system, sans-serif; font-size: 10px; line-height: 1.18; margin: 0; padding: 0; color: #222; }
+  h1 { font-size: 18px; margin: 0 0 4px 0; text-align: center; text-transform: uppercase; letter-spacing: 1.5px; color: #111; }
+  h2 { font-size: 12px; margin: 8px 0 4px 0; border-bottom: 2px solid #ddd; padding-bottom: 2px; text-transform: uppercase; color: #333; }
+  h3 { font-size: 10.5px; margin: 0; font-weight: bold; padding-top: 4px; color: #222; }
+  p, ul, li { margin: 0 0 2px 0; }
+  ul { padding-left: 14px; margin-bottom: 4px; margin-top: 2px; }
+  hr { margin: 4px 0; border: none; border-top: 1px solid #ddd; }
   a { text-decoration: none; color: #000; }
-  .contact-info { text-align: center; font-size: 12px; margin-bottom: 16px; line-height: 1.6; color: #444; }
+  .contact-info { text-align: center; font-size: 10px; margin-bottom: 6px; line-height: 1.3; color: #444; }
   .grid-2 { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; border-bottom: none; }
-  .date { color: #555; font-size: 12px; font-weight: 500; }
-  .tech { font-style: italic; color: #555; font-size: 12px; margin-bottom: 12px; display: block; }
+  .date { color: #555; font-size: 10px; font-weight: 500; }
+  .tech { font-style: italic; color: #555; font-size: 9.5px; margin-bottom: 4px; display: block; }
   strong { color: #000; font-weight: 700; }
-  .icon { display: inline-block; width: 14px; height: 14px; vertical-align: -2px; margin-right: 4px; background-size: contain; background-repeat: no-repeat; }
+  .icon { display: inline-block; width: 11px; height: 11px; vertical-align: -1px; margin-right: 3px; background-size: contain; background-repeat: no-repeat; }
   .i-email { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>'); }
   .i-phone { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>'); }
   .i-loc { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'); }
@@ -40,17 +40,25 @@ Results-driven AI/ML Engineer with **7+ years of total professional experience**
 
 ## TECHNICAL SKILLS
 
-Python, Django, Flask, FastAPI, Streamlit, LLMs (OpenAI, Anthropic, Vertex AI, Google Gen AI), LangChain, LangGraph, RAG, Multi-Agent Systems, Scikit-Learn, TensorFlow, Keras, PyTorch, Optuna, Transformers, NLP, Apache Airflow, Databases (MySQL, PostgreSQL, MongoDB, Cassandra, Vector DBs), Web Scraping (Playwright, Selenium), Git, Docker, GCP, AWS, CI/CD, MLOps
+Python, Django, Flask, FastAPI, Streamlit, LLMs (OpenAI, Anthropic, Vertex AI, Google Gen AI), LangChain, LangGraph, RAG, Multi-Agent Systems, Scikit-Learn, TensorFlow, Keras, PyTorch, Optuna, Transformers, NLP, Apache Airflow, Databases (MySQL, PostgreSQL, MongoDB, Cassandra, Vector DBs), Web Scraping (Playwright, Selenium), Git, Docker, GCP, AWS, CI/CD, MLOps, Guardrails, PII Redaction
 
 ---
 
 ## EXPERIENCE
 
+### Senior Associate Data Science L2
+
+Publicis Sapient | Sep 2026 – Present
+
+* Leading enterprise data science delivery and client transformation initiatives
+* Architecting production GenAI & LLM architectures and scalable pipeline engineering
+* Deploying resilient enterprise AI/ML platforms, cloud infrastructure, and MLOps
+
 ### Senior AI/ML Engineer
 
-R Systems International (Client: Lendistry) | Jun 2026 – Present
+R Systems International (Client: Lendistry) | Jun 2026 – Sep 2026
 
-* Architecting production Agentic AI workflows and multi-agent coordination using MCP tools and guardrails
+* Architecting production Agentic AI workflows on AWS using MCP tools, guardrails, and automated PII redaction
 * Implementing Harness Engineering and Agentic Ops for automated validation and observability
 * Building ML Flow integration and Agentic E2E evaluation frameworks for strategic agent benchmarking
 
@@ -58,7 +66,7 @@ R Systems International (Client: Lendistry) | Jun 2026 – Present
 
 AI Tech Solutions Ltd. | Nov 2024 – Oct 2025
 
-* Designed and orchestrated multi-agent AI systems utilizing LangGraph for complex task execution
+* Designed and orchestrated multi-agent Agentic AI systems utilizing LangGraph for complex task execution
 * Enhanced context retrieval relevance by 38% through hybrid RAG implementation
 * Built high-throughput, asynchronous backend microservices using FastAPI
 
@@ -66,7 +74,7 @@ AI Tech Solutions Ltd. | Nov 2024 – Oct 2025
 
 Aimlytics Technology | Sep 2022 – Oct 2024
 
-* Architected scalable RAG-based assistants reliably processing 4,500+ daily API requests
+* Architected scalable Agentic AI and RAG-based assistants (SalesMoji / AISERA) reliably processing 4,500+ daily API requests
 * Fine-tuned BERT and RoBERTa models, improving text classification F1-scores by 18%
 * Orchestrated ETL data pipelines via Airflow to handle 100K+ daily records for ML workflows
 
@@ -81,9 +89,9 @@ iNeuron.ai | Aug 2021 – Sep 2022
 
 ## PROJECTS
 
-* **Omodore**: Autonomous Agentic AI platform demonstrating LangGraph state orchestration
-* **GALAMBO**: Multi-modal AI assistant integrating vision models and real-time tool use
-* **SalesMoji**: Scalable AI sales intelligence system leveraging vector search retrieval
+* **Origen Assistant & Document Intelligence**: Intelligent lending assistant and document classification pipeline for client Lendistry with automated PII redaction, safety guardrails, and application smart-filling.
+* **AISERA & SalesMoji**: Enterprise Agentic AI and RAG assistants for Fortune 500 clients, processing 100K+ daily records and 4,500+ daily API requests.
+* **Omodore & Rbetraj**: Autonomous Agentic AI platforms demonstrating no-code LangGraph agent orchestration and LLM-guided automated e-commerce web scraping.
 
 ---
 

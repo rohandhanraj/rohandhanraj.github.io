@@ -22,3 +22,9 @@ if (process.env.NEXT_PUBLIC_OPENROUTER_API_KEY && !process.env.OPENROUTER_API_KE
   process.env.OPENROUTER_API_KEY = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
 }
 
+if (!process.env.RAG_STRATEGY) {
+  process.env.RAG_STRATEGY = "facts";
+}
+
+export const RAG_STRATEGY = process.env.RAG_STRATEGY;
+

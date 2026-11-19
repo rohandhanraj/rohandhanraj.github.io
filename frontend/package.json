@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/updateRAG.mjs",
-    "prebuild": "node scripts/updateRAG.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -14,7 +12,7 @@
   "dependencies": {
     "framer-motion": "^11.18.2",
     "marked": "^18.0.0",
-    "next": "15.3.0",
+    "next": "^16.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

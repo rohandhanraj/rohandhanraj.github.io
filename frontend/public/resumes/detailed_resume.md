@@ -1,19 +1,19 @@
 <style>
-  @page { margin: 5mm 8mm; }
-  body { font-family: system-ui, -apple-system, sans-serif; font-size: 10px; line-height: 1.15; margin: 0; padding: 0; color: #111; }
-  h1 { font-size: 15px; margin: 0 0 2px 0; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-  h2 { font-size: 12px; margin: 6px 0 3px 0; border-bottom: 1px solid #ccc; padding-bottom: 1px; text-transform: uppercase; color: #222; }
-  h3 { font-size: 11px; margin: 0; font-weight: bold; padding-top: 3px; }
-  p, ul, li { margin: 0 0 2px 0; }
-  ul { padding-left: 14px; margin-bottom: 3px; margin-top: 1px; }
+  @page { margin: 4mm 6mm; }
+  body { font-family: system-ui, -apple-system, sans-serif; font-size: 8.5px; line-height: 1.12; margin: 0; padding: 0; color: #111; }
+  h1 { font-size: 13.5px; margin: 0 0 1px 0; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+  h2 { font-size: 10.5px; margin: 4px 0 2px 0; border-bottom: 1px solid #ccc; padding-bottom: 1px; text-transform: uppercase; color: #222; }
+  h3 { font-size: 9.5px; margin: 0; font-weight: bold; padding-top: 2px; }
+  p, ul, li { margin: 0 0 1.5px 0; }
+  ul { padding-left: 12px; margin-bottom: 2px; margin-top: 1px; }
   hr { display: none; }
   a { text-decoration: none; color: #000; }
-  .contact-info { text-align: center; font-size: 9.5px; margin-bottom: 4px; line-height: 1.25; color: #333; }
-  .grid-2 { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; border-bottom: none; }
-  .date { color: #555; font-size: 9px; font-weight: 500; }
-  .tech { font-style: italic; color: #444; font-size: 9px; margin-bottom: 4px; display: block; }
+  .contact-info { text-align: center; font-size: 8.5px; margin-bottom: 2px; line-height: 1.2; color: #333; }
+  .grid-2 { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; border-bottom: none; }
+  .date { color: #555; font-size: 8px; font-weight: 500; }
+  .tech { font-style: italic; color: #444; font-size: 8px; margin-bottom: 2px; display: block; }
   strong { color: #000; font-weight: 700; }
-  .icon { display: inline-block; width: 9px; height: 9px; vertical-align: -1px; margin-right: 2px; background-size: contain; background-repeat: no-repeat; }
+  .icon { display: inline-block; width: 8px; height: 8px; vertical-align: -1px; margin-right: 2px; background-size: contain; background-repeat: no-repeat; }
   .i-email { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>'); }
   .i-phone { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>'); }
   .i-loc { background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>'); }
@@ -49,15 +49,25 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
 
 ## PROFESSIONAL EXPERIENCE
 
-<div class="grid-2"><h3>R Systems International | Senior AI/ML Engineer (Client: Lendistry)</h3><span class="date">Jun 2026 – Present</span></div>
+<div class="grid-2"><h3>Publicis Sapient | Senior Associate Data Science L2 — Delivery, Engineering</h3><span class="date">Sep 2026 – Present</span></div>
+
+<ul>
+  <li>Enterprise data science delivery across strategic client transformation initiatives and production AI deployments.</li>
+  <li>Architecting production <strong>GenAI & LLM architectures</strong>, multi-agent workflows, and scalable AI platforms.</li>
+  <li>Engineering scalable high-throughput data pipelines, cloud infrastructure, and robust MLOps practices.</li>
+  <li>Delivering client transformation through agentic systems, LangGraph orchestration, and enterprise-grade LLM applications.</li>
+</ul>
+<span class="tech">Tech: Python, Generative AI, LLMs, Agentic AI, LangGraph, FastAPI, Cloud Infrastructure, MLOps</span>
+
+<div class="grid-2"><h3>R Systems International | Senior AI/ML Engineer (Client: Lendistry)</h3><span class="date">Jun 2026 – Sep 2026</span></div>
 
 <ul>
   <li>Architecting enterprise-grade <strong>Agentic AI workflows</strong> and multi-agent systems using Model Context Protocol (MCP) and custom guardrails.</li>
   <li>Engineering robust <strong>Harness Engineering</strong> and <strong>Agentic Ops</strong> infrastructure for automated tool execution and real-time observability.</li>
   <li>Developing end-to-end <strong>ML Flow</strong> integration and <strong>Agentic E2E evaluation</strong> frameworks for strategic agent validation and regression testing.</li>
-  <li>Enforcing strict LLM safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows.</li>
+  <li>Enforcing strict LLM safety guardrails, automated PII redaction, and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows.</li>
 </ul>
-<span class="tech">Tech: Python, Generative AI, Agentic Workflows, MCP Tools, Guardrails, Harness Engineering, Agentic Ops, ML Flow, Strategic Agentic Evaluation, Observability</span>
+<span class="tech">Tech: Python, AWS, Generative AI, Agentic Workflows, MCP Tools, Guardrails, PII Redaction, Harness Engineering, Agentic Ops, ML Flow, Strategic Agentic Evaluation, Observability</span>
 
 <div class="grid-2"><h3>AI Tech Solutions Ltd. | AI/ML Engineer — Generative AI & Agentic Systems</h3><span class="date">Nov 2024 – Oct 2025</span></div>
 
@@ -67,17 +77,17 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
   <li>Developed <a href="https://pypi.org/project/ai-tech-crawler/" target="_blank" style="text-decoration: underline;"><strong>AI-Tech-Crawler</strong></a>, an open-source web scraping platform natively utilizing LLMs and Pydantic schemas for data extraction.</li>
   <li>Scaled complex containerized orchestration models deploying <strong>Docker</strong> against Vector DBs for robust enterprise semantic search.</li>
 </ul>
-<span class="tech">Tech: Python, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Docker, Vector DBs</span>
+<span class="tech">Tech: Python, Agentic AI, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Docker, Vector DBs</span>
 
 <div class="grid-2"><h3>Aimlytics Technology | Software Engineer — Generative AI & ML</h3><span class="date">Sep 2022 – Oct 2024</span></div>
 
 <ul>
   <li>Led an <strong>8-member team</strong> resolving <strong>50%+</strong> of critical deployment issues and delivering custom AI workflows for Fortune 500 clients (Cisco, ITC).</li>
-  <li>Architected a robust RAG-based virtual sales pipeline (<strong>SalesMoji</strong>) structurally scaling to consistently process <strong>4,500+ daily API requests</strong>.</li>
+  <li>Architected a robust RAG-based virtual assistant pipeline (<strong>AISERA</strong>) structurally scaling to consistently process <strong>4,500+ daily API requests</strong> and 100K+ daily records.</li>
   <li>Fine-tuned <strong>BERT & RoBERTa</strong> NLP models driving <strong>18% performance improvements</strong> across a 15-language sentiment tracking stack.</li>
   <li>Automated rigorous ETL architectures utilizing <strong>Apache Airflow</strong> to seamlessly ingest and process <strong>100K+ daily records</strong>.</li>
 </ul>
-<span class="tech">Tech: Python, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Vector DBs, GCP</span>
+<span class="tech">Tech: Python, Agentic AI, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Vector DBs, GCP</span>
 
 <div class="grid-2"><h3>iNeuron.ai | Machine Learning Engineer Intern</h3><span class="date">Aug 2021 – Sep 2022</span></div>
 
@@ -97,14 +107,11 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
 <span class="tech">Tech: Data Analysis, Python, NumPy, Pandas, SciPy, Statistical Analysis, Quality Control</span>
 
 ## KEY PROJECTS & ARCHITECTURES
-<ul style="padding-left: 14px; margin-bottom: 2px;">
-  <li><strong>Omodore:</strong> No-code AI agent platform with autonomous reasoning, hybrid RAG, and multi-agent orchestration via LangGraph.</li>
-  <li><strong>Rbetraj:</strong> Automated dropshipping platform powered by AI-Crawler with LLM-based structured data extraction.</li>
-  <li><strong>GALAMBO:</strong> Multi-modal agentic AI assistant with GPT-4, real-time image search, and autonomous tool usage.</li>
-  <li><strong>SalesMoji:</strong> AI-powered sales intelligence system reliably processing 100K+ records/day and 4,500+ daily API requests.</li>
-  <li><strong>AISERA:</strong> Enterprise AI system for Fortune 500 clients with BERT fine-tuning and production issue resolution.</li>
-  <li><strong>evalmyBRAND:</strong> Aspect-based sentiment analysis system (RoBERTa, 18% improvement) with 15+ language support.</li>
-  <li><strong>InventtEd:</strong> AI-powered educational platform with CLIP, Flan-T5, automated essay grading, and virtual tutoring.</li>
+<ul style="padding-left: 12px; margin-bottom: 2px;">
+  <li><strong>Document Intelligence & Origen Assistant:</strong> Financial document intelligence and conversational lending agent with automated PII redaction and safety guardrails.</li>
+  <li><strong>Omodore & Rbetraj:</strong> Agentic AI platforms featuring no-code multi-agent orchestration (LangGraph) and LLM-guided automated e-commerce web scraping.</li>
+  <li><strong>AISERA & SalesMoji:</strong> Enterprise Agentic AI and conversational RAG assistants for Fortune 500 clients, processing 100K+ daily records and 4,500+ daily API requests.</li>
+  <li><strong>evalmyBRAND & InventtEd:</strong> Multi-lingual aspect-based sentiment analysis (RoBERTa, 18% gain) and multi-modal vision platform (CLIP, Flan-T5) with real-time tool usage.</li>
 </ul>
 
 <div style="display: flex; justify-content: space-between; margin-top: 4px;">

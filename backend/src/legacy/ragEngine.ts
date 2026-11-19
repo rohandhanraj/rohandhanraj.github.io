@@ -2,8 +2,13 @@
 // Retrieves relevant document tree nodes based on keyword/entity matching.
 // No vector embeddings needed — uses a scoring function over the document tree.
 
-import { DocNode, ChatMessage } from "./types";
-import { flattenTree } from "./documentTree";
+import { DocNode, flattenTree } from "../data/documentTree.js";
+
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+  timestamp?: string;
+}
 
 const MAX_CONTEXT_CHARS = 6000;
 
