@@ -5,8 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { marked } from "marked";
 import { streamChat, getChatHistory, logAnalyticsEvent } from "@/lib/chatClient";
 import { getVisitorInfo } from "@/lib/visitorInfo";
-import { retrieveContext } from "@/lib/ragEngine";
-import { buildDocumentTree } from "@/lib/documentTree";
 import type { ChatMessage, VisitorInfo } from "@/lib/types";
 
 // Configure marked options
@@ -14,9 +12,6 @@ marked.setOptions({
   gfm: true,
   breaks: true,
 });
-
-// Build once — reused across all queries (pure data, no side effects)
-const docTree = buildDocumentTree();
 
 interface UIMessage {
   id: string;
@@ -198,7 +193,7 @@ function MessageBubble({ msg }: { msg: UIMessage }) {
         <div
           className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-2 mt-0.5 overflow-hidden border border-slate-700 bg-slate-900"
         >
-          <img src="/avatar_sticker.png" alt="AI Assistant" className="w-full h-full object-cover" />
+          <img src="/assistant_avatar.jpg" alt="AI Assistant" className="w-full h-full object-cover" />
         </div>
       )}
       <div
@@ -390,9 +385,6 @@ export default function ChatWidget() {
       setIsLoading(true);
       setStatusText("retrieving");
 
-      // RAG: retrieve relevant context from the document tree (client-side)
-      const context = retrieveContext(query, docTree);
-
       // Create streaming assistant message
       const assistantMsgId = crypto.randomUUID();
       setMessages((prev) => [
@@ -401,7 +393,7 @@ export default function ChatWidget() {
       ]);
 
       // Stream from OpenRouter
-      await streamChat(context, chatHistory, query, {
+      await streamChat(chatHistory, query, {
         onStatus(status) {
           setStatusText(status);
         },
@@ -487,7 +479,7 @@ export default function ChatWidget() {
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-700 bg-slate-900">
-                      <img src="/avatar_sticker.png" alt="AI Avatar" className="w-full h-full object-cover" />
+                      <img src="/assistant_avatar.jpg" alt="AI Avatar" className="w-full h-full object-cover" />
                     </div>
                     <div>
                       <p
@@ -524,7 +516,7 @@ export default function ChatWidget() {
                           className="flex items-center gap-2 mb-3"
                       >
                         <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-700 bg-slate-900">
-                          <img src="/avatar_sticker.png" alt="AI Assistant" className="w-full h-full object-cover" />
+                          <img src="/assistant_avatar.jpg" alt="AI Assistant" className="w-full h-full object-cover" />
                         </div>
                         <div
                             className="flex items-center gap-2 px-3 py-1.5"

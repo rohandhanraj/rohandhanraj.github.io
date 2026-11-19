@@ -7,7 +7,7 @@ async function convert(inputFile, outputFile) {
         const pdf = await mdToPdf(
             { path: inputFile },
             {
-                launch_options: { args: ['--no-sandbox', '--disable-setuid-sandbox'] },
+                launch_options: { args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'] },
                 pdf_options: {
                     format: 'A4',
                     preferCSSPageSize: true,
@@ -25,9 +25,10 @@ async function convert(inputFile, outputFile) {
 }
 
 (async () => {
-    const baseDir = fs.existsSync(path.join(__dirname, 'frontend/public/resumes'))
-        ? path.join(__dirname, 'frontend/public/resumes')
-        : path.join(__dirname, 'public/resumes');
+    const rootDir = path.resolve(__dirname, '..');
+    const baseDir = fs.existsSync(path.join(rootDir, 'frontend/public/resumes'))
+        ? path.join(rootDir, 'frontend/public/resumes')
+        : path.join(__dirname, '../public/resumes');
 
     await convert(
         path.join(baseDir, 'detailed_resume.md'),

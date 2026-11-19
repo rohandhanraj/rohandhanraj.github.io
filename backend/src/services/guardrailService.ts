@@ -1,20 +1,46 @@
 export function isPromptInjection(query: string): boolean {
   const normalized = query.toLowerCase();
 
-  // Basic prompt injection phrases
+  // Basic prompt injection and jailbreak phrases
   const injectionPhrases = [
     "ignore previous instructions",
+    "ignore all instructions",
     "ignore the instructions",
+    "ignore prior instructions",
+    "disregard all prior instructions",
+    "disregard previous instructions",
+    "disregard prior instructions",
+    "disregard instructions",
     "forget all instructions",
+    "forget previous instructions",
+    "forget previous prompt",
     "system prompt",
-    "override",
-    "bypass",
+    "system instructions",
+    "system instruction",
+    "system directive",
+    "system directives",
+    "developer mode",
+    "dan mode",
+    "do anything now",
     "jailbreak",
     "you are now a",
-    "act as",
+    "you are now an",
+    "you are now in",
+    "new persona",
+    "adopt a new persona",
+    "assume a new persona",
     "new instructions",
     "ignore rules",
-    "forget previous prompt"
+    "bypass rules",
+    "bypass guardrails",
+    "bypass restrictions",
+    "bypass safety",
+    "override rules",
+    "override instructions",
+    "override prompt",
+    "system override",
+    "unrestricted assistant",
+    "unfiltered ai"
   ];
 
   for (const phrase of injectionPhrases) {
@@ -23,19 +49,48 @@ export function isPromptInjection(query: string): boolean {
     }
   }
 
-  // Look for attempts to print the system prompt or retrieve instructions
+  // Look for attempts to print/extract the system prompt or retrieve instructions
   const dumpPhrases = [
     "output the prompt",
+    "output your prompt",
+    "output the system prompt",
     "show the system prompt",
+    "show me your system prompt",
     "reveal the system prompt",
     "reveal your instructions",
     "print the above",
+    "print the system prompt",
+    "print your instructions",
     "repeat the system prompt",
-    "what is your system prompt"
+    "repeat the above",
+    "repeat the text above",
+    "repeat your instructions",
+    "what is your system prompt",
+    "what are your system instructions",
+    "what are your system prompt",
+    "tell me your system prompt",
+    "tell me your system instructions",
+    "dump your system prompt",
+    "dump the system prompt",
+    "what is the prompt above"
   ];
 
   for (const phrase of dumpPhrases) {
     if (normalized.includes(phrase)) {
+      return true;
+    }
+  }
+
+  // Regex patterns for dynamic injection styles
+  const injectionRegexes = [
+    /\bact\s+as\s+(an?\s+)?(unrestricted|unfiltered|jailbreak|math|evil|other|different|dan|bot|hacker)\b/i,
+    /new\s+persona\s*:/i,
+    /developer\s+mode/i,
+    /\bdan\s+mode\b/i
+  ];
+
+  for (const regex of injectionRegexes) {
+    if (regex.test(query)) {
       return true;
     }
   }
@@ -68,9 +123,19 @@ export const SAFE_FALLBACK_RESPONSE = "I am only authorized to discuss Rohan Yad
 
 // PRE-AGENT (Input) rules
 const PRE_AGENT_PATTERNS = [
-  /ignore\s+previous\s+instructions/gi,
-  /ignore\s+the\s+instructions/gi,
-  /forget\s+all\s+instructions/gi
+  /ignore\s+(all\s+|any\s+|the\s+|prior\s+|previous\s+|above\s+)*instructions/i,
+  /disregard\s+(all\s+|any\s+|the\s+|prior\s+|previous\s+|above\s+)*instructions/i,
+  /forget\s+(all\s+|any\s+|the\s+|prior\s+|previous\s+|above\s+)*(instructions|prompt)/i,
+  /you\s+are\s+now\s+(in\s+)?developer\s+mode/i,
+  /\bdeveloper\s+mode\b/i,
+  /\bdan\s+mode\b/i,
+  /\bdo\s+anything\s+now\b/i,
+  /\bjailbreak\b/i,
+  /new\s+persona\b/i,
+  /assume\s+(a\s+)?new\s+(persona|role|identity)\b/i,
+  /you\s+are\s+now\s+(a|an)\s+/i,
+  /bypass\s+(all\s+|any\s+|the\s+)*(rules|guardrails|restrictions|safety)/i,
+  /override\s+(all\s+|any\s+|the\s+)*(rules|instructions|prompt|directives)/i
 ];
 
 export function validatePreAgentInput(query: string): void {
@@ -81,7 +146,7 @@ export function validatePreAgentInput(query: string): void {
     }
   }
 
-  // 2. Check existing prompt injection helper
+  // 2. Check prompt injection helper
   if (isPromptInjection(query)) {
     throw new Error("Malicious prompt injection detected.");
   }
@@ -91,8 +156,11 @@ export function validatePreAgentInput(query: string): void {
 export interface PostAgentRule {
   name: string;
   pattern: RegExp;
-  strategy: "redact" | "mask";
+  strategy: "redact" | "mask" | "replace";
+  replacement?: string;
 }
+
+export const WHITELIST_COMBINED_PATTERN = /(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/rohan-dhanraj-yadav\/?|(?:https?:\/\/)?(?:www\.)?github\.com\/rohandhanraj\/?|(?:https?:\/\/)?rohandhanraj\.github\.io\/?|rohan\.dhanraj\.y@gmail\.com/gi;
 
 export const POST_AGENT_RULES: PostAgentRule[] = [
   {
@@ -106,6 +174,17 @@ export const POST_AGENT_RULES: PostAgentRule[] = [
     strategy: "redact"
   },
   {
+    name: "Phone Number",
+    pattern: /(?:\+\d{1,3}[-.\s]*)?\(\d{3}\)[-.\s]?\d{3}[-.\s]?\d{4}\b|(?:\+\d{1,3}[-.\s]*)?\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b|(?:\+\d{1,3}[-.\s]*)?\b\d{5}[-.\s]\d{5}\b|(?:\+\d{1,3}[-.\s]*)?\b\d{10}\b|\+\d{1,3}\d{10}\b/g,
+    strategy: "replace",
+    replacement: "[Contact via Email/LinkedIn]"
+  },
+  {
+    name: "Bearer Token",
+    pattern: /bearer\s+[a-z0-9_\-\.]{16,}/gi,
+    strategy: "redact"
+  },
+  {
     name: "OpenRouter API Key",
     pattern: /sk-or-v1-[a-f0-9]{64}/gi,
     strategy: "redact"
@@ -116,6 +195,11 @@ export const POST_AGENT_RULES: PostAgentRule[] = [
     strategy: "redact"
   },
   {
+    name: "Generic API Key",
+    pattern: /\bsk-[A-Za-z0-9]{20,}\b/g,
+    strategy: "redact"
+  },
+  {
     name: "DB Credentials",
     pattern: /(65e91c359c810bdd9bd4980e012d239fb7ad6055|e1b576e93e20032f9f24b65c58b7b1ec858c825a|ffb7695e0339536f32e7c4d0e2751655f21a71f66a3aa9502efc2465dd3eadc9)/g,
     strategy: "mask"
@@ -123,16 +207,36 @@ export const POST_AGENT_RULES: PostAgentRule[] = [
 ];
 
 export function censorPostAgentOutput(text: string): string {
-  let censored = text;
+  const tokens: string[] = [];
+  const tokenPrefix = "@@WHITELIST_CONTACT_TOKEN_";
+
+  // 1. Protect whitelisted contacts with temporary placeholders
+  let processed = text.replace(WHITELIST_COMBINED_PATTERN, (match) => {
+    const placeholder = `${tokenPrefix}${tokens.length}@@`;
+    tokens.push(match);
+    return placeholder;
+  });
+
+  // 2. Apply post-agent censoring rules
   for (const rule of POST_AGENT_RULES) {
-    censored = censored.replace(rule.pattern, (match) => {
+    processed = processed.replace(rule.pattern, (match) => {
+      if (rule.strategy === "replace") {
+        return rule.replacement ?? "[Contact via Email/LinkedIn]";
+      }
       if (rule.strategy === "mask") {
         return "*".repeat(match.length);
       }
       return "****";
     });
   }
-  return censored;
+
+  // 3. Restore whitelisted contacts
+  for (let i = 0; i < tokens.length; i++) {
+    const placeholder = `${tokenPrefix}${i}@@`;
+    processed = processed.split(placeholder).join(tokens[i]);
+  }
+
+  return processed;
 }
 
 export class StreamCensor {

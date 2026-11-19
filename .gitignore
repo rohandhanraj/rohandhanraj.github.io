@@ -48,3 +48,4 @@ volumes/
 graphify-out/
 .superpowers/
 .claude/
+.vite/

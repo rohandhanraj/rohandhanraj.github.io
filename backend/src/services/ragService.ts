@@ -18,12 +18,18 @@ let cachedDocTree: any[] | null = null;
 function loadDocumentTree(): any[] {
   if (cachedDocTree) return cachedDocTree;
   try {
+    const primaryPath = path.resolve(__dirname, "../data/documentTree.json");
+    const cwdPath = path.resolve(process.cwd(), "src/data/documentTree.json");
+    const cwdBackendPath = path.resolve(process.cwd(), "backend/src/data/documentTree.json");
     const treePath = path.resolve(__dirname, "../../../frontend/lib/documentTree.json");
     const altPath = path.resolve(process.cwd(), "frontend/lib/documentTree.json");
     const altPath2 = path.resolve(process.cwd(), "../frontend/lib/documentTree.json");
     
     let finalPath = "";
-    if (fs.existsSync(treePath)) finalPath = treePath;
+    if (fs.existsSync(primaryPath)) finalPath = primaryPath;
+    else if (fs.existsSync(cwdPath)) finalPath = cwdPath;
+    else if (fs.existsSync(cwdBackendPath)) finalPath = cwdBackendPath;
+    else if (fs.existsSync(treePath)) finalPath = treePath;
     else if (fs.existsSync(altPath)) finalPath = altPath;
     else if (fs.existsSync(altPath2)) finalPath = altPath2;
 
@@ -53,25 +59,37 @@ function flattenDocTree(nodes: any[]): any[] {
 }
 
 const LOCAL_ENTITY_MAP: Record<string, string[]> = {
-  omodore: ["1_project_name_omodore"],
-  rbetraj: ["2_project_name_rbetraj"],
-  galambo: ["3_project_name_galambo"],
-  salesmoji: ["4_project_name_salesmoji"],
+  "document intelligence": ["1_project_name_document_intelligence"],
+  "origen assistant": ["2_project_name_origen_assistant"],
+  origen: ["2_project_name_origen_assistant"],
+  omodore: ["3_project_name_omodore"],
+  rbetraj: ["4_project_name_rbetraj"],
+  galambo: ["7_project_name_inventted"],
+  salesmoji: ["5_project_name_aisera"],
   aisera: ["5_project_name_aisera"],
   evalmybrand: ["6_project_name_evalmybrand"],
   inventted: ["7_project_name_inventted"],
   mice: ["8_project_name_mice_protein_expression"],
   protein: ["8_project_name_mice_protein_expression"],
-  "r systems": ["1_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools"],
-  rsystems: ["1_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools"],
-  lendistry: ["1_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools"],
-  mcp: ["1_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools", "generative_ai_llm_engineering"],
-  guardrails: ["1_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools", "generative_ai_llm_engineering"],
-  "agentic ops": ["1_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools", "agentic_ai_multi_agent_systems"],
-  "harness engineering": ["1_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools"],
-  aimlytics: ["2_ai_ml_engineer_generative_ai_multi_agent_systems"],
-  cisco: ["2_ai_ml_engineer_generative_ai_multi_agent_systems", "5_project_name_aisera"],
-  ineuron: ["3_software_engineer_generative_ai_ml_data_science_python"],
+  "publicis sapient": ["1_senior_associate_data_science_l2_delivery_engineering"],
+  publicis: ["1_senior_associate_data_science_l2_delivery_engineering"],
+  sapient: ["1_senior_associate_data_science_l2_delivery_engineering"],
+  "r systems": ["2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools"],
+  rsystems: ["2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools"],
+  lendistry: ["2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools", "1_project_name_document_intelligence", "2_project_name_origen_assistant"],
+  "pii redaction": ["1_project_name_document_intelligence", "2_project_name_origen_assistant", "2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools"],
+  pii: ["1_project_name_document_intelligence", "2_project_name_origen_assistant"],
+  guardrails: ["2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools", "1_project_name_document_intelligence", "2_project_name_origen_assistant", "5_project_name_aisera"],
+  mcp: ["2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools", "2_project_name_origen_assistant", "generative_ai_llm_engineering"],
+  "agentic ops": ["2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools", "agentic_ai_multi_agent_systems"],
+  "agentic ai": ["agentic_ai_multi_agent_systems", "1_project_name_document_intelligence", "2_project_name_origen_assistant", "3_project_name_omodore", "4_project_name_rbetraj", "5_project_name_aisera", "2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools", "3_ai_ml_engineer_generative_ai_multi_agent_systems", "4_software_engineer_generative_ai_ml_data_science_python"],
+  agentic: ["agentic_ai_multi_agent_systems", "1_project_name_document_intelligence", "2_project_name_origen_assistant", "3_project_name_omodore", "4_project_name_rbetraj", "5_project_name_aisera", "2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools", "3_ai_ml_engineer_generative_ai_multi_agent_systems", "4_software_engineer_generative_ai_ml_data_science_python"],
+  "harness engineering": ["2_senior_ai_ml_engineer_generative_ai_agentic_ai_mcp_tools"],
+  "ai tech": ["3_ai_ml_engineer_generative_ai_multi_agent_systems"],
+  aimlytics: ["4_software_engineer_generative_ai_ml_data_science_python"],
+  cisco: ["4_software_engineer_generative_ai_ml_data_science_python", "5_project_name_aisera"],
+  ineuron: ["5_machine_learning_engineer_intern"],
+  "bureau veritas": ["6_metallurgical_quality_engineer"],
   study: ["education"],
   studied: ["education"],
   education: ["education"],

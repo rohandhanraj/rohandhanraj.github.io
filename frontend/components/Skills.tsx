@@ -7,7 +7,7 @@ const skillCategories = [
     label: "Generative AI & LLM",
     color: "var(--accent-cyan)",
     icon: "🧠",
-    tags: ["LLMs", "Vertex AI", "OpenAI", "Anthropic", "LangChain", "LangGraph", "Structured Outputs", "RAG Pipelines", "Prompt Chaining", "Chain-of-Thought"],
+    tags: ["LLMs", "Vertex AI", "OpenAI", "Anthropic", "LangChain", "LangGraph", "Structured Outputs", "RAG Pipelines", "Prompt Chaining", "Chain-of-Thought", "Guardrails", "PII Redaction"],
   },
   {
     label: "ML & Deep Learning",
@@ -37,13 +37,13 @@ const skillCategories = [
     label: "DevOps, Cloud & MLOps",
     color: "var(--accent-pink)",
     icon: "☁️",
-    tags: ["Git / GitHub", "Docker", "CI/CD (Actions, Jenkins)", "GCP", "AWS", "MLOps"],
+    tags: ["Git / GitHub", "Docker", "CI/CD (Actions, Jenkins)", "GCP", "AWS", "MLflow", "MLOps"],
   },
   {
     label: "Agentic AI & Agents",
     color: "var(--accent-purple)",
     icon: "🤖",
-    tags: ["Agent Orchestration", "Multi-Agent Systems", "Tool Integration", "Memory Management", "Autonomous Decision-Making", "Autonomous AI Agents", "Design Patterns (ReAct, Reflexion)"],
+    tags: ["Model Context Protocol (MCP)", "Agent Orchestration", "Multi-Agent Systems", "Guardrails", "PII Redaction", "Harness Engineering", "Agentic Ops", "Autonomous Decision-Making", "Autonomous AI Agents", "Design Patterns (ReAct, Reflexion)"],
   },
   {
     label: "Extraction & Analytics",

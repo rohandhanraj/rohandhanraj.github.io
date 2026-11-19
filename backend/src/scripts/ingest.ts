@@ -15,7 +15,9 @@ interface DocumentNode {
   content: string;
 }
 
-const documentTreePath = path.resolve(__dirname, "../../../frontend/lib/documentTree.json");
+const primaryDocTreePath = path.resolve(__dirname, "../data/documentTree.json");
+const legacyDocTreePath = path.resolve(__dirname, "../../../frontend/lib/documentTree.json");
+const documentTreePath = fs.existsSync(primaryDocTreePath) ? primaryDocTreePath : legacyDocTreePath;
 
 async function getEmbedding(text: string): Promise<number[]> {
   const apiKey = process.env.COHERE_API_KEY?.trim();
@@ -155,6 +157,26 @@ export async function ingestResume() {
     // Map projects and skills based on the synopsis
     const projects = [
       {
+        name: "DOCUMENT INTELLIGENCE",
+        domain: "Financial Lending & Document Processing",
+        client: "Lendistry",
+        company: "R Systems International",
+        desc: "AI-powered document intelligence system classifying financial documents required for lending processes and extracting critical data for credit and underwriting pipelines with automated PII redaction and strict guardrails.",
+        skills: [
+          "Python", "FastAPI", "Multi-Modal AI", "NLP", "Pydantic", "AWS", "Docker", "PII Redaction", "Guardrails"
+        ]
+      },
+      {
+        name: "ORIGEN ASSISTANT",
+        domain: "Fintech & Lending Agent",
+        client: "Lendistry",
+        company: "R Systems International",
+        desc: "Conversational lending portal assistant guiding borrowers to understand financial jargons and smart-filling lending applications using data extracted through Document Intelligence with conversational safety guardrails and PII redaction.",
+        skills: [
+          "Python", "Generative AI", "LLMs", "RAG", "Agentic Workflows", "MCP Tools", "FastAPI", "AWS", "PII Redaction", "Guardrails"
+        ]
+      },
+      {
         name: "OMODORE",
         domain: "AI Agent Platform",
         desc: "Auto-agent platform enabling non-technical users to build domain-specific AI agents.",
@@ -247,17 +269,32 @@ export async function ingestResume() {
 
     const experiences = [
       {
+        company: "Publicis Sapient",
+        role: "Senior Associate Data Science L2 — Delivery, Engineering",
+        duration: "September 2026 – Present",
+        skills: ["Python", "Generative AI", "LLMs", "Enterprise AI Architecture", "Data Science Delivery", "Agentic Systems", "Cloud & MLOps", "LangGraph", "FastAPI"],
+        projects: []
+      },
+      {
+        company: "R Systems International",
+        client: "Lendistry",
+        role: "Senior AI/ML Engineer",
+        duration: "June 2026 – September 2026",
+        skills: ["Python", "Generative AI", "Agentic Workflows", "MCP Tools", "Guardrails", "PII Redaction", "Harness Engineering", "Agentic Ops", "ML Flow", "Strategic Agentic Evaluation", "Observability", "AWS"],
+        projects: ["DOCUMENT INTELLIGENCE", "ORIGEN ASSISTANT"]
+      },
+      {
         company: "AI Tech Solutions Ltd.",
         role: "AI/ML Engineer",
         duration: "November 2024 – October 2025",
-        skills: ["Python", "LangChain", "LangGraph", "FastAPI", "RAG", "Docker", "Qdrant", "Playwright", "Selenium"],
+        skills: ["Python", "Agentic AI", "LangChain", "LangGraph", "FastAPI", "RAG", "Docker", "Qdrant", "Playwright", "Selenium"],
         projects: ["OMODORE", "RBETRAJ", "GALAMBO"]
       },
       {
         company: "Aimlytics Technology",
         role: "Software Engineer",
         duration: "September 2022 – October 2024",
-        skills: ["Python", "RAG", "LangChain", "Apache Airflow", "BERT", "RoBERTa", "FastAPI", "Flask", "TensorFlow", "PyTorch", "Qdrant", "Chroma", "GCP"],
+        skills: ["Python", "Agentic AI", "RAG", "LangChain", "Apache Airflow", "BERT", "RoBERTa", "FastAPI", "Flask", "TensorFlow", "PyTorch", "Qdrant", "Chroma", "GCP"],
         projects: ["SALESMOJI", "AISERA", "EVALMYBRAND", "INVENTTED"]
       },
       {
@@ -293,10 +330,29 @@ export async function ingestResume() {
       await session.run(
         `
         MERGE (p:Project {name: $name})
-        SET p.domain = $domain, p.description = $desc
+        SET p.domain = $domain, p.description = $desc, p.client = $client, p.company = $company
         `,
-        { name: proj.name, domain: proj.domain, desc: proj.desc }
+        {
+          name: proj.name,
+          domain: proj.domain,
+          desc: proj.desc,
+          client: (proj as any).client || "",
+          company: (proj as any).company || ""
+        }
       );
+
+      // Link to Client if exists
+      if ((proj as any).client) {
+        await session.run(
+          `
+          MERGE (c:Client {name: $clientName})
+          WITH c
+          MATCH (p:Project {name: $projectName})
+          MERGE (p)-[:FOR_CLIENT]->(c)
+          `,
+          { clientName: (proj as any).client, projectName: proj.name }
+        );
+      }
 
       // Link to Skill
       for (const skill of proj.skills) {
@@ -321,15 +377,28 @@ export async function ingestResume() {
       );
     }
 
-    // Seed Experiences and Link to Skills, Projects & Section
+    // Seed Experiences and Link to Skills, Projects, Client & Section
     for (const exp of experiences) {
       await session.run(
         `
         MERGE (e:Experience {company: $company})
-        SET e.role = $role, e.duration = $duration
+        SET e.role = $role, e.duration = $duration, e.client = $client
         `,
-        { company: exp.company, role: exp.role, duration: exp.duration }
+        { company: exp.company, role: exp.role, duration: exp.duration, client: (exp as any).client || "" }
       );
+
+      // Link to Client if exists
+      if ((exp as any).client) {
+        await session.run(
+          `
+          MERGE (c:Client {name: $clientName})
+          WITH c
+          MATCH (e:Experience {company: $company})
+          MERGE (e)-[:SERVED_CLIENT]->(c)
+          `,
+          { clientName: (exp as any).client, company: exp.company }
+        );
+      }
 
       // Link to Skill
       for (const skill of exp.skills) {
