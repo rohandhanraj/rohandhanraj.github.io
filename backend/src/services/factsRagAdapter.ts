@@ -32,6 +32,8 @@ interface ExperienceItem {
 interface ProjectItem {
   name: string;
   domain: string;
+  company?: string;
+  client?: string;
   description: string;
   skills_used: string[];
   responsibilities: string[];
@@ -172,11 +174,12 @@ function isPureGreeting(query: string): boolean {
 const MAX_CONTEXT_LENGTH = 10000;
 
 export const PROJECT_ALIASES: Record<string, string[]> = {
-  "Document Intelligence": ["document intelligence", "document extraction", "lending documents"],
-  "Origen Assistant": ["origen assistant", "origen", "lending portal", "smart fill", "loan application"],
+  "Document Intelligence": ["document intelligence", "document extraction", "lending documents", "document processing"],
+  "Origen Assistant": ["origen assistant", "origen", "lending portal", "smart fill", "loan application", "lending assistant"],
   "Omodore": ["omodore"],
   "Rbetraj": ["rbetraj", "shop scan agent", "ai tech crawler", "ai-tech-crawler", "crawler", "scraping", "scraper"],
-  "Aisera": ["aisera", "customer service", "traps", "sales intelligence", "salesmoji", "sales", "4500", "4,500", "daily queries", "100k"],
+  "Salesmoji": ["salesmoji", "sales virtual assistant", "sales agent", "sales intelligence"],
+  "Aisera": ["aisera", "customer service", "traps", "4500", "4,500", "daily queries", "100k"],
   "evalmyBRAND": ["evalmybrand", "sentiment analysis", "absa"],
   "Inventted": ["inventted", "education", "clip", "flan-t5", "galambo", "multi-modal vision", "tool use"],
   "Mice Protein Expression Analysis": ["mice", "protein", "bioinformatics"]
@@ -250,7 +253,8 @@ export async function retrieveFactsContext(
   for (const project of facts.projects) {
     const aliases = projectAliases[project.name] || [project.name.toLowerCase()];
     const isDirectMatch = aliases.some(alias => normalizedQuery.includes(alias));
-    if (isDirectMatch) {
+    const isClientMatch = Boolean(project.client && normalizedQuery.includes(project.client.toLowerCase()));
+    if (isDirectMatch || isClientMatch) {
       matchedProjects.push(project);
     }
   }
@@ -382,13 +386,15 @@ export async function retrieveFactsContext(
     const projLines = [
       `### Project: ${proj.name}`,
       `- **Domain**: ${proj.domain}`,
+      ...(proj.company ? [`- **Company**: ${proj.company}`] : []),
+      ...(proj.client ? [`- **Client**: ${proj.client}`] : []),
       `- **Description**: ${proj.description}`,
       `- **Skills Used**: ${proj.skills_used.join(", ")}`,
       "- **Key Responsibilities & Deliverables**:",
       ...proj.responsibilities.map(r => `  - ${r}`)
     ];
     sections.push(projLines.join("\n"));
-    logs.push(`- 🚀 **Project Node**: ${proj.name} (${proj.domain})`);
+    logs.push(`- 🚀 **Project Node**: ${proj.name} (${proj.domain}${proj.client ? ` | Client: ${proj.client}` : ""})`);
     matchedCount++;
   }
 

@@ -7,7 +7,7 @@ async function convert(inputFile, outputFile) {
         const pdf = await mdToPdf(
             { path: inputFile },
             {
-                launch_options: { args: ['--no-sandbox', '--disable-setuid-sandbox'] },
+                launch_options: { args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'] },
                 pdf_options: {
                     format: 'A4',
                     preferCSSPageSize: true,

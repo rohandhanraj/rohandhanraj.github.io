@@ -4,19 +4,34 @@ import { motion } from "framer-motion";
 
 const experiences = [
   {
+    company: "Publicis Sapient",
+    role: "Senior Associate Data Science L2 — Delivery, Engineering",
+    duration: "Sep 2026 – Present",
+    type: "Full-time",
+    focus: "Enterprise Data Science Delivery · Production GenAI & LLM Architectures · Client Transformation",
+    dotColor: "var(--accent-cyan)",
+    highlights: [
+      "Leading enterprise data science delivery across strategic client transformation initiatives and production AI deployments",
+      "Architecting production GenAI & LLM architectures, multi-agent workflows, and scalable enterprise AI platforms",
+      "Engineering scalable high-throughput data pipelines, cloud infrastructure, and robust MLOps practices",
+      "Delivering client transformation through agentic systems, LangGraph orchestration, and enterprise-grade LLM applications",
+    ],
+    tech: ["Python", "Generative AI", "LLMs", "Enterprise AI Architecture", "Data Science Delivery", "Agentic Systems", "Cloud & MLOps", "LangGraph", "FastAPI"],
+  },
+  {
     company: "R Systems International",
     role: "Senior AI/ML Engineer (Client: Lendistry)",
-    duration: "Jun 2026 – Present",
+    duration: "Jun 2026 – Sep 2026",
     type: "Full-time",
-    focus: "Enterprise Agentic AI Workflows · MCP Tools · Guardrails & Agentic Ops",
+    focus: "Enterprise Agentic AI Workflows · MCP Tools · Guardrails, PII Redaction & Agentic Ops",
     dotColor: "#38bdf8",
     highlights: [
       "Architecting enterprise Agentic AI workflows and multi-agent coordination systems using Model Context Protocol (MCP) and custom guardrails for fintech operations",
       "Engineering robust Harness Engineering and Agentic Ops infrastructure for automated tool execution, schema validation, and real-time observability",
       "Developing end-to-end ML Flow integration and Agentic E2E evaluation frameworks for continuous testing, strategic agent evaluation, and regression tracking",
-      "Enforcing strict LLM safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows",
+      "Enforcing strict LLM safety guardrails, automated PII redaction, and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows",
     ],
-    tech: ["Python", "Generative AI", "Agentic Workflows", "MCP Tools", "Guardrails", "Harness Engineering", "Agentic Ops", "ML Flow", "Strategic Agentic Evaluation", "Observability"],
+    tech: ["Python", "Generative AI", "Agentic Workflows", "MCP Tools", "Guardrails", "PII Redaction", "Harness Engineering", "Agentic Ops", "ML Flow", "Strategic Agentic Evaluation", "Observability", "AWS"],
   },
   {
     company: "AI Tech Solutions Ltd.",
@@ -33,7 +48,7 @@ const experiences = [
       "Built automated web scraping platform (Rbetraj) with Playwright + Selenium for real-time e-commerce data extraction",
       "Architected multi-modal agentic AI assistant (GALAMBO) with GPT-4, image search & autonomous tool use",
     ],
-    tech: ["LangChain", "LangGraph", "FastAPI", "RAG", "Agent Orchestration", "Multi-Agent Systems", "Docker", "Qdrant"],
+    tech: ["Agentic AI", "LangChain", "LangGraph", "FastAPI", "RAG", "Agent Orchestration", "Multi-Agent Systems", "Docker", "Qdrant"],
   },
   {
     company: "Aimlytics Technology",
@@ -51,7 +66,7 @@ const experiences = [
       "Built 15+ language NLP translation pipeline (evalmyBRAND) · CLIP/Flan-T5 fine-tuning (InventtEd)",
       "Resolved 28 critical production tickets with 100% on-time delivery",
     ],
-    tech: ["Python", "RAG", "LangChain", "BERT", "RoBERTa", "Airflow", "FastAPI", "GCP", "MongoDB"],
+    tech: ["Agentic AI", "Python", "RAG", "LangChain", "BERT", "RoBERTa", "Airflow", "FastAPI", "GCP", "MongoDB"],
   },
   {
     company: "iNeuron.ai",

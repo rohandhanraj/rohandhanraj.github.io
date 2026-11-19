@@ -65,9 +65,9 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
   <li>Architecting enterprise-grade <strong>Agentic AI workflows</strong> and multi-agent systems using Model Context Protocol (MCP) and custom guardrails.</li>
   <li>Engineering robust <strong>Harness Engineering</strong> and <strong>Agentic Ops</strong> infrastructure for automated tool execution and real-time observability.</li>
   <li>Developing end-to-end <strong>ML Flow</strong> integration and <strong>Agentic E2E evaluation</strong> frameworks for strategic agent validation and regression testing.</li>
-  <li>Enforcing strict LLM safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows.</li>
+  <li>Enforcing strict LLM safety guardrails, automated PII redaction, and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows.</li>
 </ul>
-<span class="tech">Tech: Python, AWS, Generative AI, Agentic Workflows, MCP Tools, Guardrails, Harness Engineering, Agentic Ops, ML Flow, Strategic Agentic Evaluation, Observability</span>
+<span class="tech">Tech: Python, AWS, Generative AI, Agentic Workflows, MCP Tools, Guardrails, PII Redaction, Harness Engineering, Agentic Ops, ML Flow, Strategic Agentic Evaluation, Observability</span>
 
 <div class="grid-2"><h3>AI Tech Solutions Ltd. | AI/ML Engineer — Generative AI & Agentic Systems</h3><span class="date">Nov 2024 – Oct 2025</span></div>
 
@@ -77,7 +77,7 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
   <li>Developed <a href="https://pypi.org/project/ai-tech-crawler/" target="_blank" style="text-decoration: underline;"><strong>AI-Tech-Crawler</strong></a>, an open-source web scraping platform natively utilizing LLMs and Pydantic schemas for data extraction.</li>
   <li>Scaled complex containerized orchestration models deploying <strong>Docker</strong> against Vector DBs for robust enterprise semantic search.</li>
 </ul>
-<span class="tech">Tech: Python, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Docker, Vector DBs</span>
+<span class="tech">Tech: Python, Agentic AI, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Docker, Vector DBs</span>
 
 <div class="grid-2"><h3>Aimlytics Technology | Software Engineer — Generative AI & ML</h3><span class="date">Sep 2022 – Oct 2024</span></div>
 
@@ -87,7 +87,7 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
   <li>Fine-tuned <strong>BERT & RoBERTa</strong> NLP models driving <strong>18% performance improvements</strong> across a 15-language sentiment tracking stack.</li>
   <li>Automated rigorous ETL architectures utilizing <strong>Apache Airflow</strong> to seamlessly ingest and process <strong>100K+ daily records</strong>.</li>
 </ul>
-<span class="tech">Tech: Python, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Vector DBs, GCP</span>
+<span class="tech">Tech: Python, Agentic AI, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Vector DBs, GCP</span>
 
 <div class="grid-2"><h3>iNeuron.ai | Machine Learning Engineer Intern</h3><span class="date">Aug 2021 – Sep 2022</span></div>
 
@@ -108,13 +108,10 @@ Delivered high-impact AI solutions for **Fortune 500 clients**, achieving up to 
 
 ## KEY PROJECTS & ARCHITECTURES
 <ul style="padding-left: 12px; margin-bottom: 2px;">
-  <li><strong>Document Intelligence:</strong> Multi-modal financial document intelligence system classifying loan documentation and extracting critical data for credit decisioning and underwriting.</li>
-  <li><strong>Origen Assistant:</strong> Conversational lending assistant guiding borrowers through financial terminology, portal navigation, and smart-filling application forms using extracted data.</li>
-  <li><strong>Omodore:</strong> No-code AI agent platform with autonomous reasoning, hybrid RAG, and multi-agent orchestration via LangGraph.</li>
-  <li><strong>Rbetraj:</strong> Automated dropshipping platform powered by AI-Crawler with LLM-based structured data extraction.</li>
-  <li><strong>AISERA:</strong> Enterprise AI system for Fortune 500 clients with BERT fine-tuning, processing 100K+ daily records and 4,500+ daily API requests.</li>
-  <li><strong>evalmyBRAND:</strong> Aspect-based sentiment analysis system (RoBERTa, 18% improvement) with 15+ language support.</li>
-  <li><strong>InventtEd:</strong> Multi-modal AI platform with vision models, CLIP, and Flan-T5 for automated essay grading, visual tutoring, and real-time tool usage.</li>
+  <li><strong>Document Intelligence & Origen Assistant:</strong> Financial document intelligence and conversational lending agent with automated PII redaction and safety guardrails.</li>
+  <li><strong>Omodore & Rbetraj:</strong> Agentic AI platforms featuring no-code multi-agent orchestration (LangGraph) and LLM-guided automated e-commerce web scraping.</li>
+  <li><strong>AISERA & SalesMoji:</strong> Enterprise Agentic AI and conversational RAG assistants for Fortune 500 clients, processing 100K+ daily records and 4,500+ daily API requests.</li>
+  <li><strong>evalmyBRAND & InventtEd:</strong> Multi-lingual aspect-based sentiment analysis (RoBERTa, 18% gain) and multi-modal vision platform (CLIP, Flan-T5) with real-time tool usage.</li>
 </ul>
 
 <div style="display: flex; justify-content: space-between; margin-top: 4px;">

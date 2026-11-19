@@ -163,8 +163,11 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
 
       expect(result.context).toContain("Document Intelligence");
       expect(result.context).toContain("Financial Lending & Document Processing");
-      expect(result.context).toContain("AI-powered document intelligence system classifying financial documents");
+      expect(result.context).toContain("**Client**: Lendistry");
+      expect(result.context).toContain("**Company**: R Systems International");
       expect(result.context).toContain("Multi-Modal AI");
+      expect(result.context).toContain("PII Redaction");
+      expect(result.context).toContain("Guardrails");
       expect(result.context).toContain("AWS");
       expect(result.context).toContain("Classified complex loan and financial documents");
       expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
@@ -176,8 +179,12 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
 
       expect(result.context).toContain("Origen Assistant");
       expect(result.context).toContain("Fintech & Lending Agent");
+      expect(result.context).toContain("**Client**: Lendistry");
+      expect(result.context).toContain("**Company**: R Systems International");
       expect(result.context).toContain("Conversational lending portal assistant");
       expect(result.context).toContain("Agentic Workflows");
+      expect(result.context).toContain("PII Redaction");
+      expect(result.context).toContain("Guardrails");
       expect(result.context).toContain("AWS");
       expect(result.context).toContain("Guided borrowers through financial terminology");
       expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
@@ -244,6 +251,67 @@ describe("Facts RAG Adapter (Pluggable In-Memory RAG)", () => {
       expect(result.context).toContain("Lendistry");
       expect(result.context).toContain("Model Context Protocol (MCP)");
       expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should treat Lendistry as client and return both experience and client projects Document Intelligence and Origen Assistant", async () => {
+      const result = await retrieveFactsContext("What work did you do for client Lendistry?");
+
+      expect(result.context).toContain("**Client**: Lendistry");
+      expect(result.context).toContain("R Systems International");
+      expect(result.context).toContain("Document Intelligence");
+      expect(result.context).toContain("Origen Assistant");
+      // Must not treat Lendistry as a project
+      expect(result.context).not.toMatch(/### Project:\s*Lendistry/i);
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(2);
+    });
+
+    it("should match PII redaction and return specialties, Document Intelligence, and Origen Assistant", async () => {
+      const result = await retrieveFactsContext("experience with PII redaction");
+
+      expect(result.context).toContain("PII Redaction");
+      expect(result.context).toContain("Document Intelligence");
+      expect(result.context).toContain("Origen Assistant");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should match Guardrails and return specialties, R Systems, and projects with guardrails", async () => {
+      const result = await retrieveFactsContext("tell me about guardrails");
+
+      expect(result.context).toContain("Guardrails");
+      expect(result.context).toContain("R Systems International");
+      expect(result.context).toContain("Document Intelligence");
+      expect(result.context).toContain("Origen Assistant");
+      expect(result.matchedNodesCount).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should include Agentic AI in skills for Omodore, Rbetraj, Salesmoji, Aisera, AI Tech Solutions, and Aimlytics", async () => {
+      const omodoreRes = await retrieveFactsContext("tell me about Omodore");
+      expect(omodoreRes.context).toContain("Omodore");
+      expect(omodoreRes.context).toContain("Agentic AI");
+      expect(omodoreRes.context).toContain("AI Tech Solutions Ltd.");
+
+      const rbetrajRes = await retrieveFactsContext("tell me about Rbetraj");
+      expect(rbetrajRes.context).toContain("Rbetraj");
+      expect(rbetrajRes.context).toContain("Agentic AI");
+      expect(rbetrajRes.context).toContain("AI Tech Solutions Ltd.");
+
+      const salesmojiRes = await retrieveFactsContext("tell me about Salesmoji");
+      expect(salesmojiRes.context).toContain("Salesmoji");
+      expect(salesmojiRes.context).toContain("Agentic AI");
+      expect(salesmojiRes.context).toContain("Aimlytics Technology");
+
+      const aiseraRes = await retrieveFactsContext("tell me about Aisera");
+      expect(aiseraRes.context).toContain("Aisera");
+      expect(aiseraRes.context).toContain("Agentic AI");
+      expect(aiseraRes.context).toContain("Aimlytics Technology");
+
+      const aiTechRes = await retrieveFactsContext("experience at AI Tech Solutions");
+      expect(aiTechRes.context).toContain("AI Tech Solutions Ltd.");
+      expect(aiTechRes.context).toContain("Agentic AI");
+
+      const aimlyticsRes = await retrieveFactsContext("experience at Aimlytics Technology");
+      expect(aimlyticsRes.context).toContain("Aimlytics Technology");
+      expect(aimlyticsRes.context).toContain("Agentic AI");
     });
   });
 

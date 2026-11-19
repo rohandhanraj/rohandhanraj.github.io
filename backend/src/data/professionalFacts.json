@@ -28,7 +28,9 @@
       "Structured Output Generation",
       "Retrieval-Augmented Generation (RAG)",
       "Hybrid RAG",
-      "Embedding Generation"
+      "Embedding Generation",
+      "PII Redaction",
+      "Guardrails"
     ],
     "Agentic AI & Multi-Agent Systems": [
       "LangGraph",
@@ -45,6 +47,8 @@
       "Tree of Thoughts (ToT)",
       "Deep Research",
       "Agentic Guardrails",
+      "Guardrails",
+      "PII Redaction",
       "Harness Engineering",
       "Agentic Ops"
     ],
@@ -151,10 +155,10 @@
       "end_date": "September 2026",
       "location": "Bengaluru, Karnataka, India",
       "responsibilities": [
-        "Architecting enterprise-grade Agentic AI workflows and multi-agent systems using Model Context Protocol (MCP) and custom guardrails",
+        "Architecting enterprise-grade Agentic AI workflows and multi-agent systems using Model Context Protocol (MCP) and custom guardrails for client Lendistry",
         "Engineering robust Harness Engineering and Agentic Ops infrastructure for automated tool execution and real-time observability",
         "Developing end-to-end ML Flow integration and Agentic E2E evaluation frameworks for strategic agent validation and regression testing",
-        "Enforcing strict LLM safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows"
+        "Enforcing strict LLM safety guardrails, automated PII redaction, and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows"
       ],
       "skills_used": [
         "Python",
@@ -162,12 +166,17 @@
         "Agentic Workflows",
         "MCP Tools",
         "Guardrails",
+        "PII Redaction",
         "Harness Engineering",
         "Agentic Ops",
         "ML Flow",
         "Strategic Agentic Evaluation",
         "Observability",
         "AWS"
+      ],
+      "projects": [
+        "Document Intelligence",
+        "Origen Assistant"
       ]
     },
     {
@@ -184,6 +193,7 @@
       ],
       "skills_used": [
         "Python",
+        "Agentic AI",
         "LangChain",
         "LangGraph",
         "FastAPI",
@@ -192,6 +202,11 @@
         "Agent Orchestration",
         "Docker",
         "Vector DBs"
+      ],
+      "projects": [
+        "Omodore",
+        "Rbetraj",
+        "Galambo"
       ]
     },
     {
@@ -208,6 +223,7 @@
       ],
       "skills_used": [
         "Python",
+        "Agentic AI",
         "RAG",
         "LangChain",
         "Airflow",
@@ -219,6 +235,12 @@
         "PyTorch",
         "Vector DBs",
         "GCP"
+      ],
+      "projects": [
+        "Aisera",
+        "Salesmoji",
+        "evalmyBRAND",
+        "Inventted"
       ]
     },
     {
@@ -268,7 +290,9 @@
     {
       "name": "Document Intelligence",
       "domain": "Financial Lending & Document Processing",
-      "description": "AI-powered document intelligence system classifying financial documents required for lending processes and extracting critical data for credit and underwriting pipelines.",
+      "company": "R Systems International",
+      "client": "Lendistry",
+      "description": "AI-powered document intelligence system classifying financial documents required for lending processes and extracting critical data for credit and underwriting pipelines with automated PII redaction and strict guardrails.",
       "skills_used": [
         "Python",
         "FastAPI",
@@ -276,39 +300,49 @@
         "NLP",
         "Pydantic",
         "AWS",
-        "Docker"
+        "Docker",
+        "PII Redaction",
+        "Guardrails"
       ],
       "responsibilities": [
         "Classified complex loan and financial documents for lending workflows",
-        "Extracted structured financial data for loan and credit processing",
+        "Extracted structured financial data for loan and credit processing with automated PII redaction",
+        "Engineered validation guardrails and compliance rules for safe financial document processing",
         "Integrated document extraction pipelines with downstream credit evaluation services"
       ]
     },
     {
       "name": "Origen Assistant",
       "domain": "Fintech & Lending Agent",
-      "description": "Conversational lending portal assistant guiding borrowers to understand financial jargons and smart-filling lending applications using data extracted through Document Intelligence.",
+      "company": "R Systems International",
+      "client": "Lendistry",
+      "description": "Conversational lending portal assistant guiding borrowers to understand financial jargons and smart-filling lending applications using data extracted through Document Intelligence with conversational safety guardrails and PII redaction.",
       "skills_used": [
         "Python",
         "Generative AI",
         "LLMs",
         "RAG",
         "Agentic Workflows",
+        "MCP Tools",
         "FastAPI",
-        "AWS"
+        "AWS",
+        "PII Redaction",
+        "Guardrails"
       ],
       "responsibilities": [
         "Guided borrowers through financial terminology and loan portal navigation",
         "Automated smart-filling of lending applications using extracted document data",
-        "Engineered conversational safety guardrails and lending guidance workflows"
+        "Engineered conversational safety guardrails, automated PII redaction, and lending guidance workflows using Model Context Protocol (MCP)"
       ]
     },
     {
       "name": "Omodore",
       "domain": "AI Agent Platform",
+      "company": "AI Tech Solutions Ltd.",
       "description": "No-code AI agent platform enabling non-technical users to build domain-specific AI agents without coding expertise. The platform leverages advanced RAG pipelines to deliver accurate, context-aware responses with a 45% accuracy boost.",
       "skills_used": [
         "Python",
+        "Agentic AI",
         "FastAPI",
         "LangChain",
         "LangGraph",
@@ -342,9 +376,11 @@
     {
       "name": "Rbetraj",
       "domain": "E-commerce Data Intelligence",
+      "company": "AI Tech Solutions Ltd.",
       "description": "Automated Dropshipping Platform powered by Shop Scan Agent which specializes in e-commerce data extraction with advanced price tracking and competitive analysis capabilities, powered by the open-source automated scraper AI Tech Crawler.",
       "skills_used": [
         "Python",
+        "Agentic AI",
         "FastAPI",
         "Selenium",
         "Playwright",
@@ -370,11 +406,44 @@
       ]
     },
     {
+      "name": "Salesmoji",
+      "domain": "Sales Intelligence & Conversational RAG",
+      "company": "Aimlytics Technology",
+      "description": "RAG-based Virtual Sales Assistant and conversational agent answering natural language sales queries, managing leads, and driving pipeline conversions.",
+      "skills_used": [
+        "Python",
+        "Agentic AI",
+        "FastAPI",
+        "LangChain",
+        "LangGraph",
+        "GPT",
+        "LLMs",
+        "Generative AI",
+        "RAG",
+        "Agent Building",
+        "Prompt Chaining",
+        "Chain of Thoughts",
+        "Apache Airflow",
+        "MySQL",
+        "MongoDB",
+        "Qdrant",
+        "Docker"
+      ],
+      "responsibilities": [
+        "Architected RAG-based virtual sales assistant answering complex customer and lead queries",
+        "Implemented LangChain and LangGraph for automated multi-step conversational sales workflows",
+        "Integrated vector search with Qdrant for real-time sales collateral retrieval",
+        "Scaled backend API services using FastAPI with containerized Docker deployments"
+      ]
+    },
+    {
       "name": "Aisera",
       "domain": "Customer Service & IT Operations Management",
+      "company": "Aimlytics Technology",
       "description": "Enterprise Generative AI solutions helping enterprises boost revenue, improve user productivity, and lower operating expenses by automating and personalizing customer support using NLP, BERT fine-tuning, and the TRAPS ethical AI framework, processing 100K+ daily records and 4,500+ daily API requests.",
       "skills_used": [
         "Python",
+        "Agentic AI",
         "FastAPI",
         "LangChain",
         "LangGraph",

@@ -5,12 +5,12 @@ import { useEffect, useRef, useState } from "react";
 import ResumeModal from "./ResumeModal";
 
 const ROLES = [
+  "Senior Associate Data Science L2",
   "AI/ML Engineer",
-  "Generative AI Developer",
-  "Multi-Agent Systems Architect",
+  "Generative AI Architect",
+  "Multi-Agent Systems Specialist",
   "RAG Pipeline Expert",
-  "LLM Fine-tuning",
-  "AI Platform Engineer"
+  "LLM Platform Engineer"
 ];
 
 function useTypingEffect(words: string[], speed = 80, pause = 1800) {
@@ -209,10 +209,10 @@ export default function Hero() {
                 ● CURRENTLY AT
               </p>
               <p className="font-orbitron font-bold text-sm" style={{ color: "var(--accent-cyan)" }}>
-                R Systems International <span style={{ color: "var(--text-secondary)", fontSize: "0.8rem", fontWeight: "normal" }}>(Client: Lendistry)</span>
+                Publicis Sapient
               </p>
               <p className="text-xs mt-1" style={{ color: "var(--text-secondary)" }}>
-                Senior AI/ML Engineer · Generative AI · Agentic AI · MCP Tools
+                Senior Associate Data Science L2 — Delivery, Engineering · Generative AI · Enterprise AI
               </p>
             </motion.div>
 
@@ -315,7 +315,7 @@ export default function Hero() {
               {[
                 { icon: "📍", text: "Bengaluru, India" },
                 { icon: "🎓", text: "GATE Qualified BE" },
-                { icon: "💼", text: "Senior AI/ML Engineer @ R Systems" },
+                { icon: "💼", text: "Senior Associate Data Science L2 @ Publicis Sapient" },
               ].map((item) => (
                 <div
                   key={item.text}

@@ -131,14 +131,14 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 * Architected enterprise-grade **Agentic AI workflows** and multi-agent systems using Model Context Protocol (MCP) and custom guardrails for fintech operations
 * Implemented robust **Harness Engineering** and **Agentic Ops** pipelines for automated tool execution, schema validation, and real-time observability
 * Developed **ML Flow** integration and **Agentic E2E evaluation** frameworks for continuous testing, strategic agent evaluation, and regression tracking
-* Pioneered safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions in production workflows
+* Pioneered safety guardrails, automated PII redaction, and multi-layered retrieval backstops to ensure reliable autonomous decisions in production workflows
 
 **Projects**
 
-* **Document Intelligence** — Multi-modal financial document intelligence system classifying loan documentation and extracting critical data for credit decisioning and underwriting.
-* **Origen Assistant** — Conversational lending assistant guiding borrowers through financial terminology, portal navigation, and smart-filling application forms using extracted data.
+* **Document Intelligence** — Multi-modal financial document intelligence system classifying loan documentation and extracting critical data for credit decisioning with automated PII redaction and strict guardrails.
+* **Origen Assistant** — Conversational lending assistant guiding borrowers through financial terminology, portal navigation, and smart-filling application forms using extracted data with safety guardrails and PII redaction.
 
-**Tech Stack:** Python, AWS, Generative AI, Agentic Workflows, MCP Tools, Guardrails, Harness Engineering, Agentic Ops, ML Flow, Agentic E2E Evaluation, Observability
+**Tech Stack:** Python, AWS, Generative AI, Agentic Workflows, MCP Tools, Guardrails, PII Redaction, Harness Engineering, Agentic Ops, ML Flow, Agentic E2E Evaluation, Observability
 
 ---
 
@@ -163,7 +163,7 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 * **Omodore** — Autonomous Agentic AI platform demonstrating LangGraph state orchestration
 * **Rbetraj** — Automated Dropshipping Platform with AI-Powered Product Research and Listing Generation by scanning Global E-Commerce Sites.
 
-**Tech Stack:** Python, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Multi-Agent Systems, Docker, Qdrant, LanceDB, Chroma, Playwright, Selenium
+**Tech Stack:** Python, Agentic AI, LangChain, LangGraph, FastAPI, LLMs, RAG, Agent Orchestration, Multi-Agent Systems, Docker, Qdrant, LanceDB, Chroma, Playwright, Selenium
 
 ---
 
@@ -187,10 +187,11 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 **Projects**
 
 * **AISERA** — Enterprise AI system for Fortune 500 clients with BERT fine-tuning, processing 100K+ daily records and 4,500+ daily API requests.
+* **SalesMoji** — RAG-based Virtual Sales Assistant and conversational agent answering natural language sales queries, managing leads, and driving pipeline conversions.
 * **InventtEd** — Multi-Modal AI platform with vision models, CLIP, and Flan-T5 for automated essay grading, visual tutoring, and real-time tool usage.
 * **evalmyBRAND** — Brand Monitoring and Reputation Management Platform with Multi-Lingual Sentiment Analysis and Trend Tracking
 
-**Tech Stack:** Python, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Qdrant, Chroma, GCP
+**Tech Stack:** Python, Agentic AI, RAG, LangChain, Airflow, BERT, RoBERTa, FastAPI, Flask, TensorFlow, PyTorch, Qdrant, Chroma, GCP
 
 ---
 
@@ -235,24 +236,27 @@ NumPy, Pandas, SciPy, Matplotlib, Seaborn, Plotly, Statistical Analysis, Predict
 ### 1. Project Name: DOCUMENT INTELLIGENCE
 **Duration:** June 2026 to September 2026  
 **Role:** Senior AI/ML Engineer  
+**Client:** Lendistry  
+**Company:** R Systems International  
 
 **Description:**
 
 **Domain:** Financial Lending & Document Processing
 
-AI-powered document intelligence system classifying financial and loan documentation required for lending workflows and extracting critical structured data for credit decisioning and underwriting pipelines.
+AI-powered document intelligence system classifying financial and loan documentation required for lending workflows and extracting critical structured data for credit decisioning and underwriting pipelines with automated PII redaction and strict guardrails.
 
 **Key Features:**
 - Multi-modal financial document classification for complex loan documentation
 - Automated critical data extraction for loan and credit underwriting
 - Schema validation and structured data mapping for financial records
+- Automated PII redaction and strict validation guardrails
 - Integration with downstream credit scoring and decisioning services
 - Enterprise-grade accuracy, security, and compliance in financial data pipelines
 
 **Roles and Responsibilities:**
 - Architected multi-modal document intelligence pipeline classifying diverse loan documents (W-2s, tax returns, bank statements)
 - Extracted and validated structured financial data using multi-modal models and Pydantic schemas
-- Implemented safety guardrails and privacy compliance backstops to ensure zero data leakage
+- Implemented safety guardrails, automated PII redaction, and privacy compliance backstops to ensure zero data leakage
 - Integrated document extraction pipelines with automated credit decisioning engines via FastAPI
 - Built observability and evaluation harnesses to track extraction accuracy across document varieties
 
@@ -260,7 +264,7 @@ AI-powered document intelligence system classifying financial and loan documenta
 
 **Language:** Python  
 **Development Framework:** FastAPI  
-**Generative AI & Agentic AI:** Multi-Modal AI, LLMs, Agentic Workflows, Pydantic, Guardrails  
+**Generative AI & Agentic AI:** Multi-Modal AI, LLMs, Agentic Workflows, Pydantic, Guardrails, PII Redaction  
 **NLP & Extraction:** Document Parsing, Information Extraction, Text Classification  
 **Cloud & DevOps:** AWS, Docker  
 
@@ -269,18 +273,20 @@ AI-powered document intelligence system classifying financial and loan documenta
 ### 2. Project Name: ORIGEN ASSISTANT
 **Duration:** June 2026 to September 2026  
 **Role:** Senior AI/ML Engineer  
+**Client:** Lendistry  
+**Company:** R Systems International  
 
 **Description:**
 
 **Domain:** Fintech & Lending Conversational Agent
 
-Conversational lending portal assistant guiding borrowers to understand complex financial terminology, navigate the lending portal, and smart-fill loan application forms using data extracted through Document Intelligence.
+Conversational lending portal assistant guiding borrowers to understand complex financial terminology, navigate the lending portal, and smart-fill loan application forms using data extracted through Document Intelligence with safety guardrails and PII redaction.
 
 **Key Features:**
 - Context-aware conversational guidance for borrowers on financial and lending terminology
 - Intelligent portal navigation assistance and real-time application support
 - Automated smart-filling of lending applications using extracted document data
-- Strict safety guardrails and multi-layered retrieval backstops for financial compliance
+- Strict safety guardrails, automated PII redaction, and multi-layered retrieval backstops for financial compliance
 - Human-in-the-loop workflows for loan application verification
 
 **Roles and Responsibilities:**
@@ -294,7 +300,7 @@ Conversational lending portal assistant guiding borrowers to understand complex 
 
 **Language:** Python  
 **Development Framework:** FastAPI  
-**Generative AI & Agentic AI:** Generative AI, LLMs, RAG, Agentic Workflows, MCP Tools, Guardrails  
+**Generative AI & Agentic AI:** Generative AI, LLMs, RAG, Agentic Workflows, MCP Tools, Guardrails, PII Redaction  
 **Agentic Ops & MLOps:** ML Flow, Agentic E2E Evaluation, Observability  
 **Cloud & DevOps:** AWS, Docker  
 
@@ -333,7 +339,7 @@ Omodore is an auto-agent platform enabling non-technical users to build domain-s
 **Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
 **NLP:** Hugging Face Transformers, Large Language Models (LLMs)  
 **Model Development:** Model Tuning, Model Training, Model Evaluation, Model Deployment, Model Monitoring, Model Optimization, Model Versioning, Model Management  
-**Generative AI & Agentic AI:** LangChain, LangGraph, GPT, LLMs, Prompt Chaining, Chain of Thoughts, RAG, Agent Building, Autonomous Agents, Multi-Agent Systems  
+**Generative AI & Agentic AI:** Agentic AI, LangChain, LangGraph, GPT, LLMs, Prompt Chaining, Chain of Thoughts, RAG, Agent Building, Autonomous Agents, Multi-Agent Systems  
 **Data Engineering & Databases:** Apache Airflow, Qdrant, MongoDB, Postgresql, PgVector, Neo4j  
 **Cloud & DevOps:** Docker
 
@@ -371,7 +377,7 @@ Rbetraj is an Automated Dropshipping Platform powered by Shop Scan Agent which s
 **Language:** Python  
 **Development Framework:** FastAPI  
 **Web Scraping:** Selenium, Playwright, BeautifulSoup  
-**Generative AI & Agentic AI:** GPT, LLMs, LangChain, Pydantic for structured output 
+**Generative AI & Agentic AI:** Agentic AI, GPT, LLMs, LangChain, Pydantic for structured output 
 **Data Engineering & Databases:** Apache Airflow, Qdrant, MongoDB  
 **Cloud & DevOps:** Docker
 
@@ -413,7 +419,7 @@ Aisera is an enterprise Generative AI solution helping organizations automate cu
 **Development Framework:** FastAPI  
 **Machine Learning:** Sklearn, TensorFlow, Keras, PyTorch  
 **NLP:** Spacy, NLTK, Hugging Face Transformers, BERT, RoBERTa, Large Language Models (LLMs)  
-**Generative AI & Agentic AI:** LangChain, Prompt Chaining, RAG, Agent Building, Autonomous Agents, Multi-Agent Systems, Agentic Guardrails and Middleware for Enterprise AI  
+**Generative AI & Agentic AI:** Agentic AI, LangChain, Prompt Chaining, RAG, Agent Building, Autonomous Agents, Multi-Agent Systems, Agentic Guardrails and Middleware for Enterprise AI  
 **Data Engineering & Databases:** Apache Airflow, MySQL, MongoDB, Chroma, Weaviate, Qdrant      
 **Cloud Platform:** GCP
 

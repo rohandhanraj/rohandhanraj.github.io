@@ -40,7 +40,7 @@ Results-driven AI/ML Engineer with **7+ years of total professional experience**
 
 ## TECHNICAL SKILLS
 
-Python, Django, Flask, FastAPI, Streamlit, LLMs (OpenAI, Anthropic, Vertex AI, Google Gen AI), LangChain, LangGraph, RAG, Multi-Agent Systems, Scikit-Learn, TensorFlow, Keras, PyTorch, Optuna, Transformers, NLP, Apache Airflow, Databases (MySQL, PostgreSQL, MongoDB, Cassandra, Vector DBs), Web Scraping (Playwright, Selenium), Git, Docker, GCP, AWS, CI/CD, MLOps
+Python, Django, Flask, FastAPI, Streamlit, LLMs (OpenAI, Anthropic, Vertex AI, Google Gen AI), LangChain, LangGraph, RAG, Multi-Agent Systems, Scikit-Learn, TensorFlow, Keras, PyTorch, Optuna, Transformers, NLP, Apache Airflow, Databases (MySQL, PostgreSQL, MongoDB, Cassandra, Vector DBs), Web Scraping (Playwright, Selenium), Git, Docker, GCP, AWS, CI/CD, MLOps, Guardrails, PII Redaction
 
 ---
 
@@ -58,7 +58,7 @@ Publicis Sapient | Sep 2026 – Present
 
 R Systems International (Client: Lendistry) | Jun 2026 – Sep 2026
 
-* Architecting production Agentic AI workflows and multi-agent coordination on AWS using MCP tools and guardrails
+* Architecting production Agentic AI workflows on AWS using MCP tools, guardrails, and automated PII redaction
 * Implementing Harness Engineering and Agentic Ops for automated validation and observability
 * Building ML Flow integration and Agentic E2E evaluation frameworks for strategic agent benchmarking
 
@@ -66,7 +66,7 @@ R Systems International (Client: Lendistry) | Jun 2026 – Sep 2026
 
 AI Tech Solutions Ltd. | Nov 2024 – Oct 2025
 
-* Designed and orchestrated multi-agent AI systems utilizing LangGraph for complex task execution
+* Designed and orchestrated multi-agent Agentic AI systems utilizing LangGraph for complex task execution
 * Enhanced context retrieval relevance by 38% through hybrid RAG implementation
 * Built high-throughput, asynchronous backend microservices using FastAPI
 
@@ -74,7 +74,7 @@ AI Tech Solutions Ltd. | Nov 2024 – Oct 2025
 
 Aimlytics Technology | Sep 2022 – Oct 2024
 
-* Architected scalable RAG-based assistants reliably processing 4,500+ daily API requests
+* Architected scalable Agentic AI and RAG-based assistants (SalesMoji / AISERA) reliably processing 4,500+ daily API requests
 * Fine-tuned BERT and RoBERTa models, improving text classification F1-scores by 18%
 * Orchestrated ETL data pipelines via Airflow to handle 100K+ daily records for ML workflows
 
@@ -89,10 +89,9 @@ iNeuron.ai | Aug 2021 – Sep 2022
 
 ## PROJECTS
 
-* **Origen Assistant & Document Intelligence**: Intelligent lending assistant and document classification pipeline that guides borrowers on portal navigation, simplifies financial jargon, and smart-fills loan applications using extracted data.
-* **AISERA**: Enterprise AI system for Fortune 500 clients with BERT fine-tuning, processing 100K+ daily records and 4,500+ daily API requests.
-* **Rbetraj**: Automated dropshipping platform powered by AI-Crawler with LLM-based structured data extraction.
-* **Omodore**: Autonomous Agentic AI platform demonstrating LangGraph state orchestration.
+* **Origen Assistant & Document Intelligence**: Intelligent lending assistant and document classification pipeline for client Lendistry with automated PII redaction, safety guardrails, and application smart-filling.
+* **AISERA & SalesMoji**: Enterprise Agentic AI and RAG assistants for Fortune 500 clients, processing 100K+ daily records and 4,500+ daily API requests.
+* **Omodore & Rbetraj**: Autonomous Agentic AI platforms demonstrating no-code LangGraph agent orchestration and LLM-guided automated e-commerce web scraping.
 
 ---
 

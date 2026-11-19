@@ -1,4 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import axios from "axios";
+import { EventEmitter } from "events";
 import { streamNvidiaNimResponse, buildSystemPrompt, generateMockResponse } from "./llmService.js";
 
 describe("LLM Service", () => {
@@ -28,6 +30,10 @@ describe("LLM Service", () => {
       expect(prompt).toContain("https://www.linkedin.com/in/rohan-dhanraj-yadav");
       expect(prompt).toContain("Sample facts context");
       expect(prompt).toContain("GREETINGS & CASUAL QUESTIONS");
+      expect(prompt).toContain("STRICT FACTUAL ADHERENCE & ZERO CREATIVE FABRICATION");
+      expect(prompt).toContain("without generating anything out of creativity");
+      expect(prompt).toContain('Never describe a short tenure as "several years"');
+      expect(prompt).toContain("EXACT TENURE & TIMELINE ACCURACY");
     });
   });
 
@@ -93,6 +99,50 @@ describe("LLM Service", () => {
       const text = extractSSEContent(mockResponse.write.mock.calls);
       expect(text).toContain("I am Rohan's Digital Twin");
       expect(text).not.toContain("Some context");
+    });
+
+    it("should send temperature: 0.1 and top_p: 0.1 by default in payload", async () => {
+      delete process.env.LLM_TEMPERATURE;
+      delete process.env.LLM_TOP_P;
+      process.env.NVIDIA_NIM_API_KEY = "valid-nvapi-key";
+
+      const mockStream = new EventEmitter();
+      const postSpy = vi.spyOn(axios, "post").mockImplementation(async () => {
+        setTimeout(() => mockStream.emit("end"), 10);
+        return { data: mockStream } as any;
+      });
+
+      await streamNvidiaNimResponse("tell me about projects", "Context text", [], mockResponse);
+
+      expect(postSpy).toHaveBeenCalled();
+      const payload = postSpy.mock.calls[0][1] as any;
+      expect(payload.temperature).toBe(0.1);
+      expect(payload.top_p).toBe(0.1);
+
+      postSpy.mockRestore();
+    });
+
+    it("should respect LLM_TEMPERATURE and LLM_TOP_P environment variable overrides", async () => {
+      process.env.LLM_TEMPERATURE = "0.2";
+      process.env.LLM_TOP_P = "0.15";
+      process.env.NVIDIA_NIM_API_KEY = "valid-nvapi-key";
+
+      const mockStream = new EventEmitter();
+      const postSpy = vi.spyOn(axios, "post").mockImplementation(async () => {
+        setTimeout(() => mockStream.emit("end"), 10);
+        return { data: mockStream } as any;
+      });
+
+      await streamNvidiaNimResponse("tell me about projects", "Context text", [], mockResponse);
+
+      expect(postSpy).toHaveBeenCalled();
+      const payload = postSpy.mock.calls[0][1] as any;
+      expect(payload.temperature).toBe(0.2);
+      expect(payload.top_p).toBe(0.15);
+
+      delete process.env.LLM_TEMPERATURE;
+      delete process.env.LLM_TOP_P;
+      postSpy.mockRestore();
     });
   });
 });
