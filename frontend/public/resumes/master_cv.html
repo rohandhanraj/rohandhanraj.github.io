@@ -253,8 +253,10 @@
       border-bottom: 2px solid #cbd5e1;
       padding-bottom: 5px;
       margin: 25px 0 15px 0;
-      display: inline-block;
+      display: block;
       width: 100%;
+      break-after: avoid;
+      page-break-after: avoid;
     }
 
     .summary {
@@ -359,6 +361,8 @@
     /* Descriptive Formats (Experience, Projects, Education) */
     .desc-item {
       margin-bottom: 25px;
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
 
     .desc-header {
@@ -623,13 +627,14 @@
           Focus: Enterprise Agentic AI workflows, MCP tools integration, guardrails, harness engineering, observability, and Agentic Ops
         </div>
         <ul class="desc-bullets">
-          <li>Architecting enterprise-grade <strong>Agentic AI workflows</strong> and multi-agent systems using Model Context Protocol (MCP) and custom guardrails for fintech operations</li>
+          <li>Architecting enterprise-grade <strong>Agentic AI workflows</strong> and multi-agent systems (<strong>Origen Assistant</strong>) using Model Context Protocol (MCP) and custom guardrails on AWS</li>
+          <li>Engineering multi-modal financial <strong>Document Intelligence</strong> systems classifying loan documentation and extracting critical data for credit underwriting</li>
           <li>Engineering robust <strong>Harness Engineering</strong> and <strong>Agentic Ops</strong> infrastructure for automated tool execution and real-time observability</li>
           <li>Developing end-to-end <strong>ML Flow</strong> integration and <strong>Agentic E2E evaluation</strong> frameworks for strategic agent validation and regression testing</li>
           <li>Enforcing strict LLM safety guardrails and multi-layered retrieval backstops to ensure reliable autonomous decisions and zero data leaks in financial workflows</li>
         </ul>
         <div class="tech-badges">
-          <span class="tech-badge">Python</span> <span class="tech-badge">Generative AI</span> <span class="tech-badge">Agentic Workflows</span> <span class="tech-badge">MCP Tools</span> <span class="tech-badge">Guardrails</span> <span class="tech-badge">Harness Engineering</span> <span class="tech-badge">Agentic Ops</span> <span class="tech-badge">ML Flow</span> <span class="tech-badge">Agentic E2E Eval</span> <span class="tech-badge">Observability</span>
+          <span class="tech-badge">Python</span> <span class="tech-badge">AWS</span> <span class="tech-badge">Generative AI</span> <span class="tech-badge">Agentic Workflows</span> <span class="tech-badge">MCP Tools</span> <span class="tech-badge">Guardrails</span> <span class="tech-badge">Harness Engineering</span> <span class="tech-badge">Agentic Ops</span> <span class="tech-badge">ML Flow</span> <span class="tech-badge">Agentic E2E Eval</span> <span class="tech-badge">Observability</span>
         </div>
       </div>
 
@@ -655,7 +660,7 @@
           <li>Built automated web scraping systems (Rbetraj) with <strong>Playwright</strong> and
             <strong>Selenium</strong> for real-time data extraction
           </li>
-          <li>Architected multi-modal virtual agent (GALAMBO) integrating GPT-4 and autonomous tool use</li>
+          <li>Architected multi-modal virtual agent integrating GPT-4, vision models, and autonomous tool use</li>
         </ul>
         <div class="tech-badges">
           <span class="tech-badge">Python</span> <span class="tech-badge">LangChain</span> <span
@@ -676,14 +681,13 @@
         </div>
         <ul class="desc-bullets">
           <li>Led team of 8 engineers delivering AI solutions for <strong>Fortune 500 clients</strong></li>
-          <li>Built RAG-based virtual sales assistant (SalesMoji) handling <strong>4,500+ daily API requests</strong>
-          </li>
+          <li>Architected a robust RAG-based virtual assistant pipeline (<strong>AISERA</strong>) structurally scaling to consistently process <strong>4,500+ daily API requests</strong> and 100K+ daily records</li>
           <li>Built ML pipelines processing <strong>100K+ daily records</strong> using <strong>Apache Airflow</strong>
           </li>
           <li>Fine-tuned <strong>BERT</strong> and <strong>RoBERTa</strong> models achieving <strong>18% performance
               improvement</strong></li>
           <li>Implemented vector database solutions (Qdrant, Chroma) for semantic search</li>
-          <li>Built multi-modal educational AI system (InventtEd)</li>
+          <li>Built multi-modal educational AI platform (<strong>InventtEd</strong>) integrating vision models and real-time tool usage</li>
           <li>Developed multilingual NLP pipeline supporting <strong>15+ languages</strong> (evalmyBRAND)</li>
           <li>Resolved <strong>28 critical production issues</strong> with 100% on-time delivery</li>
         </ul>
@@ -728,11 +732,55 @@
         </ul>
       </div>
 
-      <div class="section-title">Project Synopsis</div>
+      <div class="section-title" style="break-before: page; page-break-before: always; margin-top: 0;">Project Synopsis</div>
 
       <div class="desc-item">
         <div class="desc-header">
-          <div class="desc-title">Project 1: OMODORE</div>
+          <div class="desc-title">Project 1: DOCUMENT INTELLIGENCE</div>
+          <div class="desc-date">Jun 2026 - Sep 2026</div>
+        </div>
+        <div class="desc-context">Domain: Financial Lending & Document Processing | Role: Senior AI/ML Engineer</div>
+        <div class="desc-context">AI-powered document intelligence system classifying financial documents required for
+          lending processes and extracting critical data for credit and underwriting pipelines.</div>
+        <ul class="desc-bullets">
+          <li>Classified complex loan and financial documents for lending workflows</li>
+          <li>Extracted structured financial data for loan and credit underwriting using multi-modal models and Pydantic schemas</li>
+          <li>Integrated document extraction pipelines with downstream credit evaluation services via FastAPI</li>
+          <li>Enforced strict privacy guardrails and data validation to ensure zero information leakage</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Python</span> <span class="tech-badge">FastAPI</span> <span
+            class="tech-badge">Multi-Modal AI</span> <span class="tech-badge">NLP</span> <span
+            class="tech-badge">Pydantic</span> <span class="tech-badge">AWS</span> <span
+            class="tech-badge">Docker</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Project 2: ORIGEN ASSISTANT</div>
+          <div class="desc-date">Jun 2026 - Sep 2026</div>
+        </div>
+        <div class="desc-context">Domain: Fintech & Lending Agent | Role: Senior AI/ML Engineer</div>
+        <div class="desc-context">Conversational lending portal assistant guiding borrowers to understand financial
+          jargons and smart-filling lending applications using data extracted through Document Intelligence.</div>
+        <ul class="desc-bullets">
+          <li>Guided borrowers through financial terminology and loan portal navigation</li>
+          <li>Automated smart-filling of lending applications using extracted document data</li>
+          <li>Engineered conversational safety guardrails and multi-agent lending guidance workflows using MCP</li>
+          <li>Built MLflow integration and agentic E2E evaluation pipelines for continuous reliability</li>
+        </ul>
+        <div class="tech-badges">
+          <span class="tech-badge">Python</span> <span class="tech-badge">Generative AI</span> <span
+            class="tech-badge">LLMs</span> <span class="tech-badge">RAG</span> <span
+            class="tech-badge">Agentic Workflows</span> <span class="tech-badge">FastAPI</span> <span
+            class="tech-badge">AWS</span>
+        </div>
+      </div>
+
+      <div class="desc-item">
+        <div class="desc-header">
+          <div class="desc-title">Project 3: OMODORE</div>
           <div class="desc-date">Nov 2024 - Oct 2025</div>
         </div>
         <div class="desc-context">Domain: AI Agent Platform | Role: Senior AI Engineer</div>
@@ -753,9 +801,9 @@
         </div>
       </div>
 
-      <div class="desc-item">
+      <div class="desc-item" style="page-break-before: always; padding-top: 20px;">
         <div class="desc-header">
-          <div class="desc-title">Project 2: RBETRAJ</div>
+          <div class="desc-title">Project 4: RBETRAJ</div>
           <div class="desc-date">Nov 2024 - Oct 2025</div>
         </div>
         <div class="desc-context">Domain: E-commerce Data Intelligence | Role: Senior AI Engineer</div>
@@ -778,61 +826,23 @@
 
       <div class="desc-item">
         <div class="desc-header">
-          <div class="desc-title">Project 3: GALAMBO</div>
-          <div class="desc-date">Nov 2024 - Oct 2025</div>
-        </div>
-        <div class="desc-context">Domain: Multi-Modal AI Assistant | Role: Senior AI Engineer</div>
-        <div class="desc-context">Sophisticated multi-modal virtual agent combining context-aware GPT responses with
-          advanced image search and autonomous tool use.</div>
-        <ul class="desc-bullets">
-          <li>Architected multi-modal AI system integrating text and image processing</li>
-          <li>Implemented autonomous tool use and search engine integration for information retrieval</li>
-          <li>Built scalable API infrastructure using FastAPI and optimized model response times</li>
-        </ul>
-        <div class="tech-badges">
-          <span class="tech-badge">Multi-modal AI</span> <span class="tech-badge">GPT-4</span> <span
-            class="tech-badge">LangChain</span> <span class="tech-badge">FastAPI</span>
-        </div>
-      </div>
-
-      <div class="desc-item" style="page-break-before: always; padding-top: 20px;">
-        <div class="desc-header">
-          <div class="desc-title">Project 4: SALESMOJI</div>
-          <div class="desc-date">Nov 2023 - Oct 2024</div>
-        </div>
-        <div class="desc-context">Domain: Sales and Marketing | Role: Software Engineer (Gen AI | ML)</div>
-        <div class="desc-context">Harnesses GPT and LLMs to answer sales questions in plain English. Processes 1M+ daily
-          records through Airflow pipelines.</div>
-        <ul class="desc-bullets">
-          <li>Led 8-member team delivering custom AI workflows for Fortune 500 clients</li>
-          <li>Built RAG-based Virtual Sales Assistant handled 10K+ daily queries with 89% accuracy</li>
-          <li>Architected ML pipelines for predictive sales forecasting and trend analysis</li>
-          <li>Implemented vector DB solutions (Qdrant, Milvus, Weaviate) for efficient retrieval</li>
-        </ul>
-        <div class="tech-badges">
-          <span class="tech-badge">GPT</span> <span class="tech-badge">RAG</span> <span
-            class="tech-badge">Airflow</span> <span class="tech-badge">Milvus</span> <span
-            class="tech-badge">TensorFlow</span>
-        </div>
-      </div>
-
-      <div class="desc-item">
-        <div class="desc-header">
           <div class="desc-title">Project 5: AISERA</div>
           <div class="desc-date">July 2023 - Oct 2024</div>
         </div>
         <div class="desc-context">Domain: Customer Service and IT Operations | Role: Software Engineer (AI | ML)</div>
         <div class="desc-context">Enterprise Generative AI platform for automating customer support through NLP and ML
-          workflows.</div>
+          workflows, processing 100K+ daily records and 4,500+ daily API requests.</div>
         <ul class="desc-bullets">
           <li>Led team of 8 (5 Data Eng + 3 Soft Dev) delivering workflows for Cisco, ITC, etc.</li>
+          <li>Architected RAG-based virtual assistant pipeline handling 4,500+ daily API requests</li>
+          <li>Automated large-scale ETL pipelines processing 100K+ daily records via Apache Airflow</li>
           <li>Fine-tuned BERT models achieving 50% performance improvement in sentiment analysis</li>
           <li>Implemented custom field prediction using advanced BERT architectures and Airflow triggers</li>
-          <li>Architected scalable ML pipelines and integrated LangChain for conversational AI</li>
         </ul>
         <div class="tech-badges">
           <span class="tech-badge">BERT</span> <span class="tech-badge">LangChain</span> <span
-            class="tech-badge">Chroma</span> <span class="tech-badge">FastAPI</span> <span class="tech-badge">GCP</span>
+            class="tech-badge">Airflow</span> <span class="tech-badge">Chroma</span> <span
+            class="tech-badge">FastAPI</span> <span class="tech-badge">GCP</span>
         </div>
       </div>
 
@@ -862,18 +872,18 @@
           <div class="desc-title">Project 7: INVENTTED</div>
           <div class="desc-date">Jan 2023 - Aug 2023</div>
         </div>
-        <div class="desc-context">Domain: EdTech | Role: Software Developer (AI | ML)</div>
-        <div class="desc-context">Pioneering EdTech platform providing AI-powered tools for summarization, essay
-          grading, and performance prediction.</div>
+        <div class="desc-context">Domain: EdTech & Multi-Modal AI | Role: Software Developer (AI | ML)</div>
+        <div class="desc-context">Multi-modal AI education platform combining vision models, CLIP, Flan-T5, and autonomous tool use for automated essay grading, visual tutoring, and interactive learning.</div>
         <ul class="desc-bullets">
+          <li>Architected multi-modal AI subsystems integrating vision models and autonomous tool usage</li>
           <li>Fine-tuned CLIP for text-to-image generation and Flan-T5 for keyword-based MCQ generation</li>
-          <li>Designed scaled Phishing Classifier and multi-modal social media classification model</li>
-          <li>Integrated multiple AI models into a cohesive platform with optimized Transformers</li>
-          <li>Performed advanced prompt engineering for ChatGPT-based virtual tutoring</li>
+          <li>Designed scaled Phishing Classifier and multi-modal content classification models</li>
+          <li>Integrated search engine tools and performed advanced prompt engineering for virtual tutoring</li>
         </ul>
         <div class="tech-badges">
-          <span class="tech-badge">CLIP</span> <span class="tech-badge">Flan-T5</span> <span class="tech-badge">Prompt
-            Eng</span> <span class="tech-badge">GCP</span>
+          <span class="tech-badge">Multi-Modal AI</span> <span class="tech-badge">CLIP</span> <span
+            class="tech-badge">Flan-T5</span> <span class="tech-badge">Tool Use</span> <span
+            class="tech-badge">Prompt Eng</span> <span class="tech-badge">GCP</span>
         </div>
       </div>
 
