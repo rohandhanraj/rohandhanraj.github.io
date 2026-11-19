@@ -17,12 +17,12 @@ try {
 
   // 2. Compile HTML Master CV to PDF
   console.log("\n[2/3] Compiling Master CV HTML to PDF...");
-  const htmlToPdfPath = path.join(rootDir, "html_to_pdf.js");
+  const htmlToPdfPath = path.join(__dirname, "html_to_pdf.js");
   execSync(`node "${htmlToPdfPath}"`, { stdio: "inherit", cwd: rootDir });
 
   // 3. Compile Markdown Resumes (Detailed, Optimized, Master) to PDF
   console.log("\n[3/3] Compiling Markdown Resumes to PDF...");
-  const toPdfPath = path.join(rootDir, "to_pdf.js");
+  const toPdfPath = path.join(__dirname, "to_pdf.js");
   execSync(`node "${toPdfPath}"`, { stdio: "inherit", cwd: rootDir });
 
   console.log("\n=== Resume & PDF Sync Pipeline Completed Successfully! ===");

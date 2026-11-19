@@ -25,9 +25,10 @@ async function convert(inputFile, outputFile) {
 }
 
 (async () => {
-    const baseDir = fs.existsSync(path.join(__dirname, 'frontend/public/resumes'))
-        ? path.join(__dirname, 'frontend/public/resumes')
-        : path.join(__dirname, 'public/resumes');
+    const rootDir = path.resolve(__dirname, '..');
+    const baseDir = fs.existsSync(path.join(rootDir, 'frontend/public/resumes'))
+        ? path.join(rootDir, 'frontend/public/resumes')
+        : path.join(__dirname, '../public/resumes');
 
     await convert(
         path.join(baseDir, 'detailed_resume.md'),
