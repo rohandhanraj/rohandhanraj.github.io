@@ -24,6 +24,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      RAG_STRATEGY: ${{ vars.RAG_STRATEGY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -61,12 +63,12 @@ jobs:
               - 'backend/src/data/professionalFacts.json'
 
       - name: Install Ingestion Dependencies
-        if: steps.changes.outputs.resume == 'true' && (vars.RAG_STRATEGY == 'hybrid' || secrets.RAG_STRATEGY == 'hybrid' || env.RAG_STRATEGY == 'hybrid')
+        if: steps.changes.outputs.resume == 'true' && (vars.RAG_STRATEGY == 'hybrid' || env.RAG_STRATEGY == 'hybrid')
         working-directory: ./backend
         run: npm ci
 
       - name: Run Database Ingestion Pipeline
-        if: steps.changes.outputs.resume == 'true' && (vars.RAG_STRATEGY == 'hybrid' || secrets.RAG_STRATEGY == 'hybrid' || env.RAG_STRATEGY == 'hybrid')
+        if: steps.changes.outputs.resume == 'true' && (vars.RAG_STRATEGY == 'hybrid' || env.RAG_STRATEGY == 'hybrid')
         working-directory: ./backend
         env:
           NODE_ENV: production
